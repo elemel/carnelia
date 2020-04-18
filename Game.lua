@@ -1,3 +1,4 @@
+local Camera = require("Camera")
 local class = require("class")
 local PhysicsDomain = require("PhysicsDomain")
 
@@ -6,6 +7,13 @@ local Game = class.new()
 function Game:init()
   self.fixedDt = 1 / 60
   self.accumulatedDt = 0
+
+  local viewportWidth, viewportHeight = love.graphics.getDimensions()
+
+  self.camera = Camera.new({
+    viewportWidth = viewportWidth,
+    viewportHeight = viewportHeight,
+  })
 
   self.physicsDomain = PhysicsDomain.new(self, {})
 end
@@ -24,6 +32,8 @@ function Game:fixedUpdate(dt)
 end
 
 function Game:draw()
+  self.camera:applyTransform()
+  love.graphics.circle("line", 0, 0, 0.5, 256)
   self.physicsDomain:debugDraw()
 end
 
