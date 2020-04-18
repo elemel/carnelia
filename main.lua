@@ -1,4 +1,5 @@
 local Game = require("Game")
+local Plantfarmer = require("Plantfarmer")
 
 function love.load()
   love.window.setTitle("Plantfarmer")
@@ -10,6 +11,7 @@ function love.load()
 
   love.physics.setMeter(1)
   game = Game.new()
+  Plantfarmer.new(game, {y = -3})
 end
 
 function love.update(dt)
