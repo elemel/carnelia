@@ -37,4 +37,10 @@ function Game:draw()
   self.physicsDomain:debugDraw()
 end
 
+function Game:resize(width, height)
+  self.camera.viewportWidth = width
+  self.camera.viewportHeight = height
+  self.camera:updateTransform()
+end
+
 return Game
