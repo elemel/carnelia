@@ -1,6 +1,7 @@
 local Camera = require("Camera")
 local class = require("class")
 local GraphicsDomain = require("GraphicsDomain")
+local InputDomain = require("InputDomain")
 local PhysicsDomain = require("PhysicsDomain")
 
 local M = class.new()
@@ -17,6 +18,7 @@ function M:init()
     viewportHeight = viewportHeight,
   })
 
+  self.inputDomain = InputDomain.new(self, {})
   self.physicsDomain = PhysicsDomain.new(self, {})
   self.graphicsDomain = GraphicsDomain.new(self, {})
 
@@ -35,6 +37,7 @@ function M:update(dt)
 end
 
 function M:fixedUpdate(dt)
+  self.inputDomain:fixedUpdate(dt)
   self.physicsDomain:fixedUpdate(dt)
 end
 

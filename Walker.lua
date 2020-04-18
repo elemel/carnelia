@@ -11,6 +11,7 @@ function M:init(game, config)
   world = self.game.physicsDomain.world
 
   self.trunkBody = love.physics.newBody(world, x, y, "dynamic")
+  self.trunkBody:setFixedRotation(true)
   local trunkShape = love.physics.newCircleShape(config.trunkRadius or 0.5)
 
   self.trunkFixture = love.physics.newFixture(
@@ -24,14 +25,16 @@ function M:init(game, config)
   self.wheelFixture = love.physics.newFixture(
     self.wheelBody, wheelShape, config.wheelDensity or 1)
 
+  self.wheelFixture:setFriction(config.wheelFriction or 2)
+
   self.wheelJoint = love.physics.newWheelJoint(
-    self.trunkBody, self.wheelBody, x, y, 0, 1)
+    self.trunkBody, self.wheelBody, x, y + wheelDistance, 0, 1)
 
   self.wheelJoint:setSpringFrequency(config.springFrequency or 5)
   self.wheelJoint:setSpringDampingRatio(config.springDampingRatio or 1)
 
   self.wheelJoint:setMotorEnabled(true)
-  self.wheelJoint:setMaxMotorTorque(config.maxMotorTorque or 1)
+  self.wheelJoint:setMaxMotorTorque(config.maxMotorTorque or 20)
 end
 
 function M:destroy()
