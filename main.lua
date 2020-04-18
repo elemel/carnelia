@@ -10,6 +10,7 @@ function love.load()
   })
 
   love.physics.setMeter(1)
+  love.graphics.setDefaultFilter("linear", "nearest")
   game = Game.new()
   Plantfarmer.new(game, {y = -3})
 end

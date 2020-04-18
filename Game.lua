@@ -1,5 +1,6 @@
 local Camera = require("Camera")
 local class = require("class")
+local GraphicsDomain = require("GraphicsDomain")
 local PhysicsDomain = require("PhysicsDomain")
 
 local M = class.new()
@@ -17,6 +18,7 @@ function M:init()
   })
 
   self.physicsDomain = PhysicsDomain.new(self, {})
+  self.graphicsDomain = GraphicsDomain.new(self, {})
 
   local groundBody = love.physics.newBody(self.physicsDomain.world, 0, 0, "static")
   local groundShape = love.physics.newRectangleShape(10, 1)
@@ -38,6 +40,7 @@ end
 
 function M:draw()
   self.camera:applyTransform()
+  self.graphicsDomain:draw()
   self.physicsDomain:debugDraw()
 end
 
