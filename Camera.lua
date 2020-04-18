@@ -1,8 +1,8 @@
 local class = require("class")
 
-local Camera = class.new()
+local M = class.new()
 
-function Camera:init(config)
+function M:init(config)
   self.x = config.x or 0
   self.y = config.y or 0
 
@@ -18,7 +18,7 @@ function Camera:init(config)
   self:updateTransform()
 end
 
-function Camera:updateTransform()
+function M:updateTransform()
   self.transform:reset()
 
   self.transform:translate(
@@ -29,9 +29,9 @@ function Camera:updateTransform()
   self.transform:translate(-self.x, -self.y)
 end
 
-function Camera:applyTransform()
+function M:applyTransform()
   love.graphics.applyTransform(self.transform)
   love.graphics.setLineWidth(1 / (self.scale * self.viewportHeight))
 end
 
-return Camera
+return M

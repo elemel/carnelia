@@ -2,9 +2,9 @@ local Camera = require("Camera")
 local class = require("class")
 local PhysicsDomain = require("PhysicsDomain")
 
-local Game = class.new()
+local M = class.new()
 
-function Game:init()
+function M:init()
   self.fixedDt = 1 / 60
   self.accumulatedDt = 0
 
@@ -23,7 +23,7 @@ function Game:init()
   local groundFixture = love.physics.newFixture(groundBody, groundShape)
 end
 
-function Game:update(dt)
+function M:update(dt)
   self.accumulatedDt = self.accumulatedDt + dt
 
   while self.accumulatedDt >= self.fixedDt do
@@ -32,19 +32,19 @@ function Game:update(dt)
   end
 end
 
-function Game:fixedUpdate(dt)
+function M:fixedUpdate(dt)
   self.physicsDomain:fixedUpdate(dt)
 end
 
-function Game:draw()
+function M:draw()
   self.camera:applyTransform()
   self.physicsDomain:debugDraw()
 end
 
-function Game:resize(width, height)
+function M:resize(width, height)
   self.camera.viewportWidth = width
   self.camera.viewportHeight = height
   self.camera:updateTransform()
 end
 
-return Game
+return M
