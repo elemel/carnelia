@@ -1,6 +1,7 @@
 local Game = require("Game")
 
 function love.load()
+  love.window.setTitle("Plantfarmer")
   game = Game.new()
 end
 
