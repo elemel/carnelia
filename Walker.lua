@@ -8,7 +8,7 @@ function M:init(game, config)
   local x = config.x or 0
   local y = config.y or 0
 
-  world = self.game.physicsDomain.world
+  local world = self.game.physicsDomain.world
 
   self.trunkBody = love.physics.newBody(world, x, y, "dynamic")
   self.trunkBody:setFixedRotation(true)
