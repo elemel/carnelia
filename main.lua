@@ -9,6 +9,8 @@ function love.load()
     resizable = true,
   })
 
+  love.filesystem.setIdentity("plant-farmer")
+
   love.physics.setMeter(1)
   love.graphics.setDefaultFilter("linear", "nearest")
   game = Game.new()
@@ -25,4 +27,15 @@ end
 
 function love.resize(width, height)
   game:resize(width, height)
+end
+
+function love.keypressed(key, scancode, isrepeat)
+  if key == "backspace" then
+    local timestamp = os.date('%Y-%m-%d-%H-%M-%S')
+    local filename = "screenshot-" .. timestamp .. ".png"
+    love.graphics.captureScreenshot(filename)
+
+    local directory = love.filesystem.getSaveDirectory()
+    print("Captured screenshot: " .. directory .. "/" .. filename)
+  end
 end
