@@ -12,7 +12,7 @@ function love.load()
   love.physics.setMeter(1)
   love.graphics.setDefaultFilter("linear", "nearest")
   game = Game.new()
-  PlantFarmer.new(game, {y = -3})
+  PlantFarmer.new(game, {y = -2})
 end
 
 function love.update(dt)

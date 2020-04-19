@@ -24,8 +24,10 @@ function M:init()
   self.animationDomain = AnimationDomain.new(self, {})
   self.graphicsDomain = GraphicsDomain.new(self, {})
 
-  local groundBody = love.physics.newBody(self.physicsDomain.world, 0, 0, "static")
-  local groundShape = love.physics.newRectangleShape(0, 0, 10, 0.5, 0 * math.pi)
+  local groundBody = love.physics.newBody(self.physicsDomain.world, 0, 1, "static")
+  groundBody:setAngle(-0.0625 * math.pi)
+
+  local groundShape = love.physics.newRectangleShape(10, 0.5)
   local groundFixture = love.physics.newFixture(groundBody, groundShape)
 end
 
