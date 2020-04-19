@@ -22,7 +22,7 @@ function M:init(parent, config)
 
   self.motorJoint = love.physics.newMotorJoint(parentBody, self.body)
   self.motorJoint:setLinearOffset(0, -1.5)
-  self.motorJoint:setMaxForce(20)
+  self.motorJoint:setMaxForce(10)
 
   local ropeX1, ropeY1 = parentBody:getWorldPoint(0, -0.75)
   local ropeX2, ropeY2 = parentBody:getWorldPoint(0, -1.5)
