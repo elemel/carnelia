@@ -1,3 +1,4 @@
+local AnimationDomain = require("AnimationDomain")
 local Camera = require("Camera")
 local class = require("class")
 local GraphicsDomain = require("GraphicsDomain")
@@ -20,6 +21,7 @@ function M:init()
 
   self.inputDomain = InputDomain.new(self, {})
   self.physicsDomain = PhysicsDomain.new(self, {})
+  self.animationDomain = AnimationDomain.new(self, {})
   self.graphicsDomain = GraphicsDomain.new(self, {})
 
   local groundBody = love.physics.newBody(self.physicsDomain.world, 0, 0, "static")
@@ -34,6 +36,8 @@ function M:update(dt)
     self.accumulatedDt = self.accumulatedDt - self.fixedDt
     self:fixedUpdate(self.fixedDt)
   end
+
+  self.animationDomain:update(dt)
 end
 
 function M:fixedUpdate(dt)

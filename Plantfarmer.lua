@@ -12,15 +12,17 @@ function M:init(game, config)
     y = config.y,
   })
 
-  local image = love.graphics.newImage("resources/images/skins/plant-farmer/trunk.png")
+  self.image = love.graphics.newImage("resources/images/skins/plant-farmer/trunk.png")
   local scale = 0.02
-  local width, height = image:getDimensions()
-  self.sprite = Sprite.new(self.game, image, love.math.newTransform(0, 0, 0, scale, scale, 0.5 * width, 0.5 * height))
+  local width, height = self.image:getDimensions()
+  self.sprite = Sprite.new(self.game, self.image, love.math.newTransform(0, 0, 0, scale, scale, 0.5 * width, 0.5 * height))
 
   self.game.inputDomain.handlers[self] = self.fixedUpdateInput
+  self.game.animationDomain.handlers[self] = self.updateAnimation
 end
 
 function M:destroy()
+  self.game.animationDomain.handlers[self] = nil
   self.game.inputDomain.handlers[self] = nil
   self.sprite:destroy()
   self.walker:destroy()
@@ -34,6 +36,13 @@ function M:fixedUpdateInput(dt)
 
   self.walker.wheelJoint:setMotorEnabled(inputX ~= 0)
   self.walker.wheelJoint:setMotorSpeed(5 * inputX)
+end
+
+function M:updateAnimation(dt)
+  local x, y = self.walker.trunkBody:getPosition()
+  local scale = 0.02
+  local width, height = self.image:getDimensions()
+  self.sprite.transform:setTransformation(x, y, 0, scale, scale, 0.5 * width, 0.5 * height)
 end
 
 return M
