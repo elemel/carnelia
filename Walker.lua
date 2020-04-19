@@ -17,10 +17,10 @@ function M:init(game, config)
   self.trunkFixture = love.physics.newFixture(
     self.trunkBody, trunkShape, config.trunkDensity or 1)
 
-  local wheelDistance = config.wheelDistance or 0.75
+  local wheelDistance = config.wheelDistance or 0.8
 
   self.wheelBody = love.physics.newBody(world, x, y + wheelDistance, "dynamic")
-  local wheelSize = 2 * (config.wheelRadius or 0.375)
+  local wheelSize = 2 * (config.wheelRadius or 0.3)
   local wheelShape = love.physics.newRectangleShape(wheelSize, wheelSize)
 
   self.wheelFixture = love.physics.newFixture(
@@ -35,7 +35,7 @@ function M:init(game, config)
   self.wheelJoint:setSpringDampingRatio(config.springDampingRatio or 1)
 
   self.wheelJoint:setMotorEnabled(true)
-  self.wheelJoint:setMaxMotorTorque(config.maxMotorTorque or 50)
+  self.wheelJoint:setMaxMotorTorque(config.maxMotorTorque or 30)
 end
 
 function M:destroy()
