@@ -12,14 +12,15 @@ function M:init(game, config)
 
   self.trunkBody = love.physics.newBody(world, x, y, "dynamic")
   self.trunkBody:setFixedRotation(true)
+
+  local wheelDistance = config.wheelDistance or 0.8
+  self.wheelBody = love.physics.newBody(world, x, y + wheelDistance, "dynamic")
+
   local trunkShape = love.physics.newCircleShape(config.trunkRadius or 0.5)
 
   self.trunkFixture = love.physics.newFixture(
     self.trunkBody, trunkShape, config.trunkDensity or 1)
 
-  local wheelDistance = config.wheelDistance or 0.8
-
-  self.wheelBody = love.physics.newBody(world, x, y + wheelDistance, "dynamic")
   local wheelSize = 2 * (config.wheelRadius or 0.3)
   local wheelShape = love.physics.newRectangleShape(wheelSize, wheelSize)
 
@@ -39,8 +40,20 @@ function M:init(game, config)
 end
 
 function M:destroy()
+  self.wheelJoint:destroy()
+  self.wheelJoint = nil
+
+  self.wheelFixture:destroy()
+  self.wheelFixture = nil
+
+  self.trunkFixture:destroy()
+  self.trunkFixture = nil
+
   self.wheelBody:destroy()
+  self.wheelBody = nil
+
   self.trunkBody:destroy()
+  self.trunkBody = nil
 end
 
 return M
