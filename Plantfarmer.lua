@@ -17,13 +17,14 @@ function M:init(game, config)
   local width, height = self.image:getDimensions()
   self.sprite = Sprite.new(self.game, self.image, love.math.newTransform(0, 0, 0, scale, scale, 0.5 * width, 0.5 * height))
 
-  self.game.inputDomain.handlers[self] = self.fixedUpdateInput
-  self.game.animationDomain.handlers[self] = self.updateAnimation
+  self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
+  self.game.animationDomain.updateHandlers[self] = self.updateAnimation
 end
 
 function M:destroy()
-  self.game.animationDomain.handlers[self] = nil
-  self.game.inputDomain.handlers[self] = nil
+  self.game.animationDomain.updateHandlers[self] = nil
+  self.game.inputDomain.fixedUpdateHandlers[self] = nil
+
   self.sprite:destroy()
   self.walker:destroy()
 end
