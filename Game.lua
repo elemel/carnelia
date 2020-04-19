@@ -23,7 +23,7 @@ function M:init()
   self.graphicsDomain = GraphicsDomain.new(self, {})
 
   local groundBody = love.physics.newBody(self.physicsDomain.world, 0, 0, "static")
-  local groundShape = love.physics.newRectangleShape(10, 1)
+  local groundShape = love.physics.newRectangleShape(0, 0, 10, 0.5, 0 * math.pi)
   local groundFixture = love.physics.newFixture(groundBody, groundShape)
 end
 

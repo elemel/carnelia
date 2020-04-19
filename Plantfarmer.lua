@@ -32,7 +32,8 @@ function M:fixedUpdateInput(dt)
 
   local inputX = (right and 1 or 0) - (left and 1 or 0)
 
-  self.walker.wheelJoint:setMotorSpeed(10 * inputX)
+  self.walker.wheelJoint:setMotorEnabled(inputX ~= 0)
+  self.walker.wheelJoint:setMotorSpeed(5 * inputX)
 end
 
 return M
