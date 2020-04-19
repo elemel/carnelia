@@ -29,6 +29,8 @@ function M:init()
 
   local groundShape = love.physics.newRectangleShape(10, 0.5)
   local groundFixture = love.physics.newFixture(groundBody, groundShape)
+
+  self.debugDrawHandlers = {}
 end
 
 function M:update(dt)
@@ -51,6 +53,10 @@ function M:draw()
   self.camera:applyTransform()
   self.graphicsDomain:draw()
   self.physicsDomain:debugDraw()
+
+  for key, handler in pairs(self.debugDrawHandlers) do
+    handler(key)
+  end
 end
 
 function M:resize(width, height)

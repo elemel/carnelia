@@ -16,7 +16,7 @@ function M:init(parent, config)
 
   self.body = love.physics.newBody(world, x, y, "dynamic")
 
-  local shape = love.physics.newCircleShape(0.375)
+  local shape = love.physics.newCircleShape(0.3)
   self.fixture = love.physics.newFixture(self.body, shape, 0.1)
   self.fixture:setSensor(true)
 
@@ -39,11 +39,16 @@ function M:init(parent, config)
 
   self.sprite = Sprite.new(self.game, self.image, transform, 0.1)
 
+  self.curve = love.math.newBezierCurve(
+    ropeX1, ropeY1, ropeX1, ropeY1, ropeX2, ropeY2, ropeX2, ropeY2)
+
   self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
   self.game.animationDomain.updateHandlers[self] = self.updateAnimation
+  self.game.debugDrawHandlers[self] = self.debugDraw
 end
 
 function M:destroy()
+  self.game.debugDrawHandlers[self] = nil
   self.game.animationDomain.updateHandlers[self] = nil
   self.game.inputDomain.fixedUpdateHandlers[self] = nil
 
@@ -96,6 +101,21 @@ function M:updateAnimation(dt)
   local scale = 0.02
   local width, height = self.image:getDimensions()
   self.sprite.transform:setTransformation(x, y, 0, scale, scale, 0.5 * width, 0.5 * height)
+end
+
+
+function M:debugDraw()
+  love.graphics.setColor(0, 1, 0, 1)
+  local bodyA, bodyB = self.ropeJoint:getBodies()
+  local x1, y1, x2, y2 = self.ropeJoint:getAnchors()
+
+  self.curve:setControlPoint(1, x1 - 0.5, y1 + 0.25)
+  self.curve:setControlPoint(2, x1 - 0.5, y1 + 0.25 - 1.5)
+  self.curve:setControlPoint(3, x2 - 0.3 - 1.5, y2)
+  self.curve:setControlPoint(4, x2 - 0.3, y2)
+
+  love.graphics.line(self.curve:render())
+  love.graphics.setColor(1, 1, 1, 1)
 end
 
 return M
