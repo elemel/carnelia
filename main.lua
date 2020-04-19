@@ -13,6 +13,10 @@ function love.load()
 
   love.physics.setMeter(1)
   love.graphics.setDefaultFilter("linear", "nearest")
+
+  -- Work-around for freeze on mouse press in LÖVE 11.3 (macOS Mojave)
+  love.event.pump()
+
   love.mouse.setRelativeMode(true)
   game = Game.new()
   PlantFarmer.new(game, {y = -2})
