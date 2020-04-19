@@ -1,4 +1,5 @@
 local class = require("class")
+local Plant = require("Plant")
 local Sprite = require("Sprite")
 local Walker = require("Walker")
 
@@ -19,9 +20,13 @@ function M:init(game, config)
 
   self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
   self.game.animationDomain.updateHandlers[self] = self.updateAnimation
+
+  self.plant = Plant.new(self, {})
 end
 
 function M:destroy()
+  self.plant:destroy()
+
   self.game.animationDomain.updateHandlers[self] = nil
   self.game.inputDomain.fixedUpdateHandlers[self] = nil
 
