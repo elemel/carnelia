@@ -94,13 +94,18 @@ function M:fixedUpdateInput(dt)
   end
 
   self.motorJoint:setLinearOffset(offsetX, offsetY)
+
+  if offsetX * self.parent.directionX < 0 then
+    self.parent.directionX = -self.parent.directionX
+  end
 end
 
 function M:updateAnimation(dt)
   local x, y = self.body:getPosition()
   local scale = 0.02
+  local directionX = self.parent.directionX
   local width, height = self.image:getDimensions()
-  self.sprite.transform:setTransformation(x, y, 0, scale, scale, 0.5 * width, 0.5 * height)
+  self.sprite.transform:setTransformation(x, y, 0, directionX * scale, scale, 0.5 * width, 0.5 * height)
 end
 
 
@@ -109,10 +114,12 @@ function M:debugDraw()
   local bodyA, bodyB = self.ropeJoint:getBodies()
   local x1, y1, x2, y2 = self.ropeJoint:getAnchors()
 
-  self.curve:setControlPoint(1, x1 - 0.5, y1 + 0.25)
-  self.curve:setControlPoint(2, x1 - 0.5, y1 + 0.25 - 1.5)
-  self.curve:setControlPoint(3, x2 - 0.3 - 1.5, y2)
-  self.curve:setControlPoint(4, x2 - 0.3, y2)
+  local directionX = self.parent.directionX
+
+  self.curve:setControlPoint(1, x1 - directionX * 0.5, y1 + 0.25)
+  self.curve:setControlPoint(2, x1 - directionX * 0.5, y1 + 0.25 - 1.5)
+  self.curve:setControlPoint(3, x2 - directionX * (0.3 + 1.5), y2)
+  self.curve:setControlPoint(4, x2 - directionX * 0.3, y2)
 
   love.graphics.line(self.curve:render())
   love.graphics.setColor(1, 1, 1, 1)

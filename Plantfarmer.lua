@@ -18,6 +18,8 @@ function M:init(game, config)
   local width, height = self.image:getDimensions()
   self.sprite = Sprite.new(self.game, self.image, love.math.newTransform(0, 0, 0, scale, scale, 0.5 * width, 0.5 * height))
 
+  self.directionX = 1
+
   self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
   self.game.animationDomain.updateHandlers[self] = self.updateAnimation
 
@@ -41,14 +43,20 @@ function M:fixedUpdateInput(dt)
   local inputX = (right and 1 or 0) - (left and 1 or 0)
 
   self.walker.wheelJoint:setMotorEnabled(inputX ~= 0)
-  self.walker.wheelJoint:setMotorSpeed(8 * inputX)
+  local speed = 8
+
+  if inputX * self.directionX < 0 then
+    speed = 5
+  end
+
+  self.walker.wheelJoint:setMotorSpeed(speed * inputX)
 end
 
 function M:updateAnimation(dt)
   local x, y = self.walker.trunkBody:getPosition()
   local scale = 0.02
   local width, height = self.image:getDimensions()
-  self.sprite.transform:setTransformation(x, y, 0, scale, scale, 0.5 * width, 0.5 * height)
+  self.sprite.transform:setTransformation(x, y, 0, self.directionX * scale, scale, 0.5 * width, 0.5 * height)
 end
 
 return M
