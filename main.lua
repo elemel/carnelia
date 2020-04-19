@@ -31,7 +31,7 @@ function love.resize(width, height)
 end
 
 function love.keypressed(key, scancode, isrepeat)
-  if key == "backspace" then
+  if key == "1" then
     local timestamp = os.date('%Y-%m-%d-%H-%M-%S')
     local filename = "screenshot-" .. timestamp .. ".png"
     love.graphics.captureScreenshot(filename)
