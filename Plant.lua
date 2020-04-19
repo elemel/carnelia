@@ -14,9 +14,15 @@ function M:init(parent, config)
   self.joint = love.physics.newMotorJoint(parentBody, self.body)
   self.joint:setLinearOffset(0, -1.5)
   self.joint:setMaxForce(20)
+
+  self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
+  self.game.animationDomain.updateHandlers[self] = self.updateAnimation
 end
 
 function M:destroy()
+  self.game.animationDomain.updateHandlers[self] = nil
+  self.game.inputDomain.fixedUpdateHandlers[self] = nil
+
   self.joint:destroy()
   self.joint = nil
 
@@ -25,6 +31,12 @@ function M:destroy()
 
   self.body:destroy()
   self.body = nil
+end
+
+function M:fixedUpdateInput(dt)
+end
+
+function M:updateAnimation(dt)
 end
 
 return M
