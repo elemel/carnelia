@@ -20,12 +20,15 @@ function M:init(parent, config)
   self.fixture = love.physics.newFixture(self.body, shape, 0.1)
   self.fixture:setSensor(true)
 
-  self.joint = love.physics.newMotorJoint(parentBody, self.body)
-  self.joint:setLinearOffset(0, -1.5)
-  self.joint:setMaxForce(20)
+  self.motorJoint = love.physics.newMotorJoint(parentBody, self.body)
+  self.motorJoint:setLinearOffset(0, -1.5)
+  self.motorJoint:setMaxForce(20)
 
-  self.anchorX = 0
-  self.anchorY = -0.75
+  local ropeX1, ropeY1 = parentBody:getWorldPoint(0, -0.75)
+  local ropeX2, ropeY2 = parentBody:getWorldPoint(0, -1.5)
+
+  self.ropeJoint = love.physics.newRopeJoint(
+    parentBody, self.body, ropeX1, ropeY1, ropeX2, ropeY2, 3)
 
   self.image = love.graphics.newImage("resources/images/plant.png")
   local scale = 0.02
@@ -35,8 +38,6 @@ function M:init(parent, config)
     x, y, 0, scale, scale, 0.5 * width, 0.5 * height)
 
   self.sprite = Sprite.new(self.game, self.image, transform, 0.1)
-
-  self.length = 3
 
   self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
   self.game.animationDomain.updateHandlers[self] = self.updateAnimation
@@ -48,8 +49,11 @@ function M:destroy()
 
   self.sprite:destroy()
 
-  self.joint:destroy()
-  self.joint = nil
+  self.ropeJoint:destroy()
+  self.ropeJoint = nil
+
+  self.motorJoint:destroy()
+  self.motorJoint = nil
 
   self.fixture:destroy()
   self.fixture = nil
@@ -59,27 +63,32 @@ function M:destroy()
 end
 
 function M:fixedUpdateInput(dt)
-  local offsetX, offsetY = self.joint:getLinearOffset()
+  local offsetX, offsetY = self.motorJoint:getLinearOffset()
   local sensitivity = 0.01
   local dx, dy = self.game.inputDomain:readMouseMovement()
 
   offsetX = offsetX + sensitivity * dx
   offsetY = offsetY + sensitivity * dy
 
-  local distance = utils.distance(offsetX, offsetY, self.anchorX, self.anchorY)
+  local bodyA, bodyB = self.ropeJoint:getBodies()
+  local x1, y1, x2, y2 = self.ropeJoint:getAnchors()
+  local localX1, localY1 = bodyA:getLocalPoint(x1, y1)
 
-  if distance > self.length then
-    offsetX = offsetX - self.anchorX
-    offsetY = offsetY - self.anchorY
+  local distance = utils.distance(localX1, localY1, offsetX, offsetY)
+  local maxLength = self.ropeJoint:getMaxLength()
 
-    offsetX = offsetX * self.length / distance
-    offsetY = offsetY * self.length / distance
+  if distance > maxLength then
+    offsetX = offsetX - localX1
+    offsetY = offsetY - localY1
 
-    offsetX = offsetX + self.anchorX
-    offsetY = offsetY + self.anchorY
+    offsetX = offsetX * maxLength / distance
+    offsetY = offsetY * maxLength / distance
+
+    offsetX = offsetX + localX1
+    offsetY = offsetY + localY1
   end
 
-  self.joint:setLinearOffset(offsetX, offsetY)
+  self.motorJoint:setLinearOffset(offsetX, offsetY)
 end
 
 function M:updateAnimation(dt)
