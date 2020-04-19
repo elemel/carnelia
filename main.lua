@@ -38,6 +38,15 @@ function love.keypressed(key, scancode, isrepeat)
 
     local directory = love.filesystem.getSaveDirectory()
     print("Captured screenshot: " .. directory .. "/" .. filename)
+  elseif key == "2" then
+    if love.window.getFullscreen() then
+      love.window.setFullscreen(false)
+
+      -- Work-around for missing resize event in LÖVE 11.3 (macOS Mojave)
+      love.resize(love.graphics.getDimensions())
+    else
+      love.window.setFullscreen(true)
+    end
   end
 end
 
