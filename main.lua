@@ -13,6 +13,7 @@ function love.load()
 
   love.physics.setMeter(1)
   love.graphics.setDefaultFilter("linear", "nearest")
+  love.mouse.setRelativeMode(true)
   game = Game.new()
   PlantFarmer.new(game, {y = -2})
 end
@@ -38,4 +39,8 @@ function love.keypressed(key, scancode, isrepeat)
     local directory = love.filesystem.getSaveDirectory()
     print("Captured screenshot: " .. directory .. "/" .. filename)
   end
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+  game:mousemoved(x, y, dx, dy, istouch)
 end

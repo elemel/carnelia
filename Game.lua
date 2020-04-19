@@ -59,4 +59,8 @@ function M:resize(width, height)
   self.camera:updateTransform()
 end
 
+function M:mousemoved(x, y, dx, dy, istouch)
+  self.inputDomain:mousemoved(x, y, dx, dy, istouch)
+end
+
 return M
