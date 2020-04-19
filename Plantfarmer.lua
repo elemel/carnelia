@@ -12,7 +12,7 @@ function M:init(game, config)
     y = config.y,
   })
 
-  local image = love.graphics.newImage("resources/images/skins/plantfarmer/trunk.png")
+  local image = love.graphics.newImage("resources/images/skins/plant-farmer/trunk.png")
   local scale = 0.02
   local width, height = image:getDimensions()
   self.sprite = Sprite.new(self.game, image, love.math.newTransform(0, 0, 0, scale, scale, 0.5 * width, 0.5 * height))

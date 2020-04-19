@@ -1,8 +1,8 @@
 local Game = require("Game")
-local Plantfarmer = require("Plantfarmer")
+local PlantFarmer = require("PlantFarmer")
 
 function love.load()
-  love.window.setTitle("Plantfarmer")
+  love.window.setTitle("Plant Farmer")
 
   love.window.setMode(800, 600, {
     fullscreentype = "desktop",
@@ -12,7 +12,7 @@ function love.load()
   love.physics.setMeter(1)
   love.graphics.setDefaultFilter("linear", "nearest")
   game = Game.new()
-  Plantfarmer.new(game, {y = -3})
+  PlantFarmer.new(game, {y = -3})
 end
 
 function love.update(dt)
