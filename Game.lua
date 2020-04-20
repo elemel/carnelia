@@ -11,6 +11,7 @@ local M = class.new()
 function M:init()
   self.fixedDt = 1 / 60
   self.accumulatedDt = 0
+  self.fixedTime = 0
 
   local viewportWidth, viewportHeight = love.graphics.getDimensions()
 
@@ -26,11 +27,10 @@ function M:init()
   self.animationDomain = AnimationDomain.new(self, {})
   self.graphicsDomain = GraphicsDomain.new(self, {})
 
-  local groundBody = love.physics.newBody(self.physicsDomain.world, 0, 1, "static")
-  groundBody:setAngle(-0.1 * math.pi)
+  self.groundBody = love.physics.newBody(self.physicsDomain.world, 0, 1, "kinematic")
 
   local groundShape = love.physics.newRectangleShape(10, 0.5)
-  local groundFixture = love.physics.newFixture(groundBody, groundShape)
+  local groundFixture = love.physics.newFixture(self.groundBody, groundShape)
 
   self.debugDrawHandlers = {}
 end
@@ -47,7 +47,13 @@ function M:update(dt)
 end
 
 function M:fixedUpdate(dt)
+  self.fixedTime = self.fixedTime + dt
   self.inputDomain:fixedUpdate(dt)
+
+  local targetAngle = 0.125 * math.pi * math.sin(self.fixedTime)
+  local currentAngle = self.groundBody:getAngle()
+  self.groundBody:setAngularVelocity((targetAngle - currentAngle) / dt)
+
   self.physicsDomain:fixedUpdate(dt)
 end
 
