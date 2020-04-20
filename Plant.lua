@@ -7,28 +7,28 @@ local M = class.new()
 function M:init(parent, config)
   self.parent = assert(parent)
   self.game = assert(parent.game)
-  local world = self.game.physicsDomain.world
-  local parentBody = self.parent.walker.trunkBody
-  local parentX, parentY = parentBody:getPosition()
+
+  local parentX, parentY = self.parent.body:getPosition()
 
   local x = parentX
   local y = parentY - 1.5
 
-  self.body = love.physics.newBody(world, x, y, "dynamic")
+  self.body = love.physics.newBody(
+    self.game.physicsDomain.world, x, y, "dynamic")
 
   local shape = love.physics.newCircleShape(0.3)
   self.fixture = love.physics.newFixture(self.body, shape, 0.1)
   self.fixture:setSensor(true)
 
-  self.motorJoint = love.physics.newMotorJoint(parentBody, self.body)
+  self.motorJoint = love.physics.newMotorJoint(self.parent.body, self.body)
   self.motorJoint:setLinearOffset(0, -1.5)
   self.motorJoint:setMaxForce(10)
 
-  local ropeX1, ropeY1 = parentBody:getWorldPoint(0, -0.75)
-  local ropeX2, ropeY2 = parentBody:getWorldPoint(0, -1.5)
+  local ropeX1, ropeY1 = self.parent.body:getWorldPoint(0, -0.75)
+  local ropeX2, ropeY2 = self.parent.body:getWorldPoint(0, -1.5)
 
   self.ropeJoint = love.physics.newRopeJoint(
-    parentBody, self.body, ropeX1, ropeY1, ropeX2, ropeY2, 3)
+    self.parent.body, self.body, ropeX1, ropeY1, ropeX2, ropeY2, 3)
 
   self.image = love.graphics.newImage("resources/images/plant.png")
   local scale = 0.02

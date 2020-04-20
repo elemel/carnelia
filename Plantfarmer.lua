@@ -8,10 +8,16 @@ local M = class.new()
 function M:init(game, config)
   self.game = assert(game)
 
-  self.walker = Walker.new(self, {
-    x = config.x,
-    y = config.y,
-  })
+  local x = config.x or 0
+  local y = config.y or 0
+
+  self.body = love.physics.newBody(self.game.physicsDomain.world, x, y, "dynamic")
+  self.body:setFixedRotation(true)
+
+  local shape = love.physics.newCircleShape(0.5)
+  self.fixture = love.physics.newFixture(self.body, shape)
+
+  self.walker = Walker.new(self, {})
 
   self.image = love.graphics.newImage("resources/images/skins/plant-farmer/trunk.png")
   local scale = 0.02
@@ -34,6 +40,9 @@ function M:destroy()
 
   self.sprite:destroy()
   self.walker:destroy()
+
+  self.fixture:destroy()
+  self.body:destroy()
 end
 
 function M:fixedUpdateInput(dt)
@@ -42,18 +51,18 @@ function M:fixedUpdateInput(dt)
 
   local inputX = (right and 1 or 0) - (left and 1 or 0)
 
-  self.walker.wheelJoint:setMotorEnabled(inputX ~= 0)
+  self.walker.joint:setMotorEnabled(inputX ~= 0)
   local speed = 8
 
   if inputX * self.directionX < 0 then
     speed = 5
   end
 
-  self.walker.wheelJoint:setMotorSpeed(speed * inputX)
+  self.walker.joint:setMotorSpeed(speed * inputX)
 end
 
 function M:updateAnimation(dt)
-  local x, y = self.walker.trunkBody:getPosition()
+  local x, y = self.body:getPosition()
   local scale = 0.02
   local width, height = self.image:getDimensions()
   self.sprite.transform:setTransformation(x, y, 0, self.directionX * scale, scale, 0.5 * width, 0.5 * height)
