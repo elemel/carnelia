@@ -25,6 +25,8 @@ function M:init(game, config)
   self.sprite = Sprite.new(self.game, self.image, love.math.newTransform(0, 0, 0, scale, scale, 0.5 * width, 0.5 * height))
 
   self.directionX = 1
+  self.inputY = 0
+  self.jumpInput = false
 
   self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
   self.game.animationDomain.updateHandlers[self] = self.updateAnimation
@@ -49,16 +51,44 @@ function M:fixedUpdateInput(dt)
   local left = love.keyboard.isDown("a")
   local right = love.keyboard.isDown("d")
 
+  local up = love.keyboard.isDown("w")
+  local down = love.keyboard.isDown("s")
+
   local inputX = (right and 1 or 0) - (left and 1 or 0)
+  local inputY = (down and 1 or 0) - (up and 1 or 0)
 
   self.walker.joint:setMotorEnabled(inputX ~= 0)
   local speed = 8
 
-  if inputX * self.directionX < 0 then
+  if inputY == 1 or inputX * self.directionX < 0 then
     speed = 5
   end
 
+  if inputY == -1 and inputX * self.directionX > 0 then
+    speed = 13
+  end
+
   self.walker.joint:setMotorSpeed(speed * inputX)
+
+  if inputY ~= self.inputY then
+    if inputY == 1 and self.inputY ~= 1 then
+      self.walker.distance = 0.5
+      self.walker:updateJoint()
+    elseif inputY ~= 1 and self.inputY == 1 then
+      self.walker.distance = 0.8
+      self.walker:updateJoint()
+    end
+
+    self.inputY = inputY
+  end
+
+  local jumpInput = love.keyboard.isDown("space")
+
+  if jumpInput and not self.jumpInput then
+    self.body:applyLinearImpulse(0, -17)
+  end
+
+  self.jumpInput = jumpInput
 end
 
 function M:updateAnimation(dt)
