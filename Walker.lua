@@ -2,8 +2,9 @@ local class = require("class")
 
 local M = class.new()
 
-function M:init(game, config)
-  self.game = assert(game)
+function M:init(parent, config)
+  self.parent = assert(parent)
+  self.game = assert(self.parent.game)
 
   local x = config.x or 0
   local y = config.y or 0

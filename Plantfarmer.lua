@@ -8,7 +8,7 @@ local M = class.new()
 function M:init(game, config)
   self.game = assert(game)
 
-  self.walker = Walker.new(self.game, {
+  self.walker = Walker.new(self, {
     x = config.x,
     y = config.y,
   })
