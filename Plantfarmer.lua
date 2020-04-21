@@ -1,9 +1,15 @@
 local class = require("class")
+local GroundSensor = require("GroundSensor")
 local Plant = require("Plant")
 local Sprite = require("Sprite")
 local Walker = require("Walker")
 
 local M = class.new()
+
+local function setLinearVelocityY(body, velocityY)
+  local oldVelocityX, oldVelocityY = body:getLinearVelocity()
+  body:setLinearVelocity(oldVelocityX, velocityY)
+end
 
 function M:init(game, config)
   self.game = assert(game)
@@ -31,10 +37,12 @@ function M:init(game, config)
   self.game.inputDomain.fixedUpdateHandlers[self] = self.fixedUpdateInput
   self.game.animationDomain.updateHandlers[self] = self.updateAnimation
 
+  self.groundSensor = GroundSensor.new(self, {})
   self.plant = Plant.new(self, {})
 end
 
 function M:destroy()
+  self.groundSensor:destroy()
   self.plant:destroy()
 
   self.game.animationDomain.updateHandlers[self] = nil
@@ -84,8 +92,12 @@ function M:fixedUpdateInput(dt)
 
   local jumpInput = love.keyboard.isDown("space")
 
-  if jumpInput and not self.jumpInput then
-    self.body:applyLinearImpulse(0, -17)
+  if jumpInput and not self.jumpInput and self.groundSensor.fixture then
+    local velocityY = self.groundSensor.linearVelocityY - 13
+
+    setLinearVelocityY(self.body, velocityY)
+    setLinearVelocityY(self.walker.body, velocityY)
+    setLinearVelocityY(self.plant.body, velocityY)
   end
 
   self.jumpInput = jumpInput

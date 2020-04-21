@@ -1,6 +1,7 @@
 local AnimationDomain = require("AnimationDomain")
 local Camera = require("Camera")
 local class = require("class")
+local CollisionDomain = require("CollisionDomain")
 local ControlDomain = require("ControlDomain")
 local GraphicsDomain = require("GraphicsDomain")
 local InputDomain = require("InputDomain")
@@ -22,8 +23,9 @@ function M:init()
   })
 
   self.inputDomain = InputDomain.new(self, {})
-  self.ControlDomain = ControlDomain.new(self, {})
+  self.controlDomain = ControlDomain.new(self, {})
   self.physicsDomain = PhysicsDomain.new(self, {})
+  self.collisionDomain = CollisionDomain.new(self, {})
   self.animationDomain = AnimationDomain.new(self, {})
   self.graphicsDomain = GraphicsDomain.new(self, {})
 
@@ -54,7 +56,9 @@ function M:fixedUpdate(dt)
   local currentAngle = self.groundBody:getAngle()
   self.groundBody:setAngularVelocity((targetAngle - currentAngle) / dt)
 
+  self.controlDomain:fixedUpdate(dt)
   self.physicsDomain:fixedUpdate(dt)
+  self.collisionDomain:fixedUpdate(dt)
 end
 
 function M:draw()
