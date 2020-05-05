@@ -3,6 +3,7 @@ local class = require("class")
 local M = class.new()
 
 function M:init(game, config)
+  self.bones = {}
   self.updateHandlers = {}
 end
 

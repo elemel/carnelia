@@ -1,37 +1,39 @@
-local Game = require("Game")
-local PlantFarmer = require("PlantFarmer")
+local heart = require("heart")
 
 function love.load()
-  love.window.setTitle("Plant Farmer")
+  love.window.setTitle("Plotfarmer")
 
   love.window.setMode(800, 600, {
     fullscreentype = "desktop",
     resizable = true,
+    -- highdpi = true,
   })
 
-  love.filesystem.setIdentity("plant-farmer")
-
-  love.physics.setMeter(1)
   love.graphics.setDefaultFilter("linear", "nearest")
+  love.physics.setMeter(1)
 
-  -- Work-around for freeze on mouse press in LÖVE 11.3 (macOS Mojave)
-  love.event.pump()
+  local assetLoaders = {
+    image = heart.graphics.ImageLoader.new(),
+  }
 
-  love.mouse.setRelativeMode(true)
-  game = Game.new()
-  PlantFarmer.new(game, {y = -2})
-end
-
-function love.update(dt)
-  game:update(dt)
+  local config = require("assets.game")
+  game = heart.Game.new(assetLoaders, config)
 end
 
 function love.draw()
-  game:draw()
+  game:handleEvent("draw")
 end
 
 function love.resize(width, height)
-  game:resize(width, height)
+  game:handleEvent("resize", width, height)
+end
+
+function love.update(dt)
+  game:handleEvent("update", dt)
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+  game:handleEvent("mouseMoved", x, y, dx, dy, istouch)
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -52,8 +54,4 @@ function love.keypressed(key, scancode, isrepeat)
       love.window.setFullscreen(true)
     end
   end
-end
-
-function love.mousemoved(x, y, dx, dy, istouch)
-  game:mousemoved(x, y, dx, dy, istouch)
 end
