@@ -134,9 +134,9 @@ return {
     },
 
     debugdraw = {
-      -- {
-      --   class = "heart.physics.systems.debugdraw.DebugDrawPhysics",
-      -- },
+      {
+        class = "heart.physics.systems.debugdraw.DebugDrawFixtures",
+      },
 
       -- {
       --   class = "heart.animation.systems.debugdraw.DebugDrawBones",
