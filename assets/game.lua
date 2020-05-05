@@ -209,6 +209,17 @@ return {
     {
       components = {
         transform = {
+          transform = {0, 0, 0, 10},
+        },
+
+        camera = {},
+        viewport = {},
+      },
+    },
+
+    {
+      components = {
+        transform = {
           transform = {0, 2},
         },
 

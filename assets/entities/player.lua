@@ -21,19 +21,6 @@ return {
   children = {
     {
       components = {
-        transform = {
-          transform = {0, 0, 0, 10},
-        },
-
-        bone = {},
-        -- parentConstraint = {},
-        camera = {},
-        viewport = {},
-      },
-    },
-
-    {
-      components = {
         wheel = {},
 
         transform = {
