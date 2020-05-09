@@ -111,7 +111,7 @@ return {
 
     {
       componentType = "groundSensor",
-      class = "plotfarmer.components.GroundSensorManager",
+      class = "components.GroundSensorManager",
     },
 
     {
@@ -152,11 +152,11 @@ return {
 
     fixedupdate = {
       {
-        class = "plotfarmer.systems.fixedUpdate.PlayerInputFixedUpdateSystem",
+        class = "systems.fixedUpdate.PlayerInputFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.systems.fixedUpdate.SeesawFixedUpdateSystem",
+        class = "systems.fixedUpdate.SeesawFixedUpdateSystem",
       },
 
       {
@@ -172,11 +172,11 @@ return {
       },
 
       {
-        class = "plotfarmer.systems.fixedUpdate.GroundSensorFixedUpdateSystem",
+        class = "systems.fixedUpdate.GroundSensorFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.systems.fixedUpdate.FootFixedUpdateSystem",
+        class = "systems.fixedUpdate.FootFixedUpdateSystem",
       },
 
       {
