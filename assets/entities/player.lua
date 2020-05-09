@@ -21,6 +21,21 @@ return {
   children = {
     {
       components = {
+        transform = {
+          transform = {0, 0, 0, 0.025, 0.025, 47.5, 60},
+        },
+
+        bone = {},
+        parentConstraint = {},
+
+        sprite = {
+          image = "assets/images/skins/player/trunk.png",
+        },
+      },
+    },
+
+    {
+      components = {
         wheel = {},
 
         transform = {

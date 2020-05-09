@@ -41,7 +41,7 @@ return {
         {
           components = {
             transform = {
-              transform = {0, 0, 0, 0.025, 0.025, 12.5, 5},
+              transform = {0, 0, 0, 0.025, 0.025, 12.5, 7.5},
             },
 
             bone = {},
@@ -72,7 +72,7 @@ return {
             {
               components = {
                 transform = {
-                  transform = {0, 0, 0, 0.025, 0.025, 10, 10},
+                  transform = {0, 0, 0, 0.025, 0.025, 10, 12.5},
                 },
 
                 bone = {},
