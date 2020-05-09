@@ -123,84 +123,84 @@ return {
   systems = {
     draw = {
       {
-        class = "heart.graphics.systems.draw.DrawViewportSystem",
+        class = "heart.graphics.systems.draw.ViewportDrawSystem",
       },
     },
 
     drawworld = {
       {
-        class = "heart.graphics.systems.drawworld.DrawSpriteSystem",
+        class = "heart.graphics.systems.drawworld.SpriteDrawWorldSystem",
       },
     },
 
     debugdraw = {
       -- {
-      --   class = "heart.physics.systems.debugdraw.DebugDrawFixtureSystem",
+      --   class = "heart.physics.systems.debugdraw.FixtureDebugDrawSystem",
       -- },
 
       -- {
-      --   class = "heart.animation.systems.debugdraw.DebugDrawBoneSystem",
+      --   class = "heart.animation.systems.debugdraw.BoneDebugDrawSystem",
       --   color = {1, 1, 0, 1},
       --   scale = 0.25,
       -- },
 
       -- {
-      --   class = "heart.animation.systems.debugdraw.DebugDrawParentConstraintSystem",
+      --   class = "heart.animation.systems.debugdraw.ParentConstraintDebugDrawSystem",
       --   color = {1, 0.5, 0, 1},
       -- },
     },
 
     fixedupdate = {
       {
-        class = "plotfarmer.systems.fixedUpdate.UpdatePlayerInputSystem",
+        class = "plotfarmer.systems.fixedUpdate.PlayerInputFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.systems.fixedUpdate.UpdateSeesawSystem",
+        class = "plotfarmer.systems.fixedUpdate.SeesawFixedUpdateSystem",
       },
 
       {
-        class = "heart.animation.systems.fixedupdate.UpdatePreviousBoneTransformSystem",
+        class = "heart.animation.systems.fixedupdate.PreviousBoneTransformFixedUpdateSystem",
       },
 
       {
-        class = "heart.physics.systems.fixedupdate.UpdateWorldSystem",
+        class = "heart.physics.systems.fixedupdate.WorldFixedUpdateSystem",
       },
 
       {
-        class = "heart.physics.systems.fixedupdate.UpdateBoneFromBodySystem",
+        class = "heart.physics.systems.fixedupdate.BodyToBoneFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.systems.fixedUpdate.UpdateGroundSensorSystem",
+        class = "plotfarmer.systems.fixedUpdate.GroundSensorFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.systems.fixedUpdate.UpdateFeetSystem",
+        class = "plotfarmer.systems.fixedUpdate.FootFixedUpdateSystem",
       },
 
       {
-        class = "heart.animation.systems.fixedupdate.UpdateParentConstraintSystem",
+        class = "heart.animation.systems.fixedupdate.ParentConstraintFixedUpdateSystem",
       },
     },
 
     resize = {
       {
-        class = "heart.graphics.systems.resize.ResizeViewportSystem",
+        class = "heart.graphics.systems.resize.ViewportResizeSystem",
       },
     },
 
     update = {
       {
-        class = "heart.timer.systems.update.UpdateTimerSystem",
+        class = "heart.timer.systems.update.TimerUpdateSystem",
       },
 
       {
-        class = "heart.graphics.systems.update.UpdateSpriteFromBoneSystem",
+        class = "heart.graphics.systems.update.SpriteFromBoneUpdateSystem",
       },
 
       {
-        class = "heart.graphics.systems.update.UpdateCameraFromBoneSystem",
+        class = "heart.graphics.systems.update.CameraFromBoneUpdateSystem",
       },
     },
   },
