@@ -12,12 +12,12 @@ function love.load()
   love.graphics.setDefaultFilter("linear", "nearest")
   love.physics.setMeter(1)
 
-  local assetLoaders = {
-    image = heart.graphics.ImageLoader.new(),
+  local resourceLoaders = {
+    image = heart.graphics.ImageResourceLoader.new(),
   }
 
-  local config = require("assets.game")
-  game = heart.Game.new(assetLoaders, config)
+  local config = require("plotfarmer.resources.configs.game")
+  game = heart.Game.new(resourceLoaders, config)
 end
 
 function love.draw()
