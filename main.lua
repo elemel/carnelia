@@ -12,6 +12,11 @@ function love.load()
   love.graphics.setDefaultFilter("linear", "nearest")
   love.physics.setMeter(1)
 
+  -- Work-around for freeze while pressing mouse in LÖVE 11.3 (macOS Mojave)
+  love.event.pump()
+
+  love.mouse.setRelativeMode(true)
+
   local resourceLoaders = {
     image = heart.graphics.ImageResourceLoader.new(),
   }
@@ -33,7 +38,7 @@ function love.update(dt)
 end
 
 function love.mousemoved(x, y, dx, dy, istouch)
-  game:handleEvent("mouseMoved", x, y, dx, dy, istouch)
+  game:handleEvent("mousemoved", x, y, dx, dy, istouch)
 end
 
 function love.keypressed(key, scancode, isrepeat)

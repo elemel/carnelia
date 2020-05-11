@@ -82,5 +82,35 @@ return {
         },
       },
     },
+
+    {
+      components = {
+        plant = {},
+
+        transform = {
+          transform = {0, -3},
+        },
+
+        bone = {},
+        parentConstraint = {},
+      },
+
+      children = {
+        {
+          components = {
+            transform = {
+              transform = {0, 0, 0, 0.025, 0.025, 47.5, 60},
+            },
+
+            bone = {},
+            parentConstraint = {},
+
+            sprite = {
+              image = "plotfarmer/resources/images/plant.png",
+            },
+          },
+        },
+      },
+    },
   },
 }

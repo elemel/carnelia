@@ -11,6 +11,11 @@ return {
       class = "heart.physics.PhysicsDomain",
       gravityY = 34,
     },
+
+    {
+      domainType = "input",
+      class = "plotfarmer.InputDomain",
+    },
   },
 
   componentManagers = {
@@ -21,6 +26,11 @@ return {
 
     {
       componentType = "left",
+      class = "heart.CategoryComponentManager",
+    },
+
+    {
+      componentType = "plant",
       class = "heart.CategoryComponentManager",
     },
 
@@ -156,6 +166,10 @@ return {
       },
 
       {
+        class = "plotfarmer.PlantInputFixedUpdateSystem",
+      },
+
+      {
         class = "plotfarmer.SeesawFixedUpdateSystem",
       },
 
@@ -184,6 +198,12 @@ return {
       },
     },
 
+    mousemoved = {
+      {
+        class = "plotfarmer.InputMouseMovedSystem",
+      },
+    },
+
     resize = {
       {
         class = "heart.graphics.ViewportResizeSystem",
@@ -209,7 +229,7 @@ return {
     {
       components = {
         transform = {
-          transform = {0, 0, 0, 10},
+          transform = {0, 0, 0, 15},
         },
 
         camera = {},
