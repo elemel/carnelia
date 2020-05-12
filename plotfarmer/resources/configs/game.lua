@@ -115,6 +115,11 @@ return {
     },
 
     {
+      componentType = "ropeJoint",
+      class = "heart.physics.RopeJointComponentManager",
+    },
+
+    {
       componentType = "wheelJoint",
       class = "heart.physics.WheelJointComponentManager",
     },
@@ -145,7 +150,11 @@ return {
 
     debugdraw = {
       -- {
-      --   class = "heart.physicsFixtureDebugDrawSystem",
+      --   class = "heart.physics.FixtureDebugDrawSystem",
+      -- },
+
+      -- {
+      --   class = "heart.physics.JointDebugDrawSystem",
       -- },
 
       -- {
@@ -267,6 +276,92 @@ return {
             6, 0.8,
             7, 0.3,
             8, -0.3,
+          },
+        },
+      },
+
+      children = {
+        {
+          components = {
+            transform = {
+              transform = {-7, 1.5, 0.6, 0.025, 0.025, 64, 64},
+            },
+
+            sprite = {
+              image = "plotfarmer/resources/images/grass.png",
+            },
+          },
+        },
+
+        {
+          components = {
+            transform = {
+              transform = {-5.5, 2.1, 0.2, 0.025, 0.025, 64, 64},
+            },
+
+            sprite = {
+              image = "plotfarmer/resources/images/grass.png",
+            },
+          },
+        },
+
+        {
+          components = {
+            transform = {
+              transform = {-3, 1.7, -0.5, 0.025, 0.025, 64, 64},
+            },
+
+            sprite = {
+              image = "plotfarmer/resources/images/grass.png",
+            },
+          },
+        },
+
+        {
+          components = {
+            transform = {
+              transform = {-0.5, 1, 0, 0.025, 0.025, 64, 64},
+            },
+
+            sprite = {
+              image = "plotfarmer/resources/images/grass.png",
+            },
+          },
+        },
+
+        {
+          components = {
+            transform = {
+              transform = {2, 1.5, 0.2, 0.025, 0.025, 64, 64},
+            },
+
+            sprite = {
+              image = "plotfarmer/resources/images/grass.png",
+            },
+          },
+        },
+
+        {
+          components = {
+            transform = {
+              transform = {4.5, 1.8, -0.1, 0.025, 0.025, 64, 64},
+            },
+
+            sprite = {
+              image = "plotfarmer/resources/images/grass.png",
+            },
+          },
+        },
+
+        {
+          components = {
+            transform = {
+              transform = {7, 1.1, -0.6, 0.025, 0.025, 64, 64},
+            },
+
+            sprite = {
+              image = "plotfarmer/resources/images/grass.png",
+            },
           },
         },
       },

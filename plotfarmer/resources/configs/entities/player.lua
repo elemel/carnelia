@@ -99,7 +99,7 @@ return {
         {
           components = {
             transform = {
-              transform = {0, 0, 0, 0.025, 0.025, 47.5, 60},
+              transform = {0, 0, 0, 0.025, 0.025, 22, 24},
             },
 
             bone = {},
