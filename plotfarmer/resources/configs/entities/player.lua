@@ -36,6 +36,22 @@ return {
 
     {
       components = {
+        transform = {
+          transform = {-0.4, -0.3, -0.3, 0.025, 0.025, 32, 32},
+        },
+
+        bone = {},
+        parentConstraint = {},
+
+        sprite = {
+          image = "plotfarmer/resources/images/sandbag.png",
+          z = -0.1,
+        },
+      },
+    },
+
+    {
+      components = {
         wheel = {},
 
         transform = {

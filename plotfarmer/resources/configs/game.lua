@@ -144,6 +144,10 @@ return {
 
     drawworld = {
       {
+        class = "plotfarmer.StalkDrawWorldSystem",
+      },
+
+      {
         class = "heart.graphics.SpriteDrawWorldSystem",
       },
     },
