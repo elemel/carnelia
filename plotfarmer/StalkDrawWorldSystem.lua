@@ -10,9 +10,11 @@ end
 
 function M:__call(viewportId)
   local lineWidth = love.graphics.getLineWidth()
+  local lineJoin = love.graphics.getLineJoin()
   local r, g, b, a = love.graphics.getColor()
 
   love.graphics.setLineWidth(0.2)
+  love.graphics.setLineJoin("none")
   love.graphics.setColor(0.6, 0.8, 0.2, 1)
 
   local transforms = self.transformComponents.transforms
@@ -29,6 +31,7 @@ function M:__call(viewportId)
   end
 
   love.graphics.setColor(r, g, b, a)
+  love.graphics.setLineJoin(lineJoin)
   love.graphics.setLineWidth(lineWidth)
 end
 

@@ -123,6 +123,7 @@ return {
 
             sprite = {
               image = "plotfarmer/resources/images/plant.png",
+              z = -0.1,
             },
           },
         },
