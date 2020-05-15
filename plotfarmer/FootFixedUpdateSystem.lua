@@ -1,4 +1,5 @@
 local heart = require("heart")
+local inverseKinematics = require("plotfarmer.inverseKinematics")
 
 local M = heart.class.newClass()
 
@@ -48,16 +49,13 @@ function M:__call(dt)
         end
       end
 
+      local length = 1
+      local kneeX, kneeY = inverseKinematics.solve(hipX, hipY, footX, footY, length)
+
       local distance = heart.math.distance2(hipX, hipY, footX, footY)
       local legAngle = math.atan2(footY - hipY, footX - hipX) - 0.5 * math.pi
-      local length = 1
 
       local kneeAngle = math.acos(math.min(distance / length, 1))
-      local kneeOffset = 0.5 * math.sqrt(math.max(0, length * length - distance * distance))
-      local kneeDirectionX, kneeDirectionY = heart.math.normalize2(footY - hipY, hipX - footX)
-
-      local kneeX = 0.5 * (hipX + footX) + kneeOffset * kneeDirectionX
-      local kneeY = 0.5 * (hipY + footY) + kneeOffset * kneeDirectionY
 
       local contact = self.groundSensorManager.contacts[playerId]
       local footAngle = math.atan2(contact.normalY, contact.normalX) + 0.5 * math.pi
