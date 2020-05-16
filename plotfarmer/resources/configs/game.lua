@@ -154,8 +154,12 @@ return {
 
     debugdraw = {
       -- {
-      --   class = "heart.physics.FixtureDebugDrawSystem",
+      --   class = "plotfarmer.SpriteDebugDrawSystem",
       -- },
+
+      {
+        class = "heart.physics.FixtureDebugDrawSystem",
+      },
 
       -- {
       --   class = "heart.physics.JointDebugDrawSystem",
@@ -373,6 +377,21 @@ return {
 
     {
       prototype = "plotfarmer.resources.configs.entities.seesaw",
+    },
+
+    {
+      components = {
+        transform = {
+          transform = {0, -1.25},
+        },
+
+        body = {},
+
+        rectangleFixture = {
+          height = 2,
+          sensor = true,
+        },
+      },
     },
 
     {
