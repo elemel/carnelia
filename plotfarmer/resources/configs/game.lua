@@ -179,6 +179,10 @@ return {
 
     fixedupdate = {
       {
+        class = "heart.animation.PreviousBoneTransformFixedUpdateSystem",
+      },
+
+      {
         class = "plotfarmer.PlayerInputFixedUpdateSystem",
       },
 
@@ -188,10 +192,6 @@ return {
 
       {
         class = "plotfarmer.SeesawFixedUpdateSystem",
-      },
-
-      {
-        class = "heart.animation.PreviousBoneTransformFixedUpdateSystem",
       },
 
       {
@@ -208,6 +208,10 @@ return {
 
       {
         class = "plotfarmer.FootFixedUpdateSystem",
+      },
+
+      {
+        class = "plotfarmer.PlayerToCameraUpdateSystem",
       },
 
       {
@@ -249,6 +253,7 @@ return {
           transform = {0, 0, 0, 15},
         },
 
+        bone = {},
         camera = {},
         viewport = {},
       },
