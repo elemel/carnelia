@@ -22,7 +22,7 @@ return {
     {
       components = {
         transform = {
-          transform = {0, 0, 0, 0.025, 0.025, 47.5, 60},
+          transform = {0, 0, 0, 1 / 32, 1 / 32, 18.5, 16.5},
         },
 
         bone = {},
@@ -36,8 +36,26 @@ return {
 
     {
       components = {
+        head = {},
+
         transform = {
-          transform = {-0.4, -0.3, -0.3, 0.025, 0.025, 32, 32},
+          transform = {0, 0.55, 0, 1 / 32, 1 / 32, 10, 8},
+        },
+
+        bone = {},
+        parentConstraint = {},
+
+        sprite = {
+          image = "plotfarmer/resources/images/skins/player/head.png",
+          z = 0.1,
+        },
+      },
+    },
+
+    {
+      components = {
+        transform = {
+          transform = {-0.4, -0.3, -0.3, 1 / 32, 1 / 32, 32, 32},
         },
 
         bone = {},
@@ -115,7 +133,7 @@ return {
         {
           components = {
             transform = {
-              transform = {0, 0, 0, 0.025, 0.025, 22, 24},
+              transform = {0, 0, 0, 1 / 32, 1 / 32, 22, 24},
             },
 
             bone = {},

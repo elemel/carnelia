@@ -2,15 +2,17 @@ local heart = require("heart")
 
 local M = heart.class.newClass()
 
-function M:init(game, system)
+function M:init(game, config)
   self.game = assert(game)
   self.playerEntities = assert(self.game.componentEntitySets.player)
   self.cameraEntities = assert(self.game.componentEntitySets.camera)
   self.transformComponents = assert(self.game.componentManagers.transform)
+  self.bounds = config.bounds or {-1, -1, 1, 1}
 end
 
 function M:__call(dt)
   local transforms = self.transformComponents.transforms
+  local minX, minY, maxX, maxY = unpack(self.bounds)
 
   for playerId in pairs(self.playerEntities) do
     for cameraId in pairs(self.cameraEntities) do
@@ -28,6 +30,9 @@ function M:__call(dt)
 
         cameraX = playerX + maxDistance * directionX
         cameraY = playerY + maxDistance * directionY
+
+        cameraX = heart.math.clamp(cameraX, minX, maxX)
+        cameraY = heart.math.clamp(cameraY, minY, maxY)
 
         transforms[cameraId]:setTransformation(cameraX, cameraY, 0, 15)
       end

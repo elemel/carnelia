@@ -37,12 +37,13 @@ function M:__call(dt)
   local mouseDown = love.mouse.isDown(1)
 
   for id in pairs(self.plantEntities) do
+    local parentId = self.game.entityParents[id]
+
     if mouseDown then
       if not self.mouseDown then
         local localTransform = localTransforms[id]
         local x, y = localTransform:transformPoint(0, 0)
 
-        local parentId = self.game.entityParents[id]
         local parentBody = bodies[parentId]
 
         local x1, y1 = parentBody:getPosition()
@@ -108,6 +109,10 @@ function M:__call(dt)
 
       localTransform:setTransformation(x, y, angle)
       enabledFlags[id] = true
+
+      for _, headId in ipairs(self.game:findDescendantComponents(parentId, "head")) do
+        localTransforms[headId]:setTransformation(0, -0.55, 0.5 * angle, 1 / 32, 1 / 32, 10, 8)
+      end
     end
   end
 

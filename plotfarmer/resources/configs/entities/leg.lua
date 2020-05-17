@@ -12,7 +12,7 @@ return {
     {
       components = {
         transform = {
-          transform = {0, 0, 0, 0.025, 0.025, 12.5, 5},
+          transform = {0, 0, 0, 1 / 32, 1 / 32, 6, 3},
         },
 
         bone = {},
@@ -41,7 +41,7 @@ return {
         {
           components = {
             transform = {
-              transform = {0, 0, 0, 0.025, 0.025, 12.5, 7.5},
+              transform = {0, 0, 0, 1 / 32, 1 / 32, 7, 3},
             },
 
             bone = {},
@@ -72,7 +72,7 @@ return {
             {
               components = {
                 transform = {
-                  transform = {0, 0, 0, 0.025, 0.025, 10, 12.5},
+                  transform = {0, 0, 0, 1 / 32, 1 / 32, 4.75, 7},
                 },
 
                 bone = {},

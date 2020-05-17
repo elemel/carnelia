@@ -25,6 +25,11 @@ return {
     },
 
     {
+      componentType = "head",
+      class = "heart.CategoryComponentManager",
+    },
+
+    {
       componentType = "left",
       class = "heart.CategoryComponentManager",
     },
@@ -157,9 +162,9 @@ return {
       --   class = "plotfarmer.SpriteDebugDrawSystem",
       -- },
 
-      {
-        class = "heart.physics.FixtureDebugDrawSystem",
-      },
+      -- {
+      --   class = "heart.physics.FixtureDebugDrawSystem",
+      -- },
 
       -- {
       --   class = "heart.physics.JointDebugDrawSystem",
@@ -212,6 +217,7 @@ return {
 
       {
         class = "plotfarmer.PlayerToCameraUpdateSystem",
+        bounds = {-10, -5, 10, 5},
       },
 
       {
@@ -297,7 +303,7 @@ return {
         {
           components = {
             transform = {
-              transform = {-7, 1.5, 0.6, 0.025, 0.025, 64, 64},
+              transform = {-7, 1.5, 0.6, 1 / 32, 1 / 32, 64, 32},
             },
 
             sprite = {
@@ -309,7 +315,7 @@ return {
         {
           components = {
             transform = {
-              transform = {-5.5, 2.1, 0.2, 0.025, 0.025, 64, 64},
+              transform = {-5.5, 2.1, 0.2, 1 / 32, 1 / 32, 64, 32},
             },
 
             sprite = {
@@ -321,7 +327,7 @@ return {
         {
           components = {
             transform = {
-              transform = {-3, 1.7, -0.5, 0.025, 0.025, 64, 64},
+              transform = {-3, 1.7, -0.5, 1 / 32, 1 / 32, 64, 32},
             },
 
             sprite = {
@@ -333,7 +339,7 @@ return {
         {
           components = {
             transform = {
-              transform = {-0.5, 1, 0, 0.025, 0.025, 64, 64},
+              transform = {-0.5, 1, 0, 1 / 32, 1 / 32, 64, 32},
             },
 
             sprite = {
@@ -345,7 +351,7 @@ return {
         {
           components = {
             transform = {
-              transform = {2, 1.5, 0.2, 0.025, 0.025, 64, 64},
+              transform = {2, 1.5, 0.2, 1 / 32, 1 / 32, 64, 32},
             },
 
             sprite = {
@@ -357,7 +363,7 @@ return {
         {
           components = {
             transform = {
-              transform = {4.5, 1.8, -0.1, 0.025, 0.025, 64, 64},
+              transform = {4.5, 1.8, -0.1, 1 / 32, 1 / 32, 64, 32},
             },
 
             sprite = {
@@ -369,7 +375,7 @@ return {
         {
           components = {
             transform = {
-              transform = {7, 1.1, -0.6, 0.025, 0.025, 64, 64},
+              transform = {7, 1.1, -0.6, 1 / 32, 1 / 32, 64, 32},
             },
 
             sprite = {
