@@ -55,7 +55,7 @@ return {
     {
       components = {
         transform = {
-          transform = {-0.4, -0.3, -0.3, 1 / 32, 1 / 32, 32, 32},
+          transform = {-0.2, -0.1, 0.1, 1 / 32, 1 / 32, 17, 23.5},
         },
 
         bone = {},
@@ -133,7 +133,7 @@ return {
         {
           components = {
             transform = {
-              transform = {0, 0, 0, 1 / 32, 1 / 32, 22, 24},
+              transform = {0, 0, 0, 1 / 32, 1 / 32, 19, 15},
             },
 
             bone = {},
