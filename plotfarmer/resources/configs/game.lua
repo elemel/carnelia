@@ -159,7 +159,7 @@ return {
 
     debugdraw = {
       -- {
-      --   class = "plotfarmer.SpriteDebugDrawSystem",
+      --   class = "heart.graphics.SpriteDebugDrawSystem",
       -- },
 
       -- {
