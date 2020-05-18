@@ -112,6 +112,12 @@ function M:__call(dt)
 
       for _, headId in ipairs(self.game:findDescendantComponents(parentId, "head")) do
         localTransforms[headId]:setTransformation(0, -0.55, 0.5 * angle, 1 / 32, 1 / 32, 10, 8)
+
+        localTransforms[headId]:apply(love.math.newTransform():setMatrix(
+          1, 0, 0, 0,
+          0, 1, 0, 0,
+          0, 0, 1, 0.1,
+          0, 0, 0, 1))
       end
     end
   end

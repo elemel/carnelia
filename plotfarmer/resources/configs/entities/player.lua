@@ -22,7 +22,7 @@ return {
     {
       components = {
         transform = {
-          transform = {0, 0, 0, 1 / 32, 1 / 32, 18.5, 16.5},
+          transform = {0, 0, 0, 1 / 32, 1 / 32, 12, 16.5},
         },
 
         bone = {},
@@ -47,7 +47,6 @@ return {
 
         sprite = {
           image = "plotfarmer/resources/images/skins/player/head.png",
-          z = 0.1,
         },
       },
     },
@@ -56,6 +55,7 @@ return {
       components = {
         transform = {
           transform = {-0.2, -0.1, 0.1, 1 / 32, 1 / 32, 17, 23.5},
+          z = -0.1,
         },
 
         bone = {},
@@ -63,7 +63,6 @@ return {
 
         sprite = {
           image = "plotfarmer/resources/images/sandbag.png",
-          z = -0.1,
         },
       },
     },
@@ -89,6 +88,19 @@ return {
         wheelJoint = {
           springFrequency = 5,
           maxMotorTorque = 50,
+        },
+      },
+    },
+
+    {
+      prototype = "plotfarmer.resources.configs.entities.arm",
+
+      components = {
+        left = {},
+
+        transform = {
+          transform = {-0.125, -0.25, 0.25 * math.pi},
+          z = 0.1,
         },
       },
     },

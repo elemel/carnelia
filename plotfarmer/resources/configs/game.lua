@@ -25,6 +25,11 @@ return {
     },
 
     {
+      componentType = "hand",
+      class = "heart.CategoryComponentManager",
+    },
+
+    {
       componentType = "head",
       class = "heart.CategoryComponentManager",
     },
