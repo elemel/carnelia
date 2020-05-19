@@ -9,7 +9,7 @@ return {
     {
       domainType = "physics",
       class = "heart.physics.PhysicsDomain",
-      gravityY = 34,
+      gravityY = 13,
     },
 
     {
@@ -115,6 +115,11 @@ return {
     },
 
     {
+      componentType = "distanceJoint",
+      class = "heart.physics.DistanceJointComponentManager",
+    },
+
+    {
       componentType = "motorJoint",
       class = "heart.physics.MotorJointComponentManager",
     },
@@ -167,13 +172,13 @@ return {
       --   class = "heart.graphics.SpriteDebugDrawSystem",
       -- },
 
-      -- {
-      --   class = "heart.physics.FixtureDebugDrawSystem",
-      -- },
+      {
+        class = "heart.physics.FixtureDebugDrawSystem",
+      },
 
-      -- {
-      --   class = "heart.physics.JointDebugDrawSystem",
-      -- },
+      {
+        class = "heart.physics.JointDebugDrawSystem",
+      },
 
       -- {
       --   class = "heart.animation.BoneDebugDrawSystem",
@@ -200,9 +205,9 @@ return {
         class = "plotfarmer.PlantInputFixedUpdateSystem",
       },
 
-      {
-        class = "plotfarmer.SeesawFixedUpdateSystem",
-      },
+      -- {
+      --   class = "plotfarmer.SeesawFixedUpdateSystem",
+      -- },
 
       {
         class = "heart.physics.WorldFixedUpdateSystem",

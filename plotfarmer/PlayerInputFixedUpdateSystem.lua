@@ -16,8 +16,9 @@ function M:__call(dt)
   for id in pairs(self.playerEntities) do
     for _, wheelId in ipairs(self.game:findDescendantComponents(id, "wheel")) do
       local joint = self.physicsDomain.wheelJoints[wheelId]
-      joint:setMotorEnabled(inputX ~= 0)
-      joint:setMotorSpeed(5 * inputX)
+      -- joint:setMotorEnabled(inputX ~= 0)
+      joint:setMotorEnabled(true)
+      joint:setMotorSpeed(13 * inputX / 0.375)
     end
   end
 end

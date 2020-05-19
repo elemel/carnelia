@@ -24,6 +24,7 @@ function M:__call(dt)
   local transforms = self.transformComponents.transforms
   local localTransforms = self.parentConstraintComponents.localTransforms
   local enabledFlags = self.parentConstraintComponents.enabledFlags
+  local distanceJoints = self.physicsDomain.distanceJoints
   local ropeJoints = self.physicsDomain.ropeJoints
   local bodies = self.physicsDomain.bodies
 
@@ -52,6 +53,10 @@ function M:__call(dt)
         local hitFixture, hitX, hitY
 
         local function callback(fixture, x, y, xn, yn, fraction)
+          if fixture:isSensor() then
+            return 1
+          end
+
           local body = fixture:getBody()
           local bodyType = body:getType()
 
@@ -74,7 +79,21 @@ function M:__call(dt)
           local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(x1, y1)
           local maxLength = heart.math.distance2(hitX, hitY, x1, y1)
 
-          self.game:createComponent(id, "ropeJoint", {
+          -- self.game:createComponent(id, "ropeJoint", {
+          --   body1 = hitFixture:getUserData(),
+          --   body2 = parentId,
+
+          --   x1 = ropeX1,
+          --   y1 = ropeY1,
+
+          --   x2 = ropeX2,
+          --   y2 = ropeY2,
+
+          --   maxLength = maxLength,
+          --   collideConnected = true,
+          -- })
+
+          self.game:createComponent(id, "distanceJoint", {
             body1 = hitFixture:getUserData(),
             body2 = parentId,
 
@@ -82,20 +101,28 @@ function M:__call(dt)
             y1 = ropeY1,
 
             x2 = ropeX2,
-            y2 = ropeY2,
+            y2 = ropeY2 - 1.25,
 
-            maxLength = maxLength,
+            frequency = 1,
+            dampingRatio = 0,
+
             collideConnected = true,
           })
+
+          -- bodies[parentId]:setFixedRotation(false)
         end
       end
     else
-      if ropeJoints[id] then
-        self.game:destroyComponent(id, "ropeJoint")
+      if distanceJoints[id] or ropeJoints[id] then
+        -- self.game:destroyComponent(id, "ropeJoint")
+        self.game:destroyComponent(id, "distanceJoint")
+
+        -- bodies[parentId]:setFixedRotation(true)
+        -- bodies[parentId]:setAngle(0)
       end
     end
 
-    if ropeJoints[id] then
+    if distanceJoints[id] or ropeJoints[id] then
     else
       local localTransform = localTransforms[id]
       local x, y = localTransform:transformPoint(0, 0)
@@ -103,7 +130,7 @@ function M:__call(dt)
       x = x + sensitivity * dx
       y = y + sensitivity * dy
 
-      x, y = heart.math.clampLength2(x, y, 0, 5)
+      x, y = heart.math.clampLength2(x, y, 0, 10)
 
       local angle = math.atan2(y, x)
 

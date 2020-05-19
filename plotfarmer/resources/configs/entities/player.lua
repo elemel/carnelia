@@ -11,6 +11,7 @@ return {
 
     circleFixture = {
       radius = 0.375,
+      density = 2,
     },
 
     groundSensor = {
@@ -79,14 +80,21 @@ return {
           bodyType = "dynamic",
         },
 
-        rectangleFixture = {
-          width = 0.75,
-          height = 0.75,
-          friction = 5,
+        -- rectangleFixture = {
+        --   width = 0.75,
+        --   height = 0.75,
+        --   friction = 5,
+        -- },
+
+        circleFixture = {
+          radius = 0.375,
+          friction = 13,
+          density = 0.5,
         },
 
         wheelJoint = {
           springFrequency = 5,
+          springDampingRatio = 1,
           maxMotorTorque = 50,
         },
       },
