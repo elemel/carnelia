@@ -9,7 +9,7 @@ return {
     {
       domainType = "physics",
       class = "heart.physics.PhysicsDomain",
-      gravityY = 13,
+      gravityY = 10,
     },
 
     {
@@ -62,6 +62,11 @@ return {
     {
       componentType = "wheel",
       class = "heart.CategoryComponentManager",
+    },
+
+    {
+      componentType = "character",
+      class = "plotfarmer.CharacterComponentManager",
     },
 
     {
@@ -205,9 +210,9 @@ return {
         class = "plotfarmer.PlantInputFixedUpdateSystem",
       },
 
-      -- {
-      --   class = "plotfarmer.SeesawFixedUpdateSystem",
-      -- },
+      {
+        class = "plotfarmer.SeesawFixedUpdateSystem",
+      },
 
       {
         class = "heart.physics.WorldFixedUpdateSystem",
@@ -416,7 +421,7 @@ return {
     },
 
     {
-      prototype = "plotfarmer.resources.configs.entities.player",
+      prototype = "plotfarmer.resources.configs.entities.farmer",
 
       components = {
         transform = {

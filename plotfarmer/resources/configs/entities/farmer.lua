@@ -88,14 +88,14 @@ return {
 
         circleFixture = {
           radius = 0.375,
-          friction = 13,
+          friction = 20,
           density = 0.5,
         },
 
         wheelJoint = {
           springFrequency = 5,
           springDampingRatio = 1,
-          maxMotorTorque = 50,
+          maxMotorTorque = 10,
         },
       },
     },

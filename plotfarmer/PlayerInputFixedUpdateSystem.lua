@@ -6,9 +6,12 @@ function M:init(game, system)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
   self.playerEntities = assert(self.game.componentEntitySets.player)
+  self.characterComponents = assert(self.game.componentManagers.character)
 end
 
 function M:__call(dt)
+  local states = self.characterComponents.states
+
   local leftInput = love.keyboard.isDown("a")
   local rightInput = love.keyboard.isDown("d")
   local inputX = (rightInput and 1 or 0) - (leftInput and 1 or 0)
@@ -18,8 +21,10 @@ function M:__call(dt)
       local joint = self.physicsDomain.wheelJoints[wheelId]
       -- joint:setMotorEnabled(inputX ~= 0)
       joint:setMotorEnabled(true)
-      joint:setMotorSpeed(13 * inputX / 0.375)
+      joint:setMotorSpeed(5 * inputX / 0.375)
     end
+
+    states[id] = inputX == 0 and "standing" or "running"
   end
 end
 

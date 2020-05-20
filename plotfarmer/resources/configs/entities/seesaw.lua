@@ -7,10 +7,10 @@ return {
     },
 
     rectangleFixture = {
-      width = 100,
+      width = 10,
       height = 0.5,
       friction = 1,
-      sensor = true,
+      -- sensor = true,
     },
 
     seesaw = {},
