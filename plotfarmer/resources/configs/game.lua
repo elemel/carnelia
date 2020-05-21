@@ -152,8 +152,13 @@ return {
     },
 
     {
-      componentType = "groundSensor",
-      class = "plotfarmer.GroundSensorComponentManager",
+      componentType = "raySensor",
+      class = "plotfarmer.RaySensorComponentManager",
+    },
+
+    {
+      componentType = "groundFilter",
+      class = "plotfarmer.GroundFilterComponentManager",
     },
 
     {
@@ -230,7 +235,7 @@ return {
       },
 
       {
-        class = "plotfarmer.GroundSensorFixedUpdateSystem",
+        class = "plotfarmer.RaySensorFixedUpdateSystem",
       },
 
       {

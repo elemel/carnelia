@@ -16,9 +16,11 @@ return {
       density = 2,
     },
 
-    groundSensor = {
+    raySensor = {
       ray = {0, 0, 0, 1.5},
     },
+
+    groundFilter = {},
   },
 
   children = {

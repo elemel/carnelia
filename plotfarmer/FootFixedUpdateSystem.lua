@@ -11,7 +11,7 @@ function M:init(game, system)
   self.leftEntities = assert(self.game.componentEntitySets.left)
 
   self.characterStateComponents = assert(self.game.componentManagers.characterState)
-  self.groundSensorComponents = assert(self.game.componentManagers.groundSensor)
+  self.raySensorComponents = assert(self.game.componentManagers.raySensor)
   self.transformComponents = assert(self.game.componentManagers.transform)
 
   local size = 0.75
@@ -35,7 +35,7 @@ function M:__call(dt)
     local side = self.leftEntities[upperLegId] and -1 or 1
     local state = states[characterId]
 
-    local contact = self.groundSensorComponents.contacts[characterId]
+    local contact = self.raySensorComponents.contacts[characterId]
     local characterBody = self.physicsDomain.bodies[characterId]
     local hipX, hipY = characterBody:getWorldPoint(side * 0.125, 0.25)
 
@@ -45,11 +45,26 @@ function M:__call(dt)
       local footX = 0
       local footY = -math.huge
 
+      local groundX, groundY, groundNormalX, groundNormalY
+
+      if contact.fixture then
+        groundX = contact.x
+        groundY = contact.y
+
+        groundNormalX = contact.normalX
+        groundNormalY = contact.normalY
+      else
+        groundX, groundY = characterBody:getWorldPoint(0, 1)
+
+        groundNormalX = 0
+        groundNormalY = -1
+      end
+
       if state == "standing" then
         local x, y = wheelBody:getPosition()
 
-        footX = contact.x - side * contact.normalY * 0.375
-        footY = contact.y + side * contact.normalX * 0.375
+        footX = groundX - side * groundNormalY * 0.375
+        footY = groundY + side * groundNormalX * 0.375
       else
         for i, corner in ipairs(self.corners) do
           if (side == -1) == ((i % 2) == 0) then
@@ -71,7 +86,7 @@ function M:__call(dt)
 
       local kneeAngle = math.acos(math.min(distance / length, 1))
 
-      local footAngle = math.atan2(contact.normalY, contact.normalX) + 0.5 * math.pi
+      local footAngle = math.atan2(groundNormalY, groundNormalX) + 0.5 * math.pi
 
       transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle)
       transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle)

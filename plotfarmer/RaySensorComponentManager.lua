@@ -7,6 +7,7 @@ function M:init(game, config)
   self.physicsDomain = assert(self.game.domains.physics)
   self.transformManager = assert(self.game.componentManagers.transform)
   self.localRays = {}
+  self.filters = {}
   self.contacts = {}
 end
 
@@ -24,16 +25,20 @@ function M:createComponent(id, config)
   self.contacts[id] = {
     x = 0,
     y = 0,
+
     normalX = 0,
     normalY = 0,
+
     linearVelocityX = 0,
     linearVelocityY = 0,
+
     angularVelocity = 0,
   }
 end
 
 function M:destroyComponent(id)
   self.localRays[id] = nil
+  self.filters[id] = nil
   self.contacts[id] = nil
 end
 
