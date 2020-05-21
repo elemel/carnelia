@@ -47,7 +47,7 @@ function M:__call(dt)
 
       local groundX, groundY, groundNormalX, groundNormalY
 
-      if contact.fixture then
+      if contact then
         groundX = contact.x
         groundY = contact.y
 

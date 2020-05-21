@@ -207,6 +207,12 @@ return {
       --   class = "heart.animation.ParentConstraintDebugDrawSystem",
       --   color = {1, 0.5, 0, 1},
       -- },
+
+      {
+        class = "plotfarmer.RaySensorDebugDrawSystem",
+        color = {1, 0, 0, 1},
+        scale = 0.5,
+      },
     },
 
     fixedupdate = {

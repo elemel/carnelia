@@ -11,6 +11,7 @@ end
 function M:__call(dt)
   local filters = self.raySensorComponents.filters
   local bodies = self.physicsDomain.bodies
+  local contacts = self.raySensorComponents.contacts
 
   for id, localRay in pairs(self.raySensorComponents.localRays) do
     local body = bodies[id]
@@ -40,9 +41,10 @@ function M:__call(dt)
 
     self.physicsDomain.world:rayCast(x1, y1, x2, y2, callback)
 
-    local contact = self.raySensorComponents.contacts[id]
-
     if contactFixture then
+      contacts[id] = contacts[id] or {}
+      local contact = contacts[id]
+
       contact.fixture = contactFixture
 
       contact.x = contactX
@@ -57,19 +59,8 @@ function M:__call(dt)
         contactBody:getLinearVelocityFromWorldPoint(contactX, contactY)
 
       contact.angularVelocity = contactBody:getAngularVelocity()
-    elseif contact.fixture then
-      contact.fixture = nil
-
-      contact.x = 0
-      contact.y = 0
-
-      contact.normalX = 0
-      contact.normalY = 0
-
-      contact.linearVelocityX = 0
-      contact.linearVelocityY = 0
-
-      contact.angularVelocity = 0
+    else
+      contacts[id] = nil
     end
   end
 end

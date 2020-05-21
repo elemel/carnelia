@@ -21,19 +21,6 @@ function M:createComponent(id, config)
   x2, y2 = body:getLocalPoint(transform:transformPoint(x2, y2))
 
   self.localRays[id] = {x1, y1, x2, y2}
-
-  self.contacts[id] = {
-    x = 0,
-    y = 0,
-
-    normalX = 0,
-    normalY = 0,
-
-    linearVelocityX = 0,
-    linearVelocityY = 0,
-
-    angularVelocity = 0,
-  }
 end
 
 function M:destroyComponent(id)
