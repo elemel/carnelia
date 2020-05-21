@@ -65,6 +65,13 @@ return {
     },
 
     {
+      componentType = "characterState",
+      class = "heart.StateComponentManager",
+      defaultState = "falling",
+      validStates = {"falling", "running", "standing"},
+    },
+
+    {
       componentType = "character",
       class = "plotfarmer.CharacterComponentManager",
     },

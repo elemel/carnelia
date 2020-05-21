@@ -6,11 +6,11 @@ function M:init(game, system)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
   self.playerEntities = assert(self.game.componentEntitySets.player)
-  self.characterComponents = assert(self.game.componentManagers.character)
+  self.characterStateComponents = assert(self.game.componentManagers.characterState)
 end
 
 function M:__call(dt)
-  local states = self.characterComponents.states
+  local states = self.characterStateComponents.states
 
   local leftInput = love.keyboard.isDown("a")
   local rightInput = love.keyboard.isDown("d")

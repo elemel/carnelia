@@ -10,7 +10,7 @@ function M:init(game, system)
   self.footEntities = assert(self.game.componentEntitySets.foot)
   self.leftEntities = assert(self.game.componentEntitySets.left)
 
-  self.characterComponents = assert(self.game.componentManagers.character)
+  self.characterStateComponents = assert(self.game.componentManagers.characterState)
   self.groundSensorComponents = assert(self.game.componentManagers.groundSensor)
   self.transformComponents = assert(self.game.componentManagers.transform)
 
@@ -26,7 +26,7 @@ end
 
 function M:__call(dt)
   local transforms = self.transformComponents.transforms
-  local states = self.characterComponents.states
+  local states = self.characterStateComponents.states
 
   for id in pairs(self.footEntities) do
     local lowerLegId = self.game.entityParents[id]

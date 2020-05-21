@@ -1,6 +1,8 @@
 return {
   components = {
     player = {},
+    character = {},
+    characterState = {},
     transform = {},
     bone = {},
 
