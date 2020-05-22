@@ -189,13 +189,13 @@ return {
       --   class = "heart.graphics.SpriteDebugDrawSystem",
       -- },
 
-      {
-        class = "heart.physics.FixtureDebugDrawSystem",
-      },
+      -- {
+      --   class = "heart.physics.FixtureDebugDrawSystem",
+      -- },
 
-      {
-        class = "heart.physics.JointDebugDrawSystem",
-      },
+      -- {
+      --   class = "heart.physics.JointDebugDrawSystem",
+      -- },
 
       -- {
       --   class = "heart.animation.BoneDebugDrawSystem",
@@ -208,11 +208,11 @@ return {
       --   color = {1, 0.5, 0, 1},
       -- },
 
-      {
-        class = "plotfarmer.RaySensorDebugDrawSystem",
-        color = {1, 0, 0, 1},
-        scale = 0.5,
-      },
+      -- {
+      --   class = "plotfarmer.RaySensorDebugDrawSystem",
+      --   color = {1, 0, 0, 1},
+      --   scale = 0.5,
+      -- },
     },
 
     fixedupdate = {
@@ -221,15 +221,15 @@ return {
       },
 
       {
+        class = "plotfarmer.SeesawFixedUpdateSystem",
+      },
+
+      {
         class = "plotfarmer.PlayerInputFixedUpdateSystem",
       },
 
       {
         class = "plotfarmer.PlantInputFixedUpdateSystem",
-      },
-
-      {
-        class = "plotfarmer.SeesawFixedUpdateSystem",
       },
 
       {
@@ -443,7 +443,7 @@ return {
 
       components = {
         transform = {
-          transform = {0, -3},
+          transform = {-3, -3},
         },
       },
     },

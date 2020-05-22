@@ -5,7 +5,9 @@ local M = heart.class.newClass()
 
 function M:init(game, system)
   self.game = assert(game)
+
   self.physicsDomain = assert(self.game.domains.physics)
+  self.timerDomain = assert(self.game.domains.timer)
 
   self.footEntities = assert(self.game.componentEntitySets.foot)
   self.leftEntities = assert(self.game.componentEntitySets.left)
@@ -13,18 +15,10 @@ function M:init(game, system)
   self.characterStateComponents = assert(self.game.componentManagers.characterState)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
   self.transformComponents = assert(self.game.componentManagers.transform)
-
-  local size = 0.75
-
-  self.corners = {
-    {0.5 * size, 0},
-    {0, 0.5 * size},
-    {-0.5 * size, 0},
-    {0, -0.5 * size},
-  }
 end
 
 function M:__call(dt)
+  local fixedTime = self.timerDomain:getFixedTime()
   local transforms = self.transformComponents.transforms
   local states = self.characterStateComponents.states
 
@@ -37,61 +31,48 @@ function M:__call(dt)
 
     local contact = self.raySensorComponents.contacts[characterId]
     local characterBody = self.physicsDomain.bodies[characterId]
-    local hipX, hipY = characterBody:getWorldPoint(side * 0.125, 0.25)
+    local hipX, hipY = characterBody:getWorldPoint(side * 0.125, 0.3)
 
-    for _, wheelId in ipairs(self.game:findDescendantComponents(characterId, "wheel")) do
-      local wheelBody = self.physicsDomain.bodies[wheelId]
+    local groundX, groundY, groundNormalX, groundNormalY
 
-      local footX = 0
-      local footY = -math.huge
+    if contact then
+      groundX = contact.x
+      groundY = contact.y
 
-      local groundX, groundY, groundNormalX, groundNormalY
+      groundNormalX = contact.normalX
+      groundNormalY = contact.normalY
+    else
+      groundX, groundY = characterBody:getWorldPoint(0, 1)
 
-      if contact then
-        groundX = contact.x
-        groundY = contact.y
-
-        groundNormalX = contact.normalX
-        groundNormalY = contact.normalY
-      else
-        groundX, groundY = characterBody:getWorldPoint(0, 1)
-
-        groundNormalX = 0
-        groundNormalY = -1
-      end
-
-      if state == "standing" then
-        local x, y = wheelBody:getPosition()
-
-        footX = groundX - side * groundNormalY * 0.375
-        footY = groundY + side * groundNormalX * 0.375
-      else
-        for i, corner in ipairs(self.corners) do
-          if (side == -1) == ((i % 2) == 0) then
-            local x, y = wheelBody:getWorldPoint(unpack(corner))
-
-            if y > footY then
-              footX = x
-              footY = y
-            end
-          end
-        end
-      end
-
-      local length = 1
-      local kneeX, kneeY, footX, footY = inverseKinematics.solve(hipX, hipY, footX, footY, length)
-
-      local distance = heart.math.distance2(hipX, hipY, footX, footY)
-      local legAngle = math.atan2(footY - hipY, footX - hipX) - 0.5 * math.pi
-
-      local kneeAngle = math.acos(math.min(distance / length, 1))
-
-      local footAngle = math.atan2(groundNormalY, groundNormalX) + 0.5 * math.pi
-
-      transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle)
-      transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle)
-      transforms[id]:setTransformation(footX, footY, footAngle)
+      groundNormalX = 0
+      groundNormalY = -1
     end
+
+    local groundTangentX = groundNormalY
+    local groundTangentY = -groundNormalX
+
+    if state == "standing" then
+      footX = groundX - side * groundTangentX * 0.375
+      footY = groundY - side * groundTangentY * 0.375
+    else
+      local angle = 10 * fixedTime + side * 0.5 * math.pi
+      footX = groundX + groundTangentX * 0.5 * math.cos(angle) + groundNormalX * 0.25 * math.max(0, 0.5 + math.sin(angle))
+      footY = groundY + groundTangentY * 0.5 * math.cos(angle) + groundNormalY * 0.25 * math.max(0, 0.5 + math.sin(angle))
+    end
+
+    local length = 1
+    local kneeX, kneeY, footX, footY = inverseKinematics.solve(hipX, hipY, footX, footY, length)
+
+    local distance = heart.math.distance2(hipX, hipY, footX, footY)
+    local legAngle = math.atan2(footY - hipY, footX - hipX) - 0.5 * math.pi
+
+    local kneeAngle = math.acos(math.min(distance / length, 1))
+
+    local footAngle = math.atan2(groundNormalY, groundNormalX) + 0.5 * math.pi
+
+    transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle)
+    transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle)
+    transforms[id]:setTransformation(footX, footY, footAngle)
   end
 end
 

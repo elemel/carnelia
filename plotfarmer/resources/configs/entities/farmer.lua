@@ -11,11 +11,6 @@ return {
       fixedRotation = true,
     },
 
-    circleFixture = {
-      radius = 0.375,
-      density = 2,
-    },
-
     raySensor = {
       ray = {0, 0, 0, 1.5},
     },
@@ -24,6 +19,42 @@ return {
   },
 
   children = {
+    {
+      components = {
+        transform = {
+          transform = {0, -0.625},
+        },
+
+        circleFixture = {
+          radius = 0.25,
+        },
+      },
+    },
+
+    {
+      components = {
+        transform = {
+          transform = {0, -0.125},
+        },
+
+        circleFixture = {
+          radius = 0.375,
+        },
+      },
+    },
+
+    {
+      components = {
+        transform = {
+          transform = {0, 0.125},
+        },
+
+        circleFixture = {
+          radius = 0.375,
+        },
+      },
+    },
+
     {
       components = {
         transform = {
@@ -68,38 +99,6 @@ return {
 
         sprite = {
           image = "plotfarmer/resources/images/sandbag.png",
-        },
-      },
-    },
-
-    {
-      components = {
-        wheel = {},
-
-        transform = {
-          transform = {0, 0.75},
-        },
-
-        body = {
-          bodyType = "dynamic",
-        },
-
-        -- rectangleFixture = {
-        --   width = 0.75,
-        --   height = 0.75,
-        --   friction = 5,
-        -- },
-
-        circleFixture = {
-          radius = 0.375,
-          friction = 20,
-          density = 0.5,
-        },
-
-        wheelJoint = {
-          springFrequency = 5,
-          springDampingRatio = 1,
-          maxMotorTorque = 10,
         },
       },
     },
