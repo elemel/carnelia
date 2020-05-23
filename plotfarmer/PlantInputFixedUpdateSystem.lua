@@ -9,10 +9,10 @@ function M:init(game, system)
   self.physicsDomain = assert(self.game.domains.physics)
 
   self.plantEntities = assert(self.game.componentEntitySets.plant)
+  self.playerComponents = assert(self.game.componentManagers.player)
 
   self.transformComponents =
     assert(self.game.componentManagers.transform)
-
 
   self.parentConstraintComponents =
     assert(self.game.componentManagers.parentConstraint)
@@ -137,9 +137,11 @@ function M:__call(dt)
       localTransform:setTransformation(x, y, angle)
       enabledFlags[id] = true
 
+      -- TODO: Extract head animation
       for _, headId in ipairs(self.game:findDescendantComponents(parentId, "head")) do
         localTransforms[headId]:setTransformation(0, -0.55, 0.5 * angle, 1 / 32, 1 / 32, 10, 8)
 
+        -- TODO: Find a better way to keep the z-coordinate
         localTransforms[headId]:apply(love.math.newTransform():setMatrix(
           1, 0, 0, 0,
           0, 1, 0, 0,
