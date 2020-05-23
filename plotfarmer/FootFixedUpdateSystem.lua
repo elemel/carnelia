@@ -17,7 +17,7 @@ function M:init(game, system)
   self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
-function M:__call(dt)
+function M:handleEvent(dt)
   local fixedTime = self.timerDomain:getFixedTime()
   local transforms = self.transformComponents.transforms
   local states = self.characterStateComponents.states

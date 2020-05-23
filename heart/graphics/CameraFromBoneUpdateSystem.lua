@@ -15,10 +15,10 @@ function M:init(game, config)
   self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
-function M:__call(dt)
+function M:handleEvent(dt)
   local previousTransforms = self.boneComponents.previousTransforms
   local transforms = self.transformComponents.transforms
-  local t = self.timerDomain.accumulatedDt / self.timerDomain.fixedDt
+  local t = self.timerDomain:getFraction()
   local cameraTransforms = self.cameraComponents.transforms
 
   for id in pairs(self.cameraEntities) do

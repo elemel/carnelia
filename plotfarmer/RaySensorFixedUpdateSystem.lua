@@ -8,7 +8,7 @@ function M:init(game, config)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
 end
 
-function M:__call(dt)
+function M:handleEvent(dt)
   local filters = self.raySensorComponents.filters
   local bodies = self.physicsDomain.bodies
   local contacts = self.raySensorComponents.contacts

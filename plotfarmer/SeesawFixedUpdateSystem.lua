@@ -9,7 +9,7 @@ function M:init(game, config)
   self.fixedTime = 0
 end
 
-function M:__call(dt)
+function M:handleEvent(dt)
   self.fixedTime = self.fixedTime + dt
   local targetAngle = 0.125 * math.pi * math.sin(self.fixedTime)
 

@@ -10,7 +10,7 @@ function M:init(game, config)
   self.bounds = config.bounds or {-1, -1, 1, 1}
 end
 
-function M:__call(dt)
+function M:handleEvent(dt)
   local transforms = self.transformComponents.transforms
   local minX, minY, maxX, maxY = unpack(self.bounds)
 

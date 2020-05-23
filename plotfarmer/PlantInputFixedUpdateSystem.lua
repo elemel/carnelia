@@ -20,7 +20,7 @@ function M:init(game, system)
   self.mouseDown = love.mouse.isDown()
 end
 
-function M:__call(dt)
+function M:handleEvent(dt)
   local transforms = self.transformComponents.transforms
   local localTransforms = self.parentConstraintComponents.localTransforms
   local enabledFlags = self.parentConstraintComponents.enabledFlags

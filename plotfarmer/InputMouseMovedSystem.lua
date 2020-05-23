@@ -7,7 +7,7 @@ function M:init(game, config)
   self.inputDomain = assert(self.game.domains.input)
 end
 
-function M:__call(x, y, dx, dy, istouch)
+function M:handleEvent(x, y, dx, dy, istouch)
   self.inputDomain.accumulatedMouseDx = self.inputDomain.accumulatedMouseDx + dx
   self.inputDomain.accumulatedMouseDy = self.inputDomain.accumulatedMouseDy + dy
 end

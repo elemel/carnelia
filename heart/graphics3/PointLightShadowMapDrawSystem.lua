@@ -34,10 +34,8 @@ function M:init(game, config)
   self.shader = love.graphics.newShader(vertexShaderCode)
 end
 
-function M:__call()
-  local timeStepFraction =
-    self.fixedTimeStepDomain.accumulatedTimeStep /
-    self.fixedTimeStepDomain.fixedTimeStep
+function M:handleEvent()
+  local timeStepFraction = self.timerDomain:getFraction()
 
   love.graphics.setDepthMode("less", true)
   love.graphics.setShader(self.shader)

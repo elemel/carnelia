@@ -14,7 +14,7 @@ function M:init(game, system)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
 end
 
-function M:__call(dt)
+function M:handleEvent(dt)
   local fixedTime = self.timerDomain:getFixedTime()
 
   local bodies = self.physicsDomain.bodies

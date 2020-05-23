@@ -16,7 +16,7 @@ function M:init(game, system)
   self.boneComponents = assert(self.game.componentManagers.bone)
 end
 
-function M:__call(viewportId)
+function M:handleEvent(viewportId)
   local lineWidth = love.graphics.getLineWidth()
   local lineJoin = love.graphics.getLineJoin()
   local r, g, b, a = love.graphics.getColor()
