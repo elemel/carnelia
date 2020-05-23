@@ -5,14 +5,14 @@ local M = heart.class.newClass()
 function M:init(game, config)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
-  self.transformManager = assert(self.game.componentManagers.transform)
+  self.transformComponents = assert(self.game.componentManagers.transform)
   self.localRays = {}
   self.filters = {}
   self.contacts = {}
 end
 
 function M:createComponent(id, config)
-  local transform = self.transformManager.transforms[id]
+  local transform = self.transformComponents.transforms[id]
   local body = self.physicsDomain.bodies[id]
   local ray = config.ray or {0, 0, 0, 1}
   local x1, y1, x2, y2 = unpack(ray)
