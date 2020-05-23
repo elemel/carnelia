@@ -14,7 +14,7 @@ return {
 
     {
       domainType = "input",
-      class = "plotfarmer.InputDomain",
+      class = "carnelia.InputDomain",
     },
   },
 
@@ -73,7 +73,7 @@ return {
 
     {
       componentType = "character",
-      class = "plotfarmer.CharacterComponentManager",
+      class = "carnelia.CharacterComponentManager",
     },
 
     {
@@ -153,12 +153,12 @@ return {
 
     {
       componentType = "raySensor",
-      class = "plotfarmer.RaySensorComponentManager",
+      class = "carnelia.RaySensorComponentManager",
     },
 
     {
       componentType = "groundFilter",
-      class = "plotfarmer.GroundFilterComponentManager",
+      class = "carnelia.GroundFilterComponentManager",
     },
 
     {
@@ -176,7 +176,7 @@ return {
 
     drawworld = {
       {
-        class = "plotfarmer.StalkDrawWorldSystem",
+        class = "carnelia.StalkDrawWorldSystem",
       },
 
       {
@@ -209,7 +209,7 @@ return {
       -- },
 
       -- {
-      --   class = "plotfarmer.RaySensorDebugDrawSystem",
+      --   class = "carnelia.RaySensorDebugDrawSystem",
       --   color = {1, 0, 0, 1},
       --   scale = 0.5,
       -- },
@@ -221,15 +221,15 @@ return {
       },
 
       {
-        class = "plotfarmer.SeesawFixedUpdateSystem",
+        class = "carnelia.SeesawFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.PlayerInputFixedUpdateSystem",
+        class = "carnelia.PlayerInputFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.PlantInputFixedUpdateSystem",
+        class = "carnelia.PlantInputFixedUpdateSystem",
       },
 
       {
@@ -241,15 +241,15 @@ return {
       },
 
       {
-        class = "plotfarmer.RaySensorFixedUpdateSystem",
+        class = "carnelia.RaySensorFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.FootFixedUpdateSystem",
+        class = "carnelia.FootFixedUpdateSystem",
       },
 
       {
-        class = "plotfarmer.PlayerToCameraUpdateSystem",
+        class = "carnelia.PlayerToCameraUpdateSystem",
         bounds = {-10, -5, 10, 5},
       },
 
@@ -260,7 +260,7 @@ return {
 
     mousemoved = {
       {
-        class = "plotfarmer.InputMouseMovedSystem",
+        class = "carnelia.InputMouseMovedSystem",
       },
     },
 
@@ -340,7 +340,7 @@ return {
             },
 
             sprite = {
-              image = "plotfarmer/resources/images/grass.png",
+              image = "carnelia/resources/images/grass.png",
             },
           },
         },
@@ -352,7 +352,7 @@ return {
             },
 
             sprite = {
-              image = "plotfarmer/resources/images/grass.png",
+              image = "carnelia/resources/images/grass.png",
             },
           },
         },
@@ -364,7 +364,7 @@ return {
             },
 
             sprite = {
-              image = "plotfarmer/resources/images/grass.png",
+              image = "carnelia/resources/images/grass.png",
             },
           },
         },
@@ -376,7 +376,7 @@ return {
             },
 
             sprite = {
-              image = "plotfarmer/resources/images/grass.png",
+              image = "carnelia/resources/images/grass.png",
             },
           },
         },
@@ -388,7 +388,7 @@ return {
             },
 
             sprite = {
-              image = "plotfarmer/resources/images/grass.png",
+              image = "carnelia/resources/images/grass.png",
             },
           },
         },
@@ -400,7 +400,7 @@ return {
             },
 
             sprite = {
-              image = "plotfarmer/resources/images/grass.png",
+              image = "carnelia/resources/images/grass.png",
             },
           },
         },
@@ -412,7 +412,7 @@ return {
             },
 
             sprite = {
-              image = "plotfarmer/resources/images/grass.png",
+              image = "carnelia/resources/images/grass.png",
             },
           },
         },
@@ -420,7 +420,7 @@ return {
     },
 
     {
-      prototype = "plotfarmer.resources.configs.entities.seesaw",
+      prototype = "carnelia.resources.configs.entities.seesaw",
     },
 
     {
@@ -439,7 +439,7 @@ return {
     },
 
     {
-      prototype = "plotfarmer.resources.configs.entities.farmer",
+      prototype = "carnelia.resources.configs.entities.farmer",
 
       components = {
         transform = {

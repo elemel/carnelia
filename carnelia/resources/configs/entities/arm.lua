@@ -16,7 +16,7 @@ return {
         parentConstraint = {},
 
         sprite = {
-          image = "plotfarmer/resources/images/skins/player/upperArm.png",
+          image = "carnelia/resources/images/skins/player/upperArm.png",
           z = 0.1,
         },
       },
@@ -43,7 +43,7 @@ return {
             parentConstraint = {},
 
             sprite = {
-              image = "plotfarmer/resources/images/skins/player/lowerArm.png",
+              image = "carnelia/resources/images/skins/player/lowerArm.png",
               z = 0.1,
             },
           },
@@ -72,7 +72,7 @@ return {
                 parentConstraint = {},
 
                 sprite = {
-                  image = "plotfarmer/resources/images/skins/player/hand.png",
+                  image = "carnelia/resources/images/skins/player/hand.png",
                   z = 0.1,
                 },
               },

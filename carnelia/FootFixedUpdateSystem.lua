@@ -1,5 +1,5 @@
 local heart = require("heart")
-local inverseKinematics = require("plotfarmer.inverseKinematics")
+local inverseKinematics = require("carnelia.inverseKinematics")
 
 local M = heart.class.newClass()
 

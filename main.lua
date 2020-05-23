@@ -1,7 +1,7 @@
 local heart = require("heart")
 
 function love.load()
-  love.window.setTitle("Plotfarmer")
+  love.window.setTitle("Carnelia")
 
   love.window.setMode(800, 600, {
     fullscreentype = "desktop",
@@ -23,7 +23,7 @@ function love.load()
     image = heart.graphics.ImageResourceLoader.new(),
   }
 
-  local config = require("plotfarmer.resources.configs.game")
+  local config = require("carnelia.resources.configs.game")
   game = heart.Game.new(resourceLoaders, config)
 end
 

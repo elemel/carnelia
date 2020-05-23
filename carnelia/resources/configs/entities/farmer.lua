@@ -65,7 +65,7 @@ return {
         parentConstraint = {},
 
         sprite = {
-          image = "plotfarmer/resources/images/skins/player/trunk.png",
+          image = "carnelia/resources/images/skins/player/trunk.png",
         },
       },
     },
@@ -82,7 +82,7 @@ return {
         parentConstraint = {},
 
         sprite = {
-          image = "plotfarmer/resources/images/skins/player/head.png",
+          image = "carnelia/resources/images/skins/player/head.png",
         },
       },
     },
@@ -98,13 +98,13 @@ return {
         parentConstraint = {},
 
         sprite = {
-          image = "plotfarmer/resources/images/sandbag.png",
+          image = "carnelia/resources/images/sandbag.png",
         },
       },
     },
 
     {
-      prototype = "plotfarmer.resources.configs.entities.arm",
+      prototype = "carnelia.resources.configs.entities.arm",
 
       components = {
         left = {},
@@ -117,7 +117,7 @@ return {
     },
 
     {
-      prototype = "plotfarmer.resources.configs.entities.leg",
+      prototype = "carnelia.resources.configs.entities.leg",
 
       components = {
         left = {},
@@ -129,7 +129,7 @@ return {
     },
 
     {
-      prototype = "plotfarmer.resources.configs.entities.leg",
+      prototype = "carnelia.resources.configs.entities.leg",
 
       components = {
         right = {},
@@ -163,7 +163,7 @@ return {
             parentConstraint = {},
 
             sprite = {
-              image = "plotfarmer/resources/images/plant.png",
+              image = "carnelia/resources/images/plant.png",
               z = -0.1,
             },
           },
