@@ -40,11 +40,6 @@ return {
     },
 
     {
-      componentType = "plant",
-      class = "heart.CategoryComponentManager",
-    },
-
-    {
       componentType = "player",
       class = "heart.CategoryComponentManager",
     },
@@ -69,11 +64,6 @@ return {
       class = "heart.StateComponentManager",
       defaultState = "falling",
       validStates = {"falling", "running", "standing"},
-    },
-
-    {
-      componentType = "character",
-      class = "carnelia.CharacterComponentManager",
     },
 
     {
@@ -164,6 +154,16 @@ return {
     {
       componentType = "sprite",
       class = "heart.graphics.SpriteComponentManager",
+    },
+
+    {
+      componentType = "character",
+      class = "carnelia.CharacterComponentManager",
+    },
+
+    {
+      componentType = "plant",
+      class = "carnelia.PlantComponentManager",
     },
   },
 
@@ -277,6 +277,7 @@ return {
 
       {
         class = "heart.graphics.SpriteFromBoneUpdateSystem",
+        hardFlipEnabled = true,
       },
 
       {
@@ -341,6 +342,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/grass.png",
+              z = -1,
             },
           },
         },
@@ -353,6 +355,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/grass.png",
+              z = -1,
             },
           },
         },
@@ -365,6 +368,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/grass.png",
+              z = -1,
             },
           },
         },
@@ -377,6 +381,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/grass.png",
+              z = -1,
             },
           },
         },
@@ -389,6 +394,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/grass.png",
+              z = -1,
             },
           },
         },
@@ -401,6 +407,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/grass.png",
+              z = -1,
             },
           },
         },
@@ -413,6 +420,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/grass.png",
+              z = -1,
             },
           },
         },

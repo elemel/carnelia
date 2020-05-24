@@ -9,13 +9,15 @@ function M:init(game, system)
   self.physicsDomain = assert(self.game.domains.physics)
 
   self.plantEntities = assert(self.game.componentEntitySets.plant)
-  self.playerComponents = assert(self.game.componentManagers.player)
-
-  self.transformComponents =
-    assert(self.game.componentManagers.transform)
+  self.characterComponents = assert(self.game.componentManagers.character)
 
   self.parentConstraintComponents =
     assert(self.game.componentManagers.parentConstraint)
+
+  self.plantComponents = assert(self.game.componentManagers.plant)
+
+  self.transformComponents =
+    assert(self.game.componentManagers.transform)
 
   self.mouseDown = love.mouse.isDown()
 end
@@ -27,6 +29,9 @@ function M:handleEvent(dt)
   local distanceJoints = self.physicsDomain.distanceJoints
   local ropeJoints = self.physicsDomain.ropeJoints
   local bodies = self.physicsDomain.bodies
+
+  local localXs = self.plantComponents.localXs
+  local localYs = self.plantComponents.localYs
 
   local dx = self.inputDomain.accumulatedMouseDx
   local dy = self.inputDomain.accumulatedMouseDy
@@ -42,13 +47,10 @@ function M:handleEvent(dt)
 
     if mouseDown then
       if not self.mouseDown then
-        local localTransform = localTransforms[id]
-        local x, y = localTransform:transformPoint(0, 0)
-
         local parentBody = bodies[parentId]
 
         local x1, y1 = parentBody:getPosition()
-        local x2, y2 = parentBody:getWorldPoint(x, y)
+        local x2, y2 = parentBody:getWorldPoint(localXs[id], localYs[id])
 
         local hitFixture, hitX, hitY
 
@@ -124,17 +126,17 @@ function M:handleEvent(dt)
 
     if distanceJoints[id] or ropeJoints[id] then
     else
-      local localTransform = localTransforms[id]
-      local x, y = localTransform:transformPoint(0, 0)
+      localXs[id] = localXs[id] + sensitivity * dx
+      localYs[id] = localYs[id] + sensitivity * dy
 
-      x = x + sensitivity * dx
-      y = y + sensitivity * dy
+      localXs[id], localYs[id] = heart.math.clampLength2(localXs[id], localYs[id], 0, 5)
 
-      x, y = heart.math.clampLength2(x, y, 0, 10)
+      local directionX = localXs[id] < 0 and -1 or 1
+      self.characterComponents:setDirectionX(parentId, directionX)
 
-      local angle = math.atan2(y, x)
+      local angle = math.atan2(localYs[id], directionX * localXs[id])
 
-      localTransform:setTransformation(x, y, angle)
+      localTransforms[id]:setTransformation(directionX * localXs[id], localYs[id], angle)
       enabledFlags[id] = true
 
       -- TODO: Extract head animation

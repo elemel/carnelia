@@ -12,6 +12,7 @@ function M:init(game, system)
   self.footEntities = assert(self.game.componentEntitySets.foot)
   self.leftEntities = assert(self.game.componentEntitySets.left)
 
+  self.characterComponents = assert(self.game.componentManagers.character)
   self.characterStateComponents = assert(self.game.componentManagers.characterState)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
   self.transformComponents = assert(self.game.componentManagers.transform)
@@ -21,11 +22,18 @@ function M:handleEvent(dt)
   local fixedTime = self.timerDomain:getFixedTime()
   local transforms = self.transformComponents.transforms
   local states = self.characterStateComponents.states
+  local directionXs = self.characterComponents.directionXs
+
+  -- TODO: Use state updated elsewhere
+  local leftInput = love.keyboard.isDown("a")
+  local rightInput = love.keyboard.isDown("d")
+  local inputX = (rightInput and 1 or 0) - (leftInput and 1 or 0)
 
   for id in pairs(self.footEntities) do
     local lowerLegId = self.game.entityParents[id]
     local upperLegId = self.game.entityParents[lowerLegId]
     local characterId = self.game.entityParents[upperLegId]
+    local directionX = directionXs[characterId]
     local side = self.leftEntities[upperLegId] and -1 or 1
     local state = states[characterId]
 
@@ -55,24 +63,24 @@ function M:handleEvent(dt)
       footX = groundX - side * groundTangentX * 0.375
       footY = groundY - side * groundTangentY * 0.375
     else
-      local angle = 10 * fixedTime + side * 0.5 * math.pi
+      local angle = inputX * 10 * fixedTime + side * 0.5 * math.pi
       footX = groundX + groundTangentX * 0.5 * math.cos(angle) + groundNormalX * 0.25 * math.max(0, 0.5 + math.sin(angle))
       footY = groundY + groundTangentY * 0.5 * math.cos(angle) + groundNormalY * 0.25 * math.max(0, 0.5 + math.sin(angle))
     end
 
     local length = 1
-    local kneeX, kneeY, footX, footY = inverseKinematics.solve(hipX, hipY, footX, footY, length)
+    local kneeX, kneeY, footX, footY = inverseKinematics.solve(hipX, hipY, footX, footY, directionX * length)
 
     local distance = heart.math.distance2(hipX, hipY, footX, footY)
-    local legAngle = math.atan2(footY - hipY, footX - hipX) - 0.5 * math.pi
+    local legAngle = math.atan2(footY - hipY, footX - hipX) - directionX * 0.5 * math.pi
 
-    local kneeAngle = math.acos(math.min(distance / length, 1))
+    local kneeAngle = math.acos(directionX * math.min(distance / length, 1))
 
     local footAngle = math.atan2(groundNormalY, groundNormalX) + 0.5 * math.pi
 
-    transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle)
-    transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle)
-    transforms[id]:setTransformation(footX, footY, footAngle)
+    transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle, directionX, 1)
+    transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle, directionX, 1)
+    transforms[id]:setTransformation(footX, footY, footAngle, directionX, 1)
   end
 end
 
