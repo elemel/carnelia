@@ -122,6 +122,12 @@ function M:handleEvent(dt)
       end
     else
       if distanceJoints[id] or ropeJoints[id] then
+        local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
+        local x, y = bodies[parentId]:getPosition()
+
+        localXs[id] = x1 - x
+        localYs[id] = y1 - y
+
         -- self.game:destroyComponent(id, "ropeJoint")
         self.game:destroyComponent(id, "distanceJoint")
 
@@ -132,6 +138,14 @@ function M:handleEvent(dt)
 
     if distanceJoints[id] or ropeJoints[id] then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
+      local x, y = bodies[parentId]:getPosition()
+
+      localXs[id] = x1 - x
+      localYs[id] = y1 - y
+
+      local directionX = localXs[id] < 0 and -1 or 1
+      self.characterComponents:setDirectionX(parentId, directionX)
+
       transforms[id]:setTransformation(x1, y1, 0.5 * math.pi)
     else
       localXs[id] = localXs[id] + sensitivity * dx
