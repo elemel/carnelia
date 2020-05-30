@@ -1,6 +1,7 @@
 return {
   components = {
     transform = {},
+    bone = {},
 
     body = {
       bodyType = "kinematic",
@@ -13,7 +14,7 @@ return {
       -- sensor = true,
     },
 
-    -- seesaw = {},
+    seesaw = {},
   },
 
   children = {
