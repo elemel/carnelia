@@ -50,10 +50,9 @@ function M:handleEvent(dt)
       groundNormalX = contact.normalX
       groundNormalY = contact.normalY
     else
-      groundX, groundY = characterBody:getWorldPoint(0, 1)
+      groundX, groundY = characterBody:getWorldPoint(0, 1.125)
 
-      groundNormalX = 0
-      groundNormalY = -1
+      groundNormalX, groundNormalY = characterBody:getWorldVector(0, -1)
     end
 
     local groundTangentX = groundNormalY
