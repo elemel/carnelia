@@ -176,11 +176,11 @@ return {
 
     drawworld = {
       {
-        class = "carnelia.StalkDrawWorldSystem",
+        class = "heart.graphics.SpriteDrawWorldSystem",
       },
 
       {
-        class = "heart.graphics.SpriteDrawWorldSystem",
+        class = "carnelia.StalkDrawWorldSystem",
       },
     },
 
@@ -208,11 +208,11 @@ return {
       --   color = {1, 0.5, 0, 1},
       -- },
 
-      {
-        class = "heart.physics.RaySensorDebugDrawSystem",
-        color = {1, 0, 0, 1},
-        scale = 0.5,
-      },
+      -- {
+      --   class = "heart.physics.RaySensorDebugDrawSystem",
+      --   color = {1, 0, 0, 1},
+      --   scale = 0.5,
+      -- },
     },
 
     fixedupdate = {
