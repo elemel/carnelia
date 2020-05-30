@@ -7,12 +7,30 @@ return {
     },
 
     rectangleFixture = {
-      width = 10,
+      width = 16,
       height = 0.5,
       friction = 1,
-      sensor = true,
+      -- sensor = true,
     },
 
-    seesaw = {},
+    -- seesaw = {},
+  },
+
+  children = {
+    {
+      components = {
+        transform = {
+          transform = {0, 0, 0, 1 / 32, 1 / 32, 256, 8},
+        },
+
+        bone = {},
+        parentConstraint = {},
+
+        sprite = {
+          image = "carnelia/resources/images/seesaw.png",
+          z = 0.1,
+        },
+      },
+    },
   },
 }

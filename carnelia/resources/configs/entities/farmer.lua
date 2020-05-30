@@ -12,7 +12,7 @@ return {
     },
 
     raySensor = {
-      ray = {0, 0, 0, 1.5},
+      ray = {0, 0, 0, 1.75},
     },
 
     groundFilter = {},
@@ -149,14 +149,17 @@ return {
         },
 
         bone = {},
-        parentConstraint = {},
+
+        parentConstraint = {
+          enabled = false,
+        },
       },
 
       children = {
         {
           components = {
             transform = {
-              transform = {0, 0, 0, 1 / 32, 1 / 32, 19, 15},
+              transform = {0, 0, 0, 1 / 32, 1 / 32, 5, 13},
             },
 
             bone = {},

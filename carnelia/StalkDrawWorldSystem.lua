@@ -21,7 +21,7 @@ function M:handleEvent(viewportId)
   local lineJoin = love.graphics.getLineJoin()
   local r, g, b, a = love.graphics.getColor()
 
-  love.graphics.setLineWidth(0.15)
+  love.graphics.setLineWidth(0.1)
   love.graphics.setLineJoin("none")
   love.graphics.setColor(0.4, 0.8, 0.2, 1)
 
@@ -34,7 +34,7 @@ function M:handleEvent(viewportId)
     local x1, y1 = transformPoint(previousTransforms, transforms, parentId, -0.25, -0.8, t)
     local x2, y2 = transformPoint(previousTransforms, transforms, parentId, -0.25, -2.8, t)
     local x3, y3 = transformPoint(previousTransforms, transforms, id, -2.5, 0, t)
-    local x4, y4 = transformPoint(previousTransforms, transforms, id, -0.5, 0, t)
+    local x4, y4 = transformPoint(previousTransforms, transforms, id, 0, 0, t)
 
     local curve = love.math.newBezierCurve(x1, y1, x2, y2, x3, y3, x4, y4)
     love.graphics.line(curve:render())

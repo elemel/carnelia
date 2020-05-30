@@ -50,7 +50,9 @@ function M:handleEvent(dt)
         local parentBody = bodies[parentId]
 
         local x1, y1 = parentBody:getPosition()
-        local x2, y2 = parentBody:getWorldPoint(localXs[id], localYs[id])
+
+        local x2 = x1 + localXs[id]
+        local y2 = y1 + localYs[id]
 
         local hitFixture, hitX, hitY
 
@@ -78,7 +80,8 @@ function M:handleEvent(dt)
 
         if hitFixture then
           local ropeX1, ropeY1 = transforms[id]:inverseTransformPoint(hitX, hitY)
-          local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(x1, y1)
+          local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(x1, y1 - 1.25)
+
           local maxLength = heart.math.distance2(hitX, hitY, x1, y1)
 
           -- self.game:createComponent(id, "ropeJoint", {
@@ -103,15 +106,15 @@ function M:handleEvent(dt)
             y1 = ropeY1,
 
             x2 = ropeX2,
-            y2 = ropeY2 - 1.25,
+            y2 = ropeY2,
 
             frequency = 1,
-            dampingRatio = 0,
+            dampingRatio = 0.1,
 
             collideConnected = true,
           })
 
-          -- bodies[parentId]:setFixedRotation(false)
+          bodies[parentId]:setFixedRotation(false)
         end
       end
     else
@@ -119,29 +122,33 @@ function M:handleEvent(dt)
         -- self.game:destroyComponent(id, "ropeJoint")
         self.game:destroyComponent(id, "distanceJoint")
 
-        -- bodies[parentId]:setFixedRotation(true)
-        -- bodies[parentId]:setAngle(0)
+        bodies[parentId]:setFixedRotation(true)
+        bodies[parentId]:setAngle(0)
       end
     end
 
     if distanceJoints[id] or ropeJoints[id] then
+      local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
+      transforms[id]:setTransformation(x1, y1, 0.5 * math.pi)
     else
       localXs[id] = localXs[id] + sensitivity * dx
       localYs[id] = localYs[id] + sensitivity * dy
 
-      localXs[id], localYs[id] = heart.math.clampLength2(localXs[id], localYs[id], 0, 5)
+      localXs[id], localYs[id] = heart.math.clampLength2(localXs[id], localYs[id], 0, 7.5)
 
       local directionX = localXs[id] < 0 and -1 or 1
       self.characterComponents:setDirectionX(parentId, directionX)
 
-      local angle = math.atan2(localYs[id], directionX * localXs[id])
+      local angle = math.atan2(localYs[id], localXs[id])
+      local parentX, parentY = bodies[parentId]:getPosition()
 
-      localTransforms[id]:setTransformation(directionX * localXs[id], localYs[id], angle)
-      enabledFlags[id] = true
+      transforms[id]:setTransformation(parentX + localXs[id], parentY + localYs[id], angle, 1, directionX)
+      -- enabledFlags[id] = true
 
       -- TODO: Extract head animation
       for _, headId in ipairs(self.game:findDescendantComponents(parentId, "head")) do
-        localTransforms[headId]:setTransformation(0, -0.55, 0.5 * angle, 1 / 32, 1 / 32, 10, 8)
+        local headAngle = 0.5 * math.atan2(localYs[id], directionX * localXs[id])
+        localTransforms[headId]:setTransformation(0, -0.55, headAngle, 1 / 32, 1 / 32, 10, 8)
 
         -- TODO: Find a better way to keep the z-coordinate
         localTransforms[headId]:apply(love.math.newTransform():setMatrix(

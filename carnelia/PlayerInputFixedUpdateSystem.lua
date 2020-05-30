@@ -51,10 +51,11 @@ function M:handleEvent(dt)
       local contactLinearVelocityX, contactLinearVelocityY =
         contact.fixture:getBody():getLinearVelocityFromWorldPoint(contact.x, contact.y)
 
-      local velocityErrorX = contactLinearVelocityX + 5 * inputX - linearVelocityX
+      local velocityErrorX = contactLinearVelocityX + 10 * inputX - linearVelocityX
 
       local velocityErrorY = contactLinearVelocityY - linearVelocityY - linearVelocityX * tangentY
-      body:applyForce(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
+      --body:applyForce(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
+      body:applyForce(0, math.min(0, -stiffness * mass * positionError + damping * mass * velocityErrorY))
 
       body:applyForce(-10 * mass * velocityErrorX * tangentX, -10 * mass * velocityErrorX * tangentY)
     end

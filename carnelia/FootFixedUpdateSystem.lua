@@ -60,12 +60,12 @@ function M:handleEvent(dt)
     local groundTangentY = -groundNormalX
 
     if state == "standing" then
-      footX = groundX - side * groundTangentX * 0.375
-      footY = groundY - side * groundTangentY * 0.375
+      footX = groundX + (directionX * 0.075 - side * 0.375) * groundTangentX
+      footY = groundY + (directionX * 0.075 - side * 0.375) * groundTangentY
     else
       local angle = inputX * 10 * fixedTime + side * 0.5 * math.pi
-      footX = groundX + groundTangentX * 0.5 * math.cos(angle) + groundNormalX * 0.25 * math.max(0, 0.5 + math.sin(angle))
-      footY = groundY + groundTangentY * 0.5 * math.cos(angle) + groundNormalY * 0.25 * math.max(0, 0.5 + math.sin(angle))
+      footX = groundX + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentX + groundNormalX * 0.25 * math.max(0, 0.5 + math.sin(angle))
+      footY = groundY + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentY + groundNormalY * 0.25 * math.max(0, 0.5 + math.sin(angle))
     end
 
     local length = 1
