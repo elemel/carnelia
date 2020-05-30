@@ -143,7 +143,7 @@ return {
 
     {
       componentType = "raySensor",
-      class = "carnelia.RaySensorComponentManager",
+      class = "heart.physics.RaySensorComponentManager",
     },
 
     {
@@ -208,11 +208,11 @@ return {
       --   color = {1, 0.5, 0, 1},
       -- },
 
-      -- {
-      --   class = "carnelia.RaySensorDebugDrawSystem",
-      --   color = {1, 0, 0, 1},
-      --   scale = 0.5,
-      -- },
+      {
+        class = "heart.physics.RaySensorDebugDrawSystem",
+        color = {1, 0, 0, 1},
+        scale = 0.5,
+      },
     },
 
     fixedupdate = {
@@ -241,7 +241,7 @@ return {
       },
 
       {
-        class = "carnelia.RaySensorFixedUpdateSystem",
+        class = "heart.physics.RaySensorFixedUpdateSystem",
       },
 
       {
