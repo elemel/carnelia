@@ -245,7 +245,7 @@ return {
       },
 
       {
-        class = "carnelia.FootFixedUpdateSystem",
+        class = "carnelia.CharacterAnimationFixedUpdateSystem",
       },
 
       {
