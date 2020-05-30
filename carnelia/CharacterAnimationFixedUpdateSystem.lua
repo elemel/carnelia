@@ -9,24 +9,32 @@ function M:init(game, system)
   self.physicsDomain = assert(self.game.domains.physics)
   self.timerDomain = assert(self.game.domains.timer)
 
+  self.characterEntities = assert(self.game.componentEntitySets.character)
   self.footEntities = assert(self.game.componentEntitySets.foot)
   self.leftEntities = assert(self.game.componentEntitySets.left)
 
   self.characterComponents = assert(self.game.componentManagers.character)
   self.characterStateComponents = assert(self.game.componentManagers.characterState)
+  self.parentConstraintComponents = assert(self.game.componentManagers.parentConstraint)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
   self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
 function M:handleEvent(dt)
   local fixedTime = self.timerDomain:getFixedTime()
+
+  local bodies = self.physicsDomain.bodies
   local transforms = self.transformComponents.transforms
   local states = self.characterStateComponents.states
   local directionXs = self.characterComponents.directionXs
   local inputXs = self.characterComponents.inputXs
+  local localTransforms = self.parentConstraintComponents.localTransforms
 
-  for id in pairs(self.footEntities) do
-    local lowerLegId = self.game.entityParents[id]
+  local targetXs = self.characterComponents.targetXs
+  local targetYs = self.characterComponents.targetYs
+
+  for footId in pairs(self.footEntities) do
+    local lowerLegId = self.game.entityParents[footId]
     local upperLegId = self.game.entityParents[lowerLegId]
     local characterId = self.game.entityParents[upperLegId]
     local directionX = directionXs[characterId]
@@ -75,7 +83,25 @@ function M:handleEvent(dt)
 
     transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle, directionX, 1)
     transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle, directionX, 1)
-    transforms[id]:setTransformation(footX, footY, footAngle, directionX, 1)
+    transforms[footId]:setTransformation(footX, footY, footAngle, directionX, 1)
+  end
+
+  for id in pairs(self.characterEntities) do
+    for _, headId in ipairs(self.game:findDescendantComponents(id, "head")) do
+      local localTargetX, localTargetY = bodies[id]:getLocalPoint(targetXs[id], targetYs[id])
+
+      local headAngle = 0.5 * heart.math.clamp(
+        math.atan2(localTargetY, directionXs[id] * localTargetX), -0.5 * math.pi, 0.5 * math.pi)
+
+      localTransforms[headId]:setTransformation(0, -0.55, headAngle, 1 / 32, 1 / 32, 10, 8)
+
+      -- TODO: Find a better way to keep the z-coordinate
+      localTransforms[headId]:apply(love.math.newTransform():setMatrix(
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0.1,
+        0, 0, 0, 1))
+    end
   end
 end
 

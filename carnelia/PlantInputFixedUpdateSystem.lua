@@ -42,6 +42,9 @@ function M:handleEvent(dt)
   local sensitivity = 0.01
   local mouseDown = love.mouse.isDown(1)
 
+  local targetXs = self.characterComponents.targetXs
+  local targetYs = self.characterComponents.targetYs
+
   for id in pairs(self.plantEntities) do
     local parentId = self.game.entityParents[id]
 
@@ -145,18 +148,8 @@ function M:handleEvent(dt)
       transforms[id]:setTransformation(parentX + localXs[id], parentY + localYs[id], angle, 1, directionX)
       -- enabledFlags[id] = true
 
-      -- TODO: Extract head animation
-      for _, headId in ipairs(self.game:findDescendantComponents(parentId, "head")) do
-        local headAngle = 0.5 * math.atan2(localYs[id], directionX * localXs[id])
-        localTransforms[headId]:setTransformation(0, -0.55, headAngle, 1 / 32, 1 / 32, 10, 8)
-
-        -- TODO: Find a better way to keep the z-coordinate
-        localTransforms[headId]:apply(love.math.newTransform():setMatrix(
-          1, 0, 0, 0,
-          0, 1, 0, 0,
-          0, 0, 1, 0.1,
-          0, 0, 0, 1))
-      end
+      targetXs[parentId] = parentX + localXs[id]
+      targetYs[parentId] = parentY + localYs[id]
     end
   end
 
