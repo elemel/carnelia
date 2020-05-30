@@ -52,13 +52,6 @@ function M:handleEvent(dt)
 
       contact.normalX = contactNormalX
       contact.normalY = contactNormalY
-
-      local contactBody = contactFixture:getBody()
-
-      contact.linearVelocityX, contact.linearVelocityY =
-        contactBody:getLinearVelocityFromWorldPoint(contactX, contactY)
-
-      contact.angularVelocity = contactBody:getAngularVelocity()
     else
       contacts[id] = nil
     end
