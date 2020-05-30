@@ -23,11 +23,7 @@ function M:handleEvent(dt)
   local transforms = self.transformComponents.transforms
   local states = self.characterStateComponents.states
   local directionXs = self.characterComponents.directionXs
-
-  -- TODO: Use state updated elsewhere
-  local leftInput = love.keyboard.isDown("a")
-  local rightInput = love.keyboard.isDown("d")
-  local inputX = (rightInput and 1 or 0) - (leftInput and 1 or 0)
+  local inputXs = self.characterComponents.inputXs
 
   for id in pairs(self.footEntities) do
     local lowerLegId = self.game.entityParents[id]
@@ -62,7 +58,7 @@ function M:handleEvent(dt)
       footX = groundX + (directionX * 0.075 - side * 0.375) * groundTangentX
       footY = groundY + (directionX * 0.075 - side * 0.375) * groundTangentY
     else
-      local angle = inputX * 10 * fixedTime + side * 0.5 * math.pi
+      local angle = inputXs[characterId] * 10 * fixedTime + side * 0.5 * math.pi
       footX = groundX + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentX + groundNormalX * 0.25 * math.max(0, 0.5 + math.sin(angle))
       footY = groundY + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentY + groundNormalY * 0.25 * math.max(0, 0.5 + math.sin(angle))
     end

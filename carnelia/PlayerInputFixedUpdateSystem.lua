@@ -10,6 +10,7 @@ function M:init(game, system)
 
   self.playerEntities = assert(self.game.componentEntitySets.player)
 
+  self.characterComponents = assert(self.game.componentManagers.character)
   self.characterStateComponents = assert(self.game.componentManagers.characterState)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
 end
@@ -18,6 +19,7 @@ function M:handleEvent(dt)
   local fixedTime = self.timerDomain:getFixedTime()
 
   local bodies = self.physicsDomain.bodies
+  local inputXs = self.characterComponents.inputXs
   local states = self.characterStateComponents.states
   local contacts = self.raySensorComponents.contacts
 
@@ -26,6 +28,7 @@ function M:handleEvent(dt)
   local inputX = (rightInput and 1 or 0) - (leftInput and 1 or 0)
 
   for id in pairs(self.playerEntities) do
+    inputXs[id] = inputX
     contact = contacts[id]
 
     if contact then
