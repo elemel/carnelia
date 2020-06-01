@@ -141,39 +141,7 @@ return {
     },
 
     {
-      components = {
-        plantState = {},
-
-        plant = {
-          localX = 1,
-        },
-
-        transform = {},
-
-        bone = {},
-
-        parentConstraint = {
-          enabled = false,
-        },
-      },
-
-      children = {
-        {
-          components = {
-            transform = {
-              transform = {0, 0, 0, 1 / 32, 1 / 32, 5, 13},
-            },
-
-            bone = {},
-            parentConstraint = {},
-
-            sprite = {
-              image = "carnelia/resources/images/plant.png",
-              z = -0.1,
-            },
-          },
-        },
-      },
+      prototype = "carnelia.resources.configs.entities.plant",
     },
   },
 }
