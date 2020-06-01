@@ -249,6 +249,10 @@ return {
       },
 
       {
+        class = "carnelia.PlantAnimationFixedUpdateSystem",
+      },
+
+      {
         class = "carnelia.PlayerToCameraUpdateSystem",
         bounds = {-10, -5, 10, 5},
       },

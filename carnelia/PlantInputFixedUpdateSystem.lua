@@ -11,9 +11,6 @@ function M:init(game, system)
   self.plantEntities = assert(self.game.componentEntitySets.plant)
   self.characterComponents = assert(self.game.componentManagers.character)
 
-  self.parentConstraintComponents =
-    assert(self.game.componentManagers.parentConstraint)
-
   self.plantComponents = assert(self.game.componentManagers.plant)
 
   self.transformComponents =
@@ -24,8 +21,6 @@ end
 
 function M:handleEvent(dt)
   local transforms = self.transformComponents.transforms
-  local localTransforms = self.parentConstraintComponents.localTransforms
-  local enabledFlags = self.parentConstraintComponents.enabledFlags
   local distanceJoints = self.physicsDomain.distanceJoints
   local ropeJoints = self.physicsDomain.ropeJoints
   local bodies = self.physicsDomain.bodies
@@ -136,35 +131,25 @@ function M:handleEvent(dt)
       end
     end
 
+    local parentX, parentY = bodies[parentId]:getPosition()
+
     if distanceJoints[id] or ropeJoints[id] then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
-      local x, y = bodies[parentId]:getPosition()
 
-      localXs[id] = x1 - x
-      localYs[id] = y1 - y
-
-      local directionX = localXs[id] < 0 and -1 or 1
-      self.characterComponents:setDirectionX(parentId, directionX)
-
-      transforms[id]:setTransformation(x1, y1, 0.5 * math.pi)
+      localXs[id] = x1 - parentX
+      localYs[id] = y1 - parentY
     else
       localXs[id] = localXs[id] + sensitivity * dx
       localYs[id] = localYs[id] + sensitivity * dy
 
       localXs[id], localYs[id] = heart.math.clampLength2(localXs[id], localYs[id], 0, 7.5)
-
-      local directionX = localXs[id] < 0 and -1 or 1
-      self.characterComponents:setDirectionX(parentId, directionX)
-
-      local angle = math.atan2(localYs[id], localXs[id])
-      local parentX, parentY = bodies[parentId]:getPosition()
-
-      transforms[id]:setTransformation(parentX + localXs[id], parentY + localYs[id], angle, 1, directionX)
-      -- enabledFlags[id] = true
-
-      targetXs[parentId] = parentX + localXs[id]
-      targetYs[parentId] = parentY + localYs[id]
     end
+
+    targetXs[parentId] = parentX + localXs[id]
+    targetYs[parentId] = parentY + localYs[id]
+
+    local directionX = localXs[id] < 0 and -1 or 1
+    self.characterComponents:setDirectionX(parentId, directionX)
   end
 
   self.mouseDown = mouseDown

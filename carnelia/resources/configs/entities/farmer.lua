@@ -142,11 +142,11 @@ return {
 
     {
       components = {
-        plant = {},
-
-        transform = {
-          transform = {0, -3},
+        plant = {
+          localX = 1,
         },
+
+        transform = {},
 
         bone = {},
 
