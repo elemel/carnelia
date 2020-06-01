@@ -23,12 +23,20 @@ function M:handleEvent(dt)
   local localXs = self.plantComponents.localXs
   local localYs = self.plantComponents.localYs
 
+  local localNormalXs = self.plantComponents.localNormalXs
+  local localNormalYs = self.plantComponents.localNormalYs
+
   for id in pairs(self.plantEntities) do
     local parentId = self.game.entityParents[id]
 
     if states[id] == "grabbing" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
-      transforms[id]:setTransformation(x1, y1, 0.5 * math.pi)
+      local body1, body2 = distanceJoints[id]:getBodies()
+
+      local normalX, normalY = body1:getWorldVector(localNormalXs[id], localNormalYs[id])
+      local angle = math.atan2(normalY, normalX) + math.pi
+
+      transforms[id]:setTransformation(x1, y1, angle, 1, directionXs[parentId])
     else
       local angle = math.atan2(localYs[id], localXs[id])
       local parentX, parentY = bodies[parentId]:getPosition()

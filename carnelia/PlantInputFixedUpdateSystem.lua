@@ -30,6 +30,9 @@ function M:handleEvent(dt)
   local localXs = self.plantComponents.localXs
   local localYs = self.plantComponents.localYs
 
+  local localNormalXs = self.plantComponents.localNormalXs
+  local localNormalYs = self.plantComponents.localNormalYs
+
   local dx = self.inputDomain.accumulatedMouseDx
   local dy = self.inputDomain.accumulatedMouseDy
 
@@ -54,7 +57,7 @@ function M:handleEvent(dt)
         local x2 = x1 + localXs[id]
         local y2 = y1 + localYs[id]
 
-        local hitFixture, hitX, hitY
+        local hitFixture, hitX, hitY, hitNormalX, hitNormalY
 
         local function callback(fixture, x, y, xn, yn, fraction)
           if fixture:isSensor() then
@@ -69,6 +72,9 @@ function M:handleEvent(dt)
 
             hitX = x
             hitY = y
+
+            hitNormalX = xn
+            hitNormalY = yn
 
             return fraction
           end
@@ -116,6 +122,8 @@ function M:handleEvent(dt)
 
           bodies[parentId]:setFixedRotation(false)
           self.plantStateComponents:setState(id, "grabbing")
+
+          localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
         end
       end
     else
