@@ -65,7 +65,7 @@ return {
         parentConstraint = {},
 
         sprite = {
-          image = "carnelia/resources/images/skins/player/trunk.png",
+          image = "carnelia/resources/images/farmer/trunk.png",
         },
       },
     },
@@ -82,7 +82,7 @@ return {
         parentConstraint = {},
 
         sprite = {
-          image = "carnelia/resources/images/skins/player/head.png",
+          image = "carnelia/resources/images/farmer/head.png",
         },
       },
     },
