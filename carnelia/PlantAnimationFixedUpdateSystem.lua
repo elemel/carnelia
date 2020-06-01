@@ -9,6 +9,7 @@ function M:init(game, system)
 
   self.characterComponents = assert(self.game.componentManagers.character)
   self.plantComponents = assert(self.game.componentManagers.plant)
+  self.plantStateComponents = assert(self.game.componentManagers.plantState)
   self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
@@ -17,6 +18,7 @@ function M:handleEvent(dt)
   local distanceJoints = self.physicsDomain.distanceJoints
   local transforms = self.transformComponents.transforms
   local directionXs = self.characterComponents.directionXs
+  local states = self.plantStateComponents.states
 
   local localXs = self.plantComponents.localXs
   local localYs = self.plantComponents.localYs
@@ -24,8 +26,7 @@ function M:handleEvent(dt)
   for id in pairs(self.plantEntities) do
     local parentId = self.game.entityParents[id]
 
-    -- TODO: Add a state instead
-    if distanceJoints[id] then
+    if states[id] == "grabbing" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
       transforms[id]:setTransformation(x1, y1, 0.5 * math.pi)
     else

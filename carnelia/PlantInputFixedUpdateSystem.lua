@@ -12,6 +12,7 @@ function M:init(game, system)
   self.characterComponents = assert(self.game.componentManagers.character)
 
   self.plantComponents = assert(self.game.componentManagers.plant)
+  self.plantStateComponents = assert(self.game.componentManagers.plantState)
 
   self.transformComponents =
     assert(self.game.componentManagers.transform)
@@ -24,6 +25,7 @@ function M:handleEvent(dt)
   local distanceJoints = self.physicsDomain.distanceJoints
   local ropeJoints = self.physicsDomain.ropeJoints
   local bodies = self.physicsDomain.bodies
+  local states = self.plantStateComponents.states
 
   local localXs = self.plantComponents.localXs
   local localYs = self.plantComponents.localYs
@@ -113,6 +115,7 @@ function M:handleEvent(dt)
           })
 
           bodies[parentId]:setFixedRotation(false)
+          self.plantStateComponents:setState(id, "grabbing")
         end
       end
     else
@@ -123,8 +126,8 @@ function M:handleEvent(dt)
         localXs[id] = x1 - x
         localYs[id] = y1 - y
 
-        -- self.game:destroyComponent(id, "ropeJoint")
         self.game:destroyComponent(id, "distanceJoint")
+        self.plantStateComponents:setState(id, "idle")
 
         bodies[parentId]:setFixedRotation(true)
         bodies[parentId]:setAngle(0)
@@ -133,7 +136,7 @@ function M:handleEvent(dt)
 
     local parentX, parentY = bodies[parentId]:getPosition()
 
-    if distanceJoints[id] or ropeJoints[id] then
+    if states[id] == "grabbing" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
 
       localXs[id] = x1 - parentX

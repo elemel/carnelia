@@ -67,6 +67,13 @@ return {
     },
 
     {
+      componentType = "plantState",
+      class = "heart.StateComponentManager",
+      defaultState = "idle",
+      validStates = {"grabbing", "idle"},
+    },
+
+    {
       componentType = "transform",
       class = "heart.animation.TransformComponentManager",
     },
