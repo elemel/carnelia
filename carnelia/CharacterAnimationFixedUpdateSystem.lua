@@ -39,8 +39,12 @@ function M:handleEvent(dt)
   local shoulderWidths = self.characterComponents.shoulderWidths
   local shoulderYs = self.characterComponents.shoulderYs
 
+  local armLengths = self.characterComponents.armLengths
+
   local hipWidths = self.characterComponents.hipWidths
   local hipYs = self.characterComponents.hipYs
+
+  local legLengths = self.characterComponents.legLengths
 
   for footId in pairs(self.footEntities) do
     local lowerLegId = self.game.entityParents[footId]
@@ -64,7 +68,6 @@ function M:handleEvent(dt)
       groundNormalY = contact.normalY
     else
       groundX, groundY = characterBody:getWorldPoint(0, 1.125)
-
       groundNormalX, groundNormalY = characterBody:getWorldVector(0, -1)
     end
 
@@ -80,13 +83,13 @@ function M:handleEvent(dt)
       footY = groundY + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentY + groundNormalY * 0.25 * math.max(0, 0.5 + math.sin(angle))
     end
 
-    local length = 1
-    local kneeX, kneeY, footX, footY = inverseKinematics.solve(hipX, hipY, footX, footY, directionX * length)
+    local legLength = legLengths[characterId]
+    local kneeX, kneeY, footX, footY = inverseKinematics.solve(hipX, hipY, footX, footY, directionX * legLength)
 
     local distance = heart.math.distance2(hipX, hipY, footX, footY)
     local legAngle = math.atan2(footY - hipY, footX - hipX) - directionX * 0.5 * math.pi
 
-    local kneeAngle = math.acos(directionX * math.min(distance / length, 1))
+    local kneeAngle = math.acos(directionX * math.min(distance / legLength, 1))
     local footAngle = math.atan2(groundNormalY, groundNormalX) + 0.5 * math.pi
 
     transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle, directionX, 1)
@@ -128,13 +131,13 @@ function M:handleEvent(dt)
     local handY = targetYs[characterId]
     local handAngle = math.atan2(handY - shoulderY, handX - shoulderX)
 
-    local length = 0.75
-    local elbowX, elbowY, handX, handY = inverseKinematics.solve(shoulderX, shoulderY, handX, handY, -directionX * length)
+    local armLength = armLengths[characterId]
+    local elbowX, elbowY, handX, handY = inverseKinematics.solve(shoulderX, shoulderY, handX, handY, -directionX * armLength)
 
     local distance = heart.math.distance2(shoulderX, shoulderY, handX, handY)
     local armAngle = math.atan2(handY - shoulderY, handX - shoulderX) - directionX * 0.5 * math.pi
 
-    local elbowAngle = math.acos(directionX * math.min(distance / length, 1))
+    local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
 
     local z = directionX * side
 

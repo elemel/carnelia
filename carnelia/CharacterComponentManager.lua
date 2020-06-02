@@ -20,8 +20,12 @@ function M:init(game, config)
   self.shoulderWidths = {}
   self.shoulderYs = {}
 
+  self.armLengths = {}
+
   self.hipWidths = {}
   self.hipYs = {}
+
+  self.legLengths = {}
 end
 
 function M:createComponent(id, config)
@@ -36,8 +40,12 @@ function M:createComponent(id, config)
   self.shoulderWidths[id] = config.shoulderWidth or 0.3
   self.shoulderYs[id] = config.shoulderY or -0.3
 
+  self.armLengths[id] = config.armLength or 0.75
+
   self.hipWidths[id] = config.hipWidth or 0.2
   self.hipYs[id] = config.hipY or 0.3
+
+  self.legLengths[id] = config.legLength or 1
 end
 
 function M:destroyComponent(id, config)
@@ -52,8 +60,12 @@ function M:destroyComponent(id, config)
   self.shoulderWidths[id] = nil
   self.shoulderYs[id] = nil
 
+  self.armLengths[id] = nil
+
   self.hipWidths[id] = nil
   self.hipYs[id] = nil
+
+  self.legLengths[id] = nil
 end
 
 function M:setDirectionX(id, directionX)
