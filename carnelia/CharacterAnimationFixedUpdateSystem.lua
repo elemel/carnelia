@@ -33,6 +33,11 @@ function M:handleEvent(dt)
   local targetXs = self.characterComponents.targetXs
   local targetYs = self.characterComponents.targetYs
 
+  local headYs = self.characterComponents.headYs
+
+  local hipWidths = self.characterComponents.hipWidths
+  local hipYs = self.characterComponents.hipYs
+
   for footId in pairs(self.footEntities) do
     local lowerLegId = self.game.entityParents[footId]
     local upperLegId = self.game.entityParents[lowerLegId]
@@ -43,7 +48,7 @@ function M:handleEvent(dt)
 
     local contact = self.raySensorComponents.contacts[characterId]
     local characterBody = self.physicsDomain.bodies[characterId]
-    local hipX, hipY = characterBody:getWorldPoint(side * 0.125, 0.3)
+    local hipX, hipY = characterBody:getWorldPoint(side * 0.5 * hipWidths[characterId], hipYs[characterId])
 
     local groundX, groundY, groundNormalX, groundNormalY
 
@@ -78,7 +83,6 @@ function M:handleEvent(dt)
     local legAngle = math.atan2(footY - hipY, footX - hipX) - directionX * 0.5 * math.pi
 
     local kneeAngle = math.acos(directionX * math.min(distance / length, 1))
-
     local footAngle = math.atan2(groundNormalY, groundNormalX) + 0.5 * math.pi
 
     transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle, directionX, 1)
@@ -93,7 +97,7 @@ function M:handleEvent(dt)
       local headAngle = 0.5 * heart.math.clamp(
         math.atan2(localTargetY, directionXs[id] * localTargetX), -0.5 * math.pi, 0.5 * math.pi)
 
-      localTransforms[headId]:setTransformation(0, -0.55, headAngle, 1 / 32, 1 / 32, 10, 8)
+      localTransforms[headId]:setTransformation(0, headYs[id], headAngle, 1 / 32, 1 / 32, 10, 8)
 
       -- TODO: Find a better way to keep the z-coordinate
       localTransforms[headId]:apply(love.math.newTransform():setMatrix(

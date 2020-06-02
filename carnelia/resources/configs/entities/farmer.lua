@@ -110,8 +110,21 @@ return {
         left = {},
 
         transform = {
-          transform = {-0.125, -0.25, 0.25 * math.pi},
+          transform = {-0.15, -0.3, 0.25 * math.pi},
           z = 0.1,
+        },
+      },
+    },
+
+    {
+      prototype = "carnelia.resources.configs.entities.arm",
+
+      components = {
+        right = {},
+
+        transform = {
+          transform = {0.15, -0.3, 0.25 * math.pi},
+          z = -0.1,
         },
       },
     },
@@ -123,7 +136,7 @@ return {
         left = {},
 
         transform = {
-          transform = {0.125, 0.25, -0.25 * math.pi},
+          transform = {0.1, 0.3, -0.25 * math.pi},
         },
       },
     },
@@ -135,7 +148,7 @@ return {
         right = {},
 
         transform = {
-          transform = {-0.125, 0.25, -0.25 * math.pi},
+          transform = {-0.1, 0.3, -0.25 * math.pi},
         },
       },
     },
