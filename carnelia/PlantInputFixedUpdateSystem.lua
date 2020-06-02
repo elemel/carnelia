@@ -17,7 +17,7 @@ function M:init(game, system)
   self.transformComponents =
     assert(self.game.componentManagers.transform)
 
-  self.mouseDown = love.mouse.isDown()
+  self.mouseDown = love.mouse.isDown(1)
 end
 
 function M:handleEvent(dt)

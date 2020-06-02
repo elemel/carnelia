@@ -18,6 +18,9 @@ return {
   children = {
     {
       components = {
+        jaw = {},
+        upper = {},
+
         transform = {
           transform = {0, 0, -0.375 * math.pi},
         },
@@ -47,6 +50,9 @@ return {
 
     {
       components = {
+        jaw = {},
+        lower = {},
+
         transform = {
           transform = {0, 0, 0.375 * math.pi},
         },

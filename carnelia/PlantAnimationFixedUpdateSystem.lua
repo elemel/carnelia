@@ -4,19 +4,30 @@ local M = heart.class.newClass()
 
 function M:init(game, system)
   self.game = assert(game)
+
   self.physicsDomain = assert(self.game.domains.physics)
+  self.timerDomain = assert(self.game.domains.timer)
+
   self.plantEntities = assert(self.game.componentEntitySets.plant)
+  self.upperEntities = assert(self.game.componentEntitySets.upper)
 
   self.characterComponents = assert(self.game.componentManagers.character)
+  self.parentConstraintComponents = assert(self.game.componentManagers.parentConstraint)
   self.plantComponents = assert(self.game.componentManagers.plant)
   self.plantStateComponents = assert(self.game.componentManagers.plantState)
   self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
 function M:handleEvent(dt)
+  local fixedTime = self.timerDomain:getFixedTime()
+
+  -- TODO: Use proper states instead of polling mouse
+  local mouseDown = love.mouse.isDown(1)
+
   local bodies = self.physicsDomain.bodies
   local distanceJoints = self.physicsDomain.distanceJoints
   local transforms = self.transformComponents.transforms
+  local localTransforms = self.parentConstraintComponents.localTransforms
   local directionXs = self.characterComponents.directionXs
   local states = self.plantStateComponents.states
 
@@ -37,11 +48,24 @@ function M:handleEvent(dt)
       local angle = math.atan2(normalY, normalX) + math.pi
 
       transforms[id]:setTransformation(x1, y1, angle, 1, directionXs[parentId])
+
+      for childId in pairs(self.game.entityChildSets[id]) do
+        local directionY = self.upperEntities[childId] and -1 or 1
+        localTransforms[childId]:setTransformation(0, 0, directionY * 0.375 * math.pi)
+      end
     else
       local angle = math.atan2(localYs[id], localXs[id])
       local parentX, parentY = bodies[parentId]:getPosition()
 
-      transforms[id]:setTransformation(parentX + localXs[id], parentY + localYs[id], angle, 1, directionXs[parentId])
+      transforms[id]:setTransformation(
+        parentX + localXs[id], parentY + localYs[id], angle, 1, directionXs[parentId])
+
+      local jawAngle = mouseDown and 0 or 0.1875 * math.pi
+
+      for childId in pairs(self.game.entityChildSets[id]) do
+        local directionY = self.upperEntities[childId] and -1 or 1
+        localTransforms[childId]:setTransformation(0, 0, directionY * jawAngle)
+      end
     end
   end
 end

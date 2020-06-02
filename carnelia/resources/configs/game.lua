@@ -35,7 +35,17 @@ return {
     },
 
     {
+      componentType = "jaw",
+      class = "heart.CategoryComponentManager",
+    },
+
+    {
       componentType = "left",
+      class = "heart.CategoryComponentManager",
+    },
+
+    {
+      componentType = "lower",
       class = "heart.CategoryComponentManager",
     },
 
@@ -51,6 +61,11 @@ return {
 
     {
       componentType = "seesaw",
+      class = "heart.CategoryComponentManager",
+    },
+
+    {
+      componentType = "upper",
       class = "heart.CategoryComponentManager",
     },
 
