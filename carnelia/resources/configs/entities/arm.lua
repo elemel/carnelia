@@ -2,7 +2,10 @@ return {
   components = {
     transform = {},
     bone = {},
-    parentConstraint = {},
+
+    parentConstraint = {
+      enabled = false,
+    },
   },
 
   children = {
@@ -29,7 +32,10 @@ return {
         },
 
         bone = {},
-        parentConstraint = {},
+
+        parentConstraint = {
+          enabled = false,
+        },
       },
 
       children = {
@@ -58,7 +64,10 @@ return {
             },
 
             bone = {},
-            parentConstraint = {},
+
+            parentConstraint = {
+              enabled = false,
+            },
           },
 
           children = {

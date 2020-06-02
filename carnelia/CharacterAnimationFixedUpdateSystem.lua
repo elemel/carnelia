@@ -11,6 +11,7 @@ function M:init(game, system)
 
   self.characterEntities = assert(self.game.componentEntitySets.character)
   self.footEntities = assert(self.game.componentEntitySets.foot)
+  self.handEntities = assert(self.game.componentEntitySets.hand)
   self.leftEntities = assert(self.game.componentEntitySets.left)
 
   self.characterComponents = assert(self.game.componentManagers.character)
@@ -34,6 +35,9 @@ function M:handleEvent(dt)
   local targetYs = self.characterComponents.targetYs
 
   local headYs = self.characterComponents.headYs
+
+  local shoulderWidths = self.characterComponents.shoulderWidths
+  local shoulderYs = self.characterComponents.shoulderYs
 
   local hipWidths = self.characterComponents.hipWidths
   local hipYs = self.characterComponents.hipYs
@@ -106,6 +110,44 @@ function M:handleEvent(dt)
         0, 0, 1, 0.1,
         0, 0, 0, 1))
     end
+  end
+
+  for handId in pairs(self.handEntities) do
+    local lowerArmId = self.game.entityParents[handId]
+    local upperArmId = self.game.entityParents[lowerArmId]
+    local characterId = self.game.entityParents[upperArmId]
+    local directionX = directionXs[characterId]
+    local side = self.leftEntities[upperArmId] and -1 or 1
+
+    local characterBody = self.physicsDomain.bodies[characterId]
+
+    local shoulderX, shoulderY = characterBody:getWorldPoint(
+      -side * 0.5 * shoulderWidths[characterId], shoulderYs[characterId])
+
+    local handX = targetXs[characterId]
+    local handY = targetYs[characterId]
+    local handAngle = math.atan2(handY - shoulderY, handX - shoulderX)
+
+    local length = 0.75
+    local elbowX, elbowY, handX, handY = inverseKinematics.solve(shoulderX, shoulderY, handX, handY, -directionX * length)
+
+    local distance = heart.math.distance2(shoulderX, shoulderY, handX, handY)
+    local armAngle = math.atan2(handY - shoulderY, handX - shoulderX) - directionX * 0.5 * math.pi
+
+    local elbowAngle = math.acos(directionX * math.min(distance / length, 1))
+
+    local z = directionX * side
+
+    -- TODO: Find a better way to keep the z-coordinate
+    local zTransform = love.math.newTransform():setMatrix(
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, z,
+        0, 0, 0, 1)
+
+    transforms[upperArmId]:setTransformation(shoulderX, shoulderY, armAngle + elbowAngle, directionX, 1):apply(zTransform)
+    transforms[lowerArmId]:setTransformation(elbowX, elbowY, armAngle - elbowAngle, directionX, 1):apply(zTransform)
+    transforms[handId]:setTransformation(handX, handY, handAngle, directionX, 1):apply(zTransform)
   end
 end
 

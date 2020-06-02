@@ -13,7 +13,12 @@ function M:handleEvent(viewportId)
   local transforms = self.spriteComponents.transforms
   local ids = heartTable.keys(self.spriteEntities)
   local zs = self.spriteComponents.zs
-  table.sort(ids, function(a, b) return zs[a] < zs[b] end)
+  local epsilon = 1e-6
+
+  table.sort(ids, function(a, b)
+    return zs[a] + a * epsilon < zs[b] + b * epsilon
+  end)
+
   local images = self.spriteComponents.images
 
   for _, id in ipairs(ids) do
