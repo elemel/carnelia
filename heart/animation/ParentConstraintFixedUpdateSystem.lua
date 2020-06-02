@@ -20,6 +20,7 @@ function M:handleEvent(dt)
   local localTransforms = self.parentConstraintComponents.localTransforms
   local enabledFlags = self.parentConstraintComponents.enabledFlags
 
+  -- TODO: Topological sort
   for id in pairs(self.parentConstraintEntities) do
     if enabledFlags[id] then
       local parentId = parents[id]
