@@ -206,6 +206,10 @@ return {
       {
         class = "heart.graphics.ViewportDrawSystem",
       },
+
+      {
+        class = "carnelia.FpsDrawSystem",
+      },
     },
 
     drawworld = {
@@ -227,9 +231,9 @@ return {
       --   class = "heart.graphics.SpriteDebugDrawSystem",
       -- },
 
-      {
-        class = "heart.physics.FixtureDebugDrawSystem",
-      },
+      -- {
+      --   class = "heart.physics.FixtureDebugDrawSystem",
+      -- },
 
       -- {
       --   class = "heart.physics.JointDebugDrawSystem",
@@ -527,6 +531,8 @@ return {
           transform = {-10, 8},
         },
 
+        bone = {},
+
         body = {
           bodyType = "dynamic",
           linearDamping = 0.5,
@@ -534,8 +540,26 @@ return {
         },
 
         rectangleFixture = {
-          width = 10,
+          width = 8,
           height  = 1,
+        },
+      },
+
+      children = {
+        {
+          components = {
+            transform = {
+              transform = {0, 0, 0, 1 / 32, 1 / 32, 128, 16},
+            },
+
+            bone = {},
+            parentConstraint = {},
+
+            sprite = {
+              image = "carnelia/resources/images/raft.png",
+              z = 0.1,
+            },
+          },
         },
       },
     },

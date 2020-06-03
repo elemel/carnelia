@@ -120,7 +120,6 @@ function M:handleEvent(dt)
             collideConnected = true,
           })
 
-          bodies[parentId]:setFixedRotation(false)
           self.plantStateComponents:setState(id, "grabbing")
 
           localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
@@ -137,7 +136,6 @@ function M:handleEvent(dt)
         self.game:destroyComponent(id, "distanceJoint")
         self.plantStateComponents:setState(id, "idle")
 
-        bodies[parentId]:setFixedRotation(true)
         bodies[parentId]:setAngle(0)
       end
     end

@@ -8,7 +8,6 @@ return {
 
     body = {
       bodyType = "dynamic",
-      fixedRotation = true,
     },
 
     raySensor = {

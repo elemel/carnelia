@@ -10,7 +10,7 @@ end
 
 function M:handleEvent(viewportId)
   local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(0.25, 0.5, 0.75, 0.25)
+  love.graphics.setColor(0.25, 0.5, 0.75, 0.5)
 
   local rectangleFixtures = self.physicsDomain.rectangleFixtures
 

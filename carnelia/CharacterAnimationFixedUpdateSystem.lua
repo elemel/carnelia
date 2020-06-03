@@ -67,8 +67,13 @@ function M:handleEvent(dt)
       groundNormalX = contact.normalX
       groundNormalY = contact.normalY
     else
-      groundX, groundY = characterBody:getWorldPoint(0, 1.125)
-      groundNormalX, groundNormalY = characterBody:getWorldVector(0, -1)
+      if love.keyboard.isDown("s") then
+        groundX, groundY = characterBody:getWorldPoint(0.675 * directionX, 0.675)
+        groundNormalX, groundNormalY = characterBody:getWorldVector(-directionX / math.sqrt(2), -1 / math.sqrt(2))
+      else
+        groundX, groundY = characterBody:getWorldPoint(0, 1.125)
+        groundNormalX, groundNormalY = characterBody:getWorldVector(0, -1)
+      end
     end
 
     local groundTangentX = groundNormalY

@@ -5,6 +5,7 @@ local M = heart.class.newClass()
 function M:init(game, config)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
+  self.raySensorEntities = assert(self.game.componentEntitySets.raySensor)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
 end
 
@@ -13,13 +14,20 @@ function M:handleEvent(dt)
   local bodies = self.physicsDomain.bodies
   local contacts = self.raySensorComponents.contacts
 
-  for id, localRay in pairs(self.raySensorComponents.localRays) do
+  local localXs = self.raySensorComponents.localXs
+  local localYs = self.raySensorComponents.localYs
+
+  local offsetXs = self.raySensorComponents.offsetXs
+  local offsetYs = self.raySensorComponents.offsetYs
+
+  for id in pairs(self.raySensorEntities) do
     local body = bodies[id]
-    local x1, y1, x2, y2 = unpack(localRay)
     local filter = filters[id]
 
-    x1, y1 = body:getWorldPoint(x1, y1)
-    x2, y2 = body:getWorldPoint(x2, y2)
+    local x1, y1 = body:getWorldPoint(localXs[id], localYs[id])
+
+    local x2 = x1 + offsetXs[id]
+    local y2 = y1 + offsetYs[id]
 
     local contactFixture, contactX, contactY, contactNormalX, contactNormalY
 

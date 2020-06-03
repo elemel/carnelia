@@ -6,7 +6,13 @@ function M:init(game, config)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
   self.transformComponents = assert(self.game.componentManagers.transform)
-  self.localRays = {}
+
+  self.localXs = {}
+  self.localYs = {}
+
+  self.offsetXs = {}
+  self.offsetYs = {}
+
   self.filters = {}
   self.contacts = {}
 end
@@ -14,17 +20,24 @@ end
 function M:createComponent(id, config)
   local transform = self.transformComponents.transforms[id]
   local body = self.physicsDomain.bodies[id]
-  local ray = config.ray or {0, 0, 0, 1}
-  local x1, y1, x2, y2 = unpack(ray)
 
-  x1, y1 = body:getLocalPoint(transform:transformPoint(x1, y1))
-  x2, y2 = body:getLocalPoint(transform:transformPoint(x2, y2))
+  local x = config.x or 0
+  local y = config.y or 0
 
-  self.localRays[id] = {x1, y1, x2, y2}
+  self.localXs[id], self.localYs[id] =
+    body:getLocalPoint(transform:transformPoint(x, y))
+
+  self.offsetXs[id] = config.offsetX or 0
+  self.offsetYs[id] = config.offsetY or 1.25
 end
 
 function M:destroyComponent(id)
-  self.localRays[id] = nil
+  self.localXs[id] = nil
+  self.localYs[id] = nil
+
+  self.offsetXs[id] = nil
+  self.offsetYs[id] = nil
+
   self.filters[id] = nil
   self.contacts[id] = nil
 end

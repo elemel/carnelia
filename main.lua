@@ -7,6 +7,7 @@ function love.load()
     fullscreentype = "desktop",
     resizable = true,
     -- highdpi = true,
+    -- vsync = false,
   })
 
   love.graphics.setDefaultFilter("linear", "nearest")

@@ -22,6 +22,7 @@ function M:handleEvent(dt)
   local inputXs = self.characterComponents.inputXs
   local states = self.characterStateComponents.states
   local contacts = self.raySensorComponents.contacts
+  local directionXs = self.characterComponents.directionXs
 
   local leftInput = love.keyboard.isDown("a")
   local rightInput = love.keyboard.isDown("d")
@@ -36,6 +37,11 @@ function M:handleEvent(dt)
       local x, y = body:getPosition()
       local distance = heart.math.distance2(x, y, contact.x, contact.y)
       local targetDistance = 1.25
+
+      -- TODO: Add proper state for crouching
+      if love.keyboard.isDown("s") then
+        targetDistance = 0.875
+      end
 
       if inputX ~= 0 then
         local angle = 20 * fixedTime
@@ -64,17 +70,36 @@ function M:handleEvent(dt)
       local forceX = 0
       local forceY = 0
 
-      forceY = forceY + math.min(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
+      forceY = forceY + math.min(
+        0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
 
-      local maxWalkForce = 20
-      local walkForce = heart.math.clamp(10 * mass * velocityErrorX, -maxWalkForce, maxWalkForce)
+      local maxWalkForce = 50
+
+      local walkForce = heart.math.clamp(
+        10 * mass * velocityErrorX, -maxWalkForce, maxWalkForce)
 
       forceX = forceX - walkForce * tangentX
       forceY = forceY - walkForce * tangentY
 
-      body:applyForce(forceX, forceY, contact.x, contact.y)
-      contactBody:applyForce(-forceX, -forceY, contact.x, contact.y)
+      body:applyForce(forceX, forceY, x, y)
+      contactBody:applyForce(-forceX, -forceY, x, y)
     end
+
+    local angle = bodies[id]:getAngle()
+    local targetAngle = 0
+
+    if love.keyboard.isDown("s") then
+      targetAngle = 0.25 * math.pi * directionXs[id]
+    end
+
+    local anglularError = heart.math.normalizeAngle(targetAngle - angle)
+    local angularVelocity = bodies[id]:getAngularVelocity()
+    local angularVelocityError = -angularVelocity
+    local angularStiffness = 100
+    local angularDamping = 10
+
+    bodies[id]:applyTorque(
+      angularStiffness * anglularError + angularDamping * angularVelocityError)
 
     states[id] = inputX == 0 and "standing" or "running"
   end
