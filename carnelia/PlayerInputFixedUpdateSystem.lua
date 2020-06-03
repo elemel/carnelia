@@ -11,7 +11,10 @@ function M:init(game, system)
   self.playerEntities = assert(self.game.componentEntitySets.player)
 
   self.characterComponents = assert(self.game.componentManagers.character)
-  self.characterStateComponents = assert(self.game.componentManagers.characterState)
+
+  self.characterLowerStateComponents =
+    assert(self.game.componentManagers.characterLowerState)
+
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
 end
 
@@ -20,7 +23,7 @@ function M:handleEvent(dt)
 
   local bodies = self.physicsDomain.bodies
   local inputXs = self.characterComponents.inputXs
-  local states = self.characterStateComponents.states
+  local states = self.characterLowerStateComponents.states
   local contacts = self.raySensorComponents.contacts
   local directionXs = self.characterComponents.directionXs
 

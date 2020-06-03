@@ -15,8 +15,13 @@ function M:init(game, system)
   self.leftEntities = assert(self.game.componentEntitySets.left)
 
   self.characterComponents = assert(self.game.componentManagers.character)
-  self.characterStateComponents = assert(self.game.componentManagers.characterState)
-  self.parentConstraintComponents = assert(self.game.componentManagers.parentConstraint)
+
+  self.characterLowerStateComponents =
+    assert(self.game.componentManagers.characterLowerState)
+
+  self.parentConstraintComponents =
+    assert(self.game.componentManagers.parentConstraint)
+
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
   self.transformComponents = assert(self.game.componentManagers.transform)
 end
@@ -26,7 +31,7 @@ function M:handleEvent(dt)
 
   local bodies = self.physicsDomain.bodies
   local transforms = self.transformComponents.transforms
-  local states = self.characterStateComponents.states
+  local states = self.characterLowerStateComponents.states
   local directionXs = self.characterComponents.directionXs
   local inputXs = self.characterComponents.inputXs
   local localTransforms = self.parentConstraintComponents.localTransforms
