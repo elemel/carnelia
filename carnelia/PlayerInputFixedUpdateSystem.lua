@@ -51,16 +51,26 @@ function M:handleEvent(dt)
       local tangentX = contact.normalY
       local tangentY = -contact.normalX
 
+      local contactBody = contact.fixture:getBody()
+
       local contactLinearVelocityX, contactLinearVelocityY =
-        contact.fixture:getBody():getLinearVelocityFromWorldPoint(contact.x, contact.y)
+        contactBody:getLinearVelocityFromWorldPoint(contact.x, contact.y)
 
       local velocityErrorX = contactLinearVelocityX + 10 * inputX - linearVelocityX
 
       local velocityErrorY = contactLinearVelocityY - linearVelocityY - linearVelocityX * tangentY
       --body:applyForce(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
-      body:applyForce(0, math.min(0, -stiffness * mass * positionError + damping * mass * velocityErrorY))
 
-      body:applyForce(-10 * mass * velocityErrorX * tangentX, -10 * mass * velocityErrorX * tangentY)
+      local forceX = 0
+      local forceY = 0
+
+      forceY = forceY + math.min(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
+
+      forceX = forceX - 10 * mass * velocityErrorX * tangentX
+      forceY = forceY - 10 * mass * velocityErrorX * tangentY
+
+      body:applyForce(forceX, forceY, contact.x, contact.y)
+      contactBody:applyForce(-forceX, -forceY, contact.x, contact.y)
     end
 
     states[id] = inputX == 0 and "standing" or "running"

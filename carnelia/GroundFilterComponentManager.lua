@@ -7,7 +7,8 @@ function M:init(game, config)
   self.raySensorComponents = assert(self.game.componentManagers.raySensor)
 
   self.filter = function(id, fixture, x, y, normalX, normalY)
-    return fixture:getBody():getType() ~= "dynamic" and not fixture:isSensor()
+    -- return fixture:getBody():getType() ~= "dynamic" and not fixture:isSensor()
+    return not fixture:isSensor()
   end
 end
 

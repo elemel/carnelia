@@ -70,6 +70,11 @@ return {
     },
 
     {
+      componentType = "water",
+      class = "heart.CategoryComponentManager",
+    },
+
+    {
       componentType = "wheel",
       class = "heart.CategoryComponentManager",
     },
@@ -211,6 +216,10 @@ return {
       {
         class = "carnelia.StalkDrawWorldSystem",
       },
+
+      {
+        class = "carnelia.WaterDrawWorldSystem",
+      },
     },
 
     debugdraw = {
@@ -218,9 +227,9 @@ return {
       --   class = "heart.graphics.SpriteDebugDrawSystem",
       -- },
 
-      -- {
-      --   class = "heart.physics.FixtureDebugDrawSystem",
-      -- },
+      {
+        class = "heart.physics.FixtureDebugDrawSystem",
+      },
 
       -- {
       --   class = "heart.physics.JointDebugDrawSystem",
@@ -259,6 +268,10 @@ return {
 
       {
         class = "carnelia.PlantInputFixedUpdateSystem",
+      },
+
+      {
+        class = "carnelia.WaterFixedUpdateSystem",
       },
 
       {
@@ -485,6 +498,44 @@ return {
       components = {
         transform = {
           transform = {-3, -3},
+        },
+      },
+    },
+
+    {
+      components = {
+        water = {},
+
+        transform = {
+          transform = {0, 10},
+        },
+
+        body = {},
+
+        rectangleFixture = {
+          width = 50,
+          height = 5,
+
+          sensor = true,
+        },
+      },
+    },
+
+    {
+      components = {
+        transform = {
+          transform = {-10, 8},
+        },
+
+        body = {
+          bodyType = "dynamic",
+          linearDamping = 0.5,
+          angularDamping = 0.5,
+        },
+
+        rectangleFixture = {
+          width = 10,
+          height  = 1,
         },
       },
     },
