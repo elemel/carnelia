@@ -127,30 +127,59 @@ function M:handleEvent(dt)
     local shoulderX, shoulderY = characterBody:getWorldPoint(
       -side * 0.5 * shoulderWidths[characterId], shoulderYs[characterId])
 
-    local handX = targetXs[characterId]
-    local handY = targetYs[characterId]
-    local handAngle = math.atan2(handY - shoulderY, handX - shoulderX)
+    local headX, headY = characterBody:getWorldPoint(0, -0.55)
 
-    local armLength = armLengths[characterId]
-    local elbowX, elbowY, handX, handY = inverseKinematics.solve(shoulderX, shoulderY, handX, handY, -directionX * armLength)
+    -- TODO: Add action state instead
+    if targetYs[characterId] > headY then
+      local handX, handY = characterBody:getWorldPoint(0, -1)
+      local handAngle = math.atan2(handY - shoulderY, handX - shoulderX)
 
-    local distance = heart.math.distance2(shoulderX, shoulderY, handX, handY)
-    local armAngle = math.atan2(handY - shoulderY, handX - shoulderX) - directionX * 0.5 * math.pi
+      local armLength = armLengths[characterId]
+      local elbowX, elbowY, handX, handY = inverseKinematics.solve(shoulderX, shoulderY, handX, handY, -directionX * armLength)
 
-    local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
+      local distance = heart.math.distance2(shoulderX, shoulderY, handX, handY)
+      local armAngle = math.atan2(handY - shoulderY, handX - shoulderX) - directionX * 0.5 * math.pi
 
-    local z = directionX * side
+      local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
 
-    -- TODO: Find a better way to keep the z-coordinate
-    local zTransform = love.math.newTransform():setMatrix(
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, z,
-        0, 0, 0, 1)
+      local z = directionX * side
 
-    transforms[upperArmId]:setTransformation(shoulderX, shoulderY, armAngle + elbowAngle, directionX, 1):apply(zTransform)
-    transforms[lowerArmId]:setTransformation(elbowX, elbowY, armAngle - elbowAngle, directionX, 1):apply(zTransform)
-    transforms[handId]:setTransformation(handX, handY, handAngle, directionX, 1):apply(zTransform)
+      -- TODO: Find a better way to keep the z-coordinate
+      local zTransform = love.math.newTransform():setMatrix(
+          1, 0, 0, 0,
+          0, 1, 0, 0,
+          0, 0, 1, z,
+          0, 0, 0, 1)
+
+      transforms[upperArmId]:setTransformation(shoulderX, shoulderY, armAngle + elbowAngle, directionX, 1):apply(zTransform)
+      transforms[lowerArmId]:setTransformation(elbowX, elbowY, armAngle - elbowAngle, directionX, 1):apply(zTransform)
+      transforms[handId]:setTransformation(handX, handY, handAngle, directionX, 1):apply(zTransform)
+    else
+      local handX = targetXs[characterId]
+      local handY = targetYs[characterId]
+      local handAngle = math.atan2(handY - shoulderY, handX - shoulderX)
+
+      local armLength = armLengths[characterId]
+      local elbowX, elbowY, handX, handY = inverseKinematics.solve(shoulderX, shoulderY, handX, handY, -directionX * armLength)
+
+      local distance = heart.math.distance2(shoulderX, shoulderY, handX, handY)
+      local armAngle = math.atan2(handY - shoulderY, handX - shoulderX) - directionX * 0.5 * math.pi
+
+      local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
+
+      local z = directionX * side
+
+      -- TODO: Find a better way to keep the z-coordinate
+      local zTransform = love.math.newTransform():setMatrix(
+          1, 0, 0, 0,
+          0, 1, 0, 0,
+          0, 0, 1, z,
+          0, 0, 0, 1)
+
+      transforms[upperArmId]:setTransformation(shoulderX, shoulderY, armAngle + elbowAngle, directionX, 1):apply(zTransform)
+      transforms[lowerArmId]:setTransformation(elbowX, elbowY, armAngle - elbowAngle, directionX, 1):apply(zTransform)
+      transforms[handId]:setTransformation(handX, handY, handAngle, directionX, 1):apply(zTransform)
+    end
   end
 end
 

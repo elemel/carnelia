@@ -153,7 +153,10 @@ function M:handleEvent(dt)
       localXs[id] = localXs[id] + sensitivity * dx
       localYs[id] = localYs[id] + sensitivity * dy
 
-      localXs[id], localYs[id] = heart.math.clampLength2(localXs[id], localYs[id], 0, 7.5)
+      -- TODO: Do a proper transformation to account for rotation
+      localYs[id] = localYs[id] + 0.55
+      localXs[id], localYs[id] = heart.math.clampLength2(localXs[id], localYs[id], 0.5, 7.5)
+      localYs[id] = localYs[id] - 0.55
     end
 
     targetXs[parentId] = parentX + localXs[id]

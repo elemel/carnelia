@@ -8,12 +8,23 @@ local function transformPoint(previousTransforms, transforms, id, x, y, t)
   return heart.math.mix2(x1, y1, x2, y2, t)
 end
 
+local function transformVector(previousTransforms, transforms, id, x, y, t)
+  local x1, y1 = heart.math.transformVector2(previousTransforms[id], x, y)
+  local x2, y2 = heart.math.transformVector2(transforms[id], x, y)
+  return heart.math.mix2(x1, y1, x2, y2, t)
+end
+
 function M:init(game, system)
   self.game = assert(game)
+
+  self.physicsDomain = assert(self.game.domains.physics)
   self.timerDomain = assert(self.game.domains.timer)
+
   self.plantEntities = assert(self.game.componentEntitySets.plant)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+
   self.boneComponents = assert(self.game.componentManagers.bone)
+  self.characterComponents = assert(self.game.componentManagers.character)
+  self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
 function M:handleEvent(viewportId)
@@ -29,15 +40,48 @@ function M:handleEvent(viewportId)
   local previousTransforms = self.boneComponents.previousTransforms
   local transforms = self.transformComponents.transforms
 
+  local bodies = self.physicsDomain.bodies
+  local targetYs = self.characterComponents.targetYs
+
   for id in pairs(self.plantEntities) do
     local parentId = self.game.entityParents[id]
-    local x1, y1 = transformPoint(previousTransforms, transforms, parentId, -0.25, -0.8, t)
-    local x2, y2 = transformPoint(previousTransforms, transforms, parentId, -0.25, -2.8, t)
-    local x3, y3 = transformPoint(previousTransforms, transforms, id, -2.5, 0, t)
-    local x4, y4 = transformPoint(previousTransforms, transforms, id, 0, 0, t)
+    local headX, headY = bodies[parentId]:getWorldPoint(0, -0.55)
 
-    local curve = love.math.newBezierCurve(x1, y1, x2, y2, x3, y3, x4, y4)
-    love.graphics.line(curve:render())
+    -- TODO: Add action state instead
+    if targetYs[parentId] > headY then
+      local handX, handY = transformPoint(previousTransforms, transforms, parentId, 0, -1, t)
+      local plantX, plantY = transformPoint(previousTransforms, transforms, id, 0, 0, t)
+
+      local tangentX, tangentY, distance = heart.math.normalize2(plantX - handX, plantY - handY)
+      love.graphics.line(handX, handY, plantX, plantY)
+
+      local sandbagX, sandbagY = transformPoint(previousTransforms, transforms, parentId, -0.4, -0.7, t)
+      local sandbagTangentX, sandbagTangentY = transformVector(previousTransforms, transforms, parentId, 0, -1, t)
+
+      local curve = love.math.newBezierCurve(
+        sandbagX, sandbagY, sandbagX + sandbagTangentX, sandbagY + sandbagTangentY,
+        handX - 2 * tangentX, handY - 2 * tangentY, handX, handY)
+
+      love.graphics.line(curve:render())
+    else
+      local shoulderX, shoulderY = transformPoint(previousTransforms, transforms, parentId, 0, -0.3, t)
+      local plantX, plantY = transformPoint(previousTransforms, transforms, id, 0, 0, t)
+
+      local tangentX, tangentY, distance = heart.math.normalize2(plantX - shoulderX, plantY - shoulderY)
+      local handX = shoulderX + distance / 7.5 * 0.75 * tangentX
+      local handY = shoulderY + distance / 7.5 * 0.75 * tangentY
+
+      love.graphics.line(handX, handY, plantX, plantY)
+
+      local sandbagX, sandbagY = transformPoint(previousTransforms, transforms, parentId, -0.4, -0.7, t)
+      local sandbagTangentX, sandbagTangentY = transformVector(previousTransforms, transforms, parentId, 0, -1, t)
+
+      local curve = love.math.newBezierCurve(
+        sandbagX, sandbagY, sandbagX + sandbagTangentX, sandbagY + sandbagTangentY,
+        handX - 2 * tangentX, handY - 2 * tangentY, handX, handY)
+
+      love.graphics.line(curve:render())
+    end
   end
 
   love.graphics.setColor(r, g, b, a)

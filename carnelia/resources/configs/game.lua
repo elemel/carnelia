@@ -82,6 +82,13 @@ return {
     },
 
     {
+      componentType = "characterUpperState",
+      class = "heart.StateComponentManager",
+      defaultState = "aiming",
+      validStates = {"aiming", "swinging", "vaulting"},
+    },
+
+    {
       componentType = "plantState",
       class = "heart.StateComponentManager",
       defaultState = "idle",
