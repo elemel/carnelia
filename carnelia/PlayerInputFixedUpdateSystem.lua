@@ -56,7 +56,7 @@ function M:handleEvent(dt)
       local contactLinearVelocityX, contactLinearVelocityY =
         contactBody:getLinearVelocityFromWorldPoint(contact.x, contact.y)
 
-      local velocityErrorX = contactLinearVelocityX + 10 * inputX - linearVelocityX
+      local velocityErrorX = contactLinearVelocityX + 5 * inputX - linearVelocityX
 
       local velocityErrorY = contactLinearVelocityY - linearVelocityY - linearVelocityX * tangentY
       --body:applyForce(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
@@ -66,8 +66,11 @@ function M:handleEvent(dt)
 
       forceY = forceY + math.min(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
 
-      forceX = forceX - 10 * mass * velocityErrorX * tangentX
-      forceY = forceY - 10 * mass * velocityErrorX * tangentY
+      local maxWalkForce = 20
+      local walkForce = heart.math.clamp(10 * mass * velocityErrorX, -maxWalkForce, maxWalkForce)
+
+      forceX = forceX - walkForce * tangentX
+      forceY = forceY - walkForce * tangentY
 
       body:applyForce(forceX, forceY, contact.x, contact.y)
       contactBody:applyForce(-forceX, -forceY, contact.x, contact.y)
