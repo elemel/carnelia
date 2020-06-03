@@ -85,7 +85,7 @@ return {
       componentType = "characterUpperState",
       class = "heart.StateComponentManager",
       defaultState = "aiming",
-      validStates = {"aiming", "swinging", "vaulting"},
+      validStates = {"aiming", "firing", "swinging", "vaulting"},
     },
 
     {
