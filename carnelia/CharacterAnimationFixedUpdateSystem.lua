@@ -31,7 +31,7 @@ function M:handleEvent(dt)
 
   local bodies = self.physicsDomain.bodies
   local transforms = self.transformComponents.transforms
-  local states = self.characterLowerStateComponents.states
+  local lowerStates = self.characterLowerStateComponents.states
   local directionXs = self.characterComponents.directionXs
   local inputXs = self.characterComponents.inputXs
   local localTransforms = self.parentConstraintComponents.localTransforms
@@ -57,7 +57,7 @@ function M:handleEvent(dt)
     local characterId = self.game.entityParents[upperLegId]
     local directionX = directionXs[characterId]
     local side = self.leftEntities[upperLegId] and -1 or 1
-    local state = states[characterId]
+    local lowerState = lowerStates[characterId]
 
     local contact = self.raySensorComponents.contacts[characterId]
     local characterBody = self.physicsDomain.bodies[characterId]
@@ -72,7 +72,7 @@ function M:handleEvent(dt)
       groundNormalX = contact.normalX
       groundNormalY = contact.normalY
     else
-      if love.keyboard.isDown("s") then
+      if lowerState == "crouching" then
         groundX, groundY = characterBody:getWorldPoint(0.675 * directionX, 0.675)
         groundNormalX, groundNormalY = characterBody:getWorldVector(-directionX / math.sqrt(2), -1 / math.sqrt(2))
       else
@@ -84,7 +84,7 @@ function M:handleEvent(dt)
     local groundTangentX = groundNormalY
     local groundTangentY = -groundNormalX
 
-    if state == "standing" then
+    if lowerState == "falling" or lowerState == "standing" or lowerState == "crouching" then
       footX = groundX + (directionX * 0.075 - side * 0.375) * groundTangentX
       footY = groundY + (directionX * 0.075 - side * 0.375) * groundTangentY
     else

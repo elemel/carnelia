@@ -23,15 +23,49 @@ function M:handleEvent(dt)
 
   local bodies = self.physicsDomain.bodies
   local inputXs = self.characterComponents.inputXs
-  local states = self.characterLowerStateComponents.states
+  local lowerStateComponents = self.characterLowerStateComponents
+  local lowerStates = self.characterLowerStateComponents.states
   local contacts = self.raySensorComponents.contacts
   local directionXs = self.characterComponents.directionXs
 
   local leftInput = love.keyboard.isDown("a")
   local rightInput = love.keyboard.isDown("d")
+
+  local upInput = love.keyboard.isDown("w")
+  local downInput = love.keyboard.isDown("s")
+
   local inputX = (rightInput and 1 or 0) - (leftInput and 1 or 0)
+  local inputY = (downInput and 1 or 0) - (upInput and 1 or 0)
 
   for id in pairs(self.playerEntities) do
+    if lowerStates[id] == "crouching" then
+      if inputY ~= 1 then
+        lowerStateComponents:setState(id, "standing")
+      elseif inputX ~= 0 then
+        lowerStateComponents:setState(id, "crouchWalking")
+      end
+    elseif lowerStates[id] == "crouchWalking" then
+      if inputY ~= 1 then
+        lowerStateComponents:setState(id, "walking")
+      elseif inputX == 0 then
+        lowerStateComponents:setState(id, "crouching")
+      end
+    elseif lowerStates[id] == "falling" then
+      if contacts[id] then
+        lowerStateComponents:setState(id, "standing")
+      end
+    elseif lowerStates[id] == "standing" then
+      if inputY == 1 then
+        lowerStateComponents:setState(id, "crouching")
+      elseif inputX ~= 0 then
+        lowerStateComponents:setState(id, "walking")
+      end
+    elseif lowerStates[id] == "walking" then
+      if inputX == 0 then
+        lowerStateComponents:setState(id, "standing")
+      end
+    end
+
     inputXs[id] = inputX
     contact = contacts[id]
 
@@ -42,7 +76,7 @@ function M:handleEvent(dt)
       local targetDistance = 1.25
 
       -- TODO: Add proper state for crouching
-      if love.keyboard.isDown("s") then
+      if lowerStates[id] == "crouching" or lowerStates[id] == "crouchWalking" then
         targetDistance = 0.875
       end
 
@@ -91,7 +125,7 @@ function M:handleEvent(dt)
     local angle = bodies[id]:getAngle()
     local targetAngle = 0
 
-    if love.keyboard.isDown("s") then
+    if lowerStates[id] == "crouching" or lowerStates[id] == "crouchWalking" then
       targetAngle = 0.25 * math.pi * directionXs[id]
     end
 
@@ -103,8 +137,6 @@ function M:handleEvent(dt)
 
     bodies[id]:applyTorque(
       angularStiffness * anglularError + angularDamping * angularVelocityError)
-
-    states[id] = inputX == 0 and "standing" or "running"
   end
 end
 
