@@ -86,7 +86,7 @@ function M:handleEvent(dt)
 
         if hitFixture then
           local ropeX1, ropeY1 = transforms[id]:inverseTransformPoint(hitX, hitY)
-          local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(x1, y1 - 1.25)
+          local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(parentBody:getWorldPoint(0, -1.25))
 
           local maxLength = heart.math.distance2(hitX, hitY, x1, y1)
 
@@ -134,9 +134,7 @@ function M:handleEvent(dt)
         localYs[id] = y1 - y
 
         self.game:destroyComponent(id, "distanceJoint")
-        self.plantStateComponents:setState(id, "idle")
-
-        bodies[parentId]:setAngle(0)
+        self.plantStateComponents:setState(id, "aiming")
       end
     end
 

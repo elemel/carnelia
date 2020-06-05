@@ -9,6 +9,7 @@ return {
 
     body = {
       bodyType = "dynamic",
+      -- gravityScale = 0,
     },
 
     raySensor = {
@@ -19,18 +20,6 @@ return {
   },
 
   children = {
-    {
-      components = {
-        transform = {
-          transform = {0, -0.625},
-        },
-
-        circleFixture = {
-          radius = 0.25,
-        },
-      },
-    },
-
     {
       components = {
         transform = {

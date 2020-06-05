@@ -83,7 +83,7 @@ return {
       componentType = "characterLowerState",
       class = "heart.StateComponentManager",
       defaultState = "falling",
-      validStates = {"crouchWalking", "crouching", "falling", "running", "standing", "walking"},
+      validStates = {"falling", "running", "standing", "walking"},
     },
 
     {
@@ -96,8 +96,8 @@ return {
     {
       componentType = "plantState",
       class = "heart.StateComponentManager",
-      defaultState = "idle",
-      validStates = {"grabbing", "idle"},
+      defaultState = "aiming",
+      validStates = {"aiming", "grabbing"},
     },
 
     {
@@ -231,9 +231,9 @@ return {
       --   class = "heart.graphics.SpriteDebugDrawSystem",
       -- },
 
-      -- {
-      --   class = "heart.physics.FixtureDebugDrawSystem",
-      -- },
+      {
+        class = "heart.physics.FixtureDebugDrawSystem",
+      },
 
       -- {
       --   class = "heart.physics.JointDebugDrawSystem",

@@ -72,19 +72,14 @@ function M:handleEvent(dt)
       groundNormalX = contact.normalX
       groundNormalY = contact.normalY
     else
-      if lowerState == "crouching" then
-        groundX, groundY = characterBody:getWorldPoint(0.675 * directionX, 0.675)
-        groundNormalX, groundNormalY = characterBody:getWorldVector(-directionX / math.sqrt(2), -1 / math.sqrt(2))
-      else
-        groundX, groundY = characterBody:getWorldPoint(0, 1.125)
-        groundNormalX, groundNormalY = characterBody:getWorldVector(0, -1)
-      end
+      groundX, groundY = characterBody:getWorldPoint(0, 1.125)
+      groundNormalX, groundNormalY = characterBody:getWorldVector(0, -1)
     end
 
     local groundTangentX = groundNormalY
     local groundTangentY = -groundNormalX
 
-    if lowerState == "falling" or lowerState == "standing" or lowerState == "crouching" then
+    if lowerState == "falling" or lowerState == "standing" then
       footX = groundX + (directionX * 0.075 - side * 0.375) * groundTangentX
       footY = groundY + (directionX * 0.075 - side * 0.375) * groundTangentY
     else
