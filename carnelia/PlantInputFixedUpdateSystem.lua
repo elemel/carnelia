@@ -14,6 +14,8 @@ function M:init(game, system)
   self.plantComponents = assert(self.game.componentManagers.plant)
   self.plantStateComponents = assert(self.game.componentManagers.plantState)
 
+  self.characterUpperStateComponents = assert(self.game.componentManagers.characterUpperState)
+
   self.transformComponents =
     assert(self.game.componentManagers.transform)
 
@@ -26,6 +28,7 @@ function M:handleEvent(dt)
   local ropeJoints = self.physicsDomain.ropeJoints
   local bodies = self.physicsDomain.bodies
   local states = self.plantStateComponents.states
+  local characterUpperStates = self.characterUpperStateComponents.states
 
   local localXs = self.plantComponents.localXs
   local localYs = self.plantComponents.localYs
@@ -120,7 +123,8 @@ function M:handleEvent(dt)
             collideConnected = true,
           })
 
-          self.plantStateComponents:setState(id, "grabbing")
+          self.plantStateComponents:setState(id, "vaulting")
+          self.characterUpperStateComponents:setState(parentId, "vaulting")
 
           localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
         end
@@ -135,12 +139,13 @@ function M:handleEvent(dt)
 
         self.game:destroyComponent(id, "distanceJoint")
         self.plantStateComponents:setState(id, "aiming")
+        self.characterUpperStateComponents:setState(parentId, "aiming")
       end
     end
 
     local parentX, parentY = bodies[parentId]:getPosition()
 
-    if states[id] == "grabbing" then
+    if states[id] == "vaulting" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
 
       localXs[id] = x1 - parentX

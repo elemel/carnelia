@@ -40,7 +40,7 @@ function M:handleEvent(dt)
   for id in pairs(self.plantEntities) do
     local parentId = self.game.entityParents[id]
 
-    if states[id] == "grabbing" then
+    if states[id] == "vaulting" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
       local body1, body2 = distanceJoints[id]:getBodies()
 

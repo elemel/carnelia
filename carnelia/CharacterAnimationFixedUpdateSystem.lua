@@ -19,6 +19,9 @@ function M:init(game, system)
   self.characterLowerStateComponents =
     assert(self.game.componentManagers.characterLowerState)
 
+  self.characterUpperStateComponents =
+    assert(self.game.componentManagers.characterUpperState)
+
   self.parentConstraintComponents =
     assert(self.game.componentManagers.parentConstraint)
 
@@ -31,7 +34,10 @@ function M:handleEvent(dt)
 
   local bodies = self.physicsDomain.bodies
   local transforms = self.transformComponents.transforms
+
   local lowerStates = self.characterLowerStateComponents.states
+  local upperStates = self.characterUpperStateComponents.states
+
   local directionXs = self.characterComponents.directionXs
   local inputXs = self.characterComponents.inputXs
   local localTransforms = self.parentConstraintComponents.localTransforms
@@ -57,7 +63,6 @@ function M:handleEvent(dt)
     local characterId = self.game.entityParents[upperLegId]
     local directionX = directionXs[characterId]
     local side = self.leftEntities[upperLegId] and -1 or 1
-    local lowerState = lowerStates[characterId]
 
     local contact = self.raySensorComponents.contacts[characterId]
     local characterBody = self.physicsDomain.bodies[characterId]
@@ -79,7 +84,7 @@ function M:handleEvent(dt)
     local groundTangentX = groundNormalY
     local groundTangentY = -groundNormalX
 
-    if lowerState == "falling" or lowerState == "standing" then
+    if lowerStates[characterId] == "falling" or lowerStates[characterId] == "standing" then
       footX = groundX + (directionX * 0.075 - side * 0.375) * groundTangentX
       footY = groundY + (directionX * 0.075 - side * 0.375) * groundTangentY
     else
@@ -134,8 +139,7 @@ function M:handleEvent(dt)
 
     local headX, headY = characterBody:getWorldPoint(0, -0.55)
 
-    -- TODO: Add action state instead
-    if targetYs[characterId] > headY then
+    if upperStates[characterId] == "vaulting" then
       local handX, handY = characterBody:getWorldPoint(0, -1)
       local handAngle = math.atan2(handY - shoulderY, handX - shoulderX)
 

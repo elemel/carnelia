@@ -97,7 +97,7 @@ return {
       componentType = "plantState",
       class = "heart.StateComponentManager",
       defaultState = "aiming",
-      validStates = {"aiming", "grabbing"},
+      validStates = {"aiming", "swinging", "vaulting"},
     },
 
     {
@@ -231,9 +231,9 @@ return {
       --   class = "heart.graphics.SpriteDebugDrawSystem",
       -- },
 
-      {
-        class = "heart.physics.FixtureDebugDrawSystem",
-      },
+      -- {
+      --   class = "heart.physics.FixtureDebugDrawSystem",
+      -- },
 
       -- {
       --   class = "heart.physics.JointDebugDrawSystem",
