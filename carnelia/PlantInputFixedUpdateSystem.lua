@@ -88,56 +88,86 @@ function M:handleEvent(dt)
         self.physicsDomain.world:rayCast(x1, y1, x2, y2, callback)
 
         if hitFixture then
-          local ropeX1, ropeY1 = transforms[id]:inverseTransformPoint(hitX, hitY)
-          local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(parentBody:getWorldPoint(0, -1.25))
+          if hitNormalY < 0 then
+            local ropeX1, ropeY1 = transforms[id]:inverseTransformPoint(hitX, hitY)
+            local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(parentBody:getWorldPoint(0, -1.25))
 
-          local maxLength = heart.math.distance2(hitX, hitY, x1, y1)
+            local maxLength = heart.math.distance2(hitX, hitY, x1, y1)
 
-          -- self.game:createComponent(id, "ropeJoint", {
-          --   body1 = hitFixture:getUserData(),
-          --   body2 = parentId,
+            -- self.game:createComponent(id, "ropeJoint", {
+            --   body1 = hitFixture:getUserData(),
+            --   body2 = parentId,
 
-          --   x1 = ropeX1,
-          --   y1 = ropeY1,
+            --   x1 = ropeX1,
+            --   y1 = ropeY1,
 
-          --   x2 = ropeX2,
-          --   y2 = ropeY2,
+            --   x2 = ropeX2,
+            --   y2 = ropeY2,
 
-          --   maxLength = maxLength,
-          --   collideConnected = true,
-          -- })
+            --   maxLength = maxLength,
+            --   collideConnected = true,
+            -- })
 
-          self.game:createComponent(id, "distanceJoint", {
-            body1 = hitFixture:getUserData(),
-            body2 = parentId,
+            self.game:createComponent(id, "distanceJoint", {
+              body1 = hitFixture:getUserData(),
+              body2 = parentId,
 
-            x1 = ropeX1,
-            y1 = ropeY1,
+              x1 = ropeX1,
+              y1 = ropeY1,
 
-            x2 = ropeX2,
-            y2 = ropeY2,
+              x2 = ropeX2,
+              y2 = ropeY2,
 
-            frequency = 1,
-            dampingRatio = 0.1,
+              frequency = 1,
+              dampingRatio = 0.1,
 
-            collideConnected = true,
-          })
+              collideConnected = true,
+            })
 
-          self.plantStateComponents:setState(id, "vaulting")
-          self.characterUpperStateComponents:setState(parentId, "vaulting")
+            self.plantStateComponents:setState(id, "vaulting")
+            self.characterUpperStateComponents:setState(parentId, "vaulting")
 
-          localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
+            localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
+          else
+            local ropeX1, ropeY1 = transforms[id]:inverseTransformPoint(hitX, hitY)
+            local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(parentBody:getWorldPoint(0, -0.3))
+
+            local maxLength = heart.math.distance2(hitX, hitY, x1, y1)
+
+            self.game:createComponent(id, "ropeJoint", {
+              body1 = hitFixture:getUserData(),
+              body2 = parentId,
+
+              x1 = ropeX1,
+              y1 = ropeY1,
+
+              x2 = ropeX2,
+              y2 = ropeY2,
+
+              maxLength = maxLength,
+              collideConnected = true,
+            })
+
+            self.plantStateComponents:setState(id, "swinging")
+            self.characterUpperStateComponents:setState(parentId, "swinging")
+
+            localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
+          end
         end
       end
     else
-      if distanceJoints[id] or ropeJoints[id] then
-        local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
+      local joint = distanceJoints[id] or ropeJoints[id]
+
+      if joint then
+        local x1, y1, x2, y2 = joint:getAnchors()
         local x, y = bodies[parentId]:getPosition()
 
         localXs[id] = x1 - x
         localYs[id] = y1 - y
 
         self.game:destroyComponent(id, "distanceJoint")
+        self.game:destroyComponent(id, "ropeJoint")
+
         self.plantStateComponents:setState(id, "aiming")
         self.characterUpperStateComponents:setState(parentId, "aiming")
       end
@@ -147,6 +177,11 @@ function M:handleEvent(dt)
 
     if states[id] == "vaulting" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
+
+      localXs[id] = x1 - parentX
+      localYs[id] = y1 - parentY
+    elseif states[id] == "swinging" then
+      local x1, y1, x2, y2 = ropeJoints[id]:getAnchors()
 
       localXs[id] = x1 - parentX
       localYs[id] = y1 - parentY

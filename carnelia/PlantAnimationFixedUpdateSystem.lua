@@ -25,7 +25,10 @@ function M:handleEvent(dt)
   local mouseDown = love.mouse.isDown(1)
 
   local bodies = self.physicsDomain.bodies
+
   local distanceJoints = self.physicsDomain.distanceJoints
+  local ropeJoints = self.physicsDomain.ropeJoints
+
   local transforms = self.transformComponents.transforms
   local localTransforms = self.parentConstraintComponents.localTransforms
   local directionXs = self.characterComponents.directionXs
@@ -43,6 +46,19 @@ function M:handleEvent(dt)
     if states[id] == "vaulting" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
       local body1, body2 = distanceJoints[id]:getBodies()
+
+      local normalX, normalY = body1:getWorldVector(localNormalXs[id], localNormalYs[id])
+      local angle = math.atan2(normalY, normalX) + math.pi
+
+      transforms[id]:setTransformation(x1, y1, angle, 1, directionXs[parentId])
+
+      for childId in pairs(self.game.entityChildSets[id]) do
+        local directionY = self.upperEntities[childId] and -1 or 1
+        localTransforms[childId]:setTransformation(0, 0, directionY * 0.375 * math.pi)
+      end
+    elseif states[id] == "swinging" then
+      local x1, y1, x2, y2 = ropeJoints[id]:getAnchors()
+      local body1, body2 = ropeJoints[id]:getBodies()
 
       local normalX, normalY = body1:getWorldVector(localNormalXs[id], localNormalYs[id])
       local angle = math.atan2(normalY, normalX) + math.pi
