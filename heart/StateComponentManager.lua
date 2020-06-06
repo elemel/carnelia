@@ -57,7 +57,7 @@ function M:setState(id, state)
       heartTable.set2(self.stateEntitySets, oldState, id, nil)
     end
 
-    print("Entity #" .. id .. " changes " .. self.componentType .. " from " .. oldState .. " to " .. state)
+    -- print("Entity #" .. id .. " changes " .. self.componentType .. " from " .. oldState .. " to " .. state)
     self.states[id] = state
 
     if state then

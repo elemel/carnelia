@@ -13,20 +13,13 @@ function M:init(game, config)
 end
 
 function M:createComponent(id, config)
-  local transform = self.transformComponents.transforms[entityId]
+  local transform = self.transformComponents.transforms[id]
 
   local bodyId = assert(self.game:findAncestorComponent(id, "body"))
   local body = self.physicsDomain.bodies[bodyId]
-  local localVertices
-
-  if config.localVertices then
-    localVertices = config.localVertices
-  else
-    local vertices = transformPoints2(transform, config.vertices)
-    localVertices = getLocalPoints(body, vertices)
-  end
-
-  local shape = love.physics.newPolygonShape(localVertices)
+  local points = transformPoints2(transform, config.points)
+  points = getLocalPoints(body, points)
+  local shape = love.physics.newPolygonShape(points)
   local density = config.density or 1
   local fixture = love.physics.newFixture(body, shape, density)
   fixture:setUserData(id)

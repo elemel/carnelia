@@ -350,150 +350,37 @@ return {
     },
 
     {
+      prototype = "carnelia.resources.configs.entities.terrain.grass4x2",
+
       components = {
         transform = {
-          transform = {0, 2},
-        },
-
-        body = {},
-
-        chainFixture = {
-          points = {
-            -8, 0.2,
-            -7, 0.7,
-            -6, 1.2,
-            -5, 1.5,
-            -4, 1.4,
-            -3, 1,
-            -2, 0.55,
-            -1.5, 0.35,
-            -1, 0.25,
-            -0.5, 0.2,
-            0, 0.3,
-            0.5, 0.4,
-            1, 0.55,
-            2, 0.8,
-            3, 1,
-            4, 1.2,
-            5, 1.1,
-            6, 0.8,
-            7, 0.3,
-            8, -0.3,
-          },
+          transform = {-6.7, 3.7, 0.6},
         },
       },
+    },
 
-      children = {
-        {
-          components = {
-            transform = {
-              transform = {-7, 1.5, 0.6, 1 / 32, 1 / 32, 64, 32},
-            },
+    {
+      prototype = "carnelia.resources.configs.entities.terrain.grassTop4x2",
 
-            sprite = {
-              image = "carnelia/resources/images/grass.png",
-              z = -1,
-            },
-          },
+      components = {
+        transform = {
+          transform = {-0.5, 3.5, 0},
         },
+      },
+    },
 
-        {
-          components = {
-            transform = {
-              transform = {-5.5, 2.1, 0.2, 1 / 32, 1 / 32, 64, 32},
-            },
+    {
+      prototype = "carnelia.resources.configs.entities.terrain.grassBottom4x2",
 
-            sprite = {
-              image = "carnelia/resources/images/grass.png",
-              z = -1,
-            },
-          },
-        },
-
-        {
-          components = {
-            transform = {
-              transform = {-3, 1.7, -0.5, 1 / 32, 1 / 32, 64, 32},
-            },
-
-            sprite = {
-              image = "carnelia/resources/images/grass.png",
-              z = -1,
-            },
-          },
-        },
-
-        {
-          components = {
-            transform = {
-              transform = {-0.5, 1, 0, 1 / 32, 1 / 32, 64, 32},
-            },
-
-            sprite = {
-              image = "carnelia/resources/images/grass.png",
-              z = -1,
-            },
-          },
-        },
-
-        {
-          components = {
-            transform = {
-              transform = {2, 1.5, 0.2, 1 / 32, 1 / 32, 64, 32},
-            },
-
-            sprite = {
-              image = "carnelia/resources/images/grass.png",
-              z = -1,
-            },
-          },
-        },
-
-        {
-          components = {
-            transform = {
-              transform = {4.5, 1.8, -0.1, 1 / 32, 1 / 32, 64, 32},
-            },
-
-            sprite = {
-              image = "carnelia/resources/images/grass.png",
-              z = -1,
-            },
-          },
-        },
-
-        {
-          components = {
-            transform = {
-              transform = {7, 1.1, -0.6, 1 / 32, 1 / 32, 64, 32},
-            },
-
-            sprite = {
-              image = "carnelia/resources/images/grass.png",
-              z = -1,
-            },
-          },
+      components = {
+        transform = {
+          transform = {5, 0, 0},
         },
       },
     },
 
     {
       prototype = "carnelia.resources.configs.entities.seesaw",
-    },
-
-    {
-      components = {
-        transform = {
-          transform = {0, -1.25},
-        },
-
-        body = {},
-
-        rectangleFixture = {
-          height = 2,
-          sensor = true,
-        },
-      },
     },
 
     {

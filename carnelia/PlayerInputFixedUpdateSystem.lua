@@ -102,7 +102,7 @@ function M:handleEvent(dt)
       local targetVelocity = 0
 
       if lowerStates[id] == "running" then
-        targetVelocity = 10
+        targetVelocity = 8
       elseif lowerStates[id] == "walking" then
         targetVelocity = 5
       end
