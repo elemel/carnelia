@@ -1,6 +1,11 @@
+local argparse = require("argparse")
 local heart = require("heart")
 
-function love.load()
+function love.load(arg)
+  local parser = argparse("love DIRECTORY", "Carnelia: Keep it alive")
+  parser:argument("level", "Level name"):args("?")
+  local parsed_args = parser:parse(arg)
+
   love.window.setTitle("Carnelia")
 
   love.window.setMode(800, 600, {
@@ -25,7 +30,8 @@ function love.load()
   }
 
   local gameConfig = require("carnelia.resources.configs.game")
-  local levelConfig = require("carnelia.resources.configs.levels.grass")
+  local levelName = parsed_args.level or "grass"
+  local levelConfig = require("carnelia.resources.configs.levels." .. levelName)
   local config = setmetatable({entities = levelConfig.entities}, {__index = gameConfig})
   game = heart.Game.new(resourceLoaders, config)
 end
