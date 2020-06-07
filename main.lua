@@ -24,7 +24,9 @@ function love.load()
     image = heart.graphics.ImageResourceLoader.new(),
   }
 
-  local config = require("carnelia.resources.configs.game")
+  local gameConfig = require("carnelia.resources.configs.game")
+  local levelConfig = require("carnelia.resources.configs.levels.grass")
+  local config = setmetatable({entities = levelConfig.entities}, {__index = gameConfig})
   game = heart.Game.new(resourceLoaders, config)
 end
 
