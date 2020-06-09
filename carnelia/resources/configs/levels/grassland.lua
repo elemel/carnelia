@@ -127,5 +127,17 @@ return {
         },
       },
     },
+
+    {
+      components = {
+        transform = {
+          transform = {0, 0, 0, 1 / 32, 1 / 32, 128, 64},
+        },
+
+        sprite = {
+          image = "carnelia/resources/images/cloud.png",
+        },
+      },
+    },
   },
 }
