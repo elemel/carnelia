@@ -204,6 +204,10 @@ return {
   systems = {
     draw = {
       {
+        class = "carnelia.SkyDrawSystem",
+      },
+
+      {
         class = "heart.graphics.ViewportDrawSystem",
       },
 

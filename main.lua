@@ -16,7 +16,6 @@ function love.load(arg)
   })
 
   love.graphics.setDefaultFilter("linear", "nearest")
-  love.graphics.setBackgroundColor(0.6, 0.9, 1)
 
   love.physics.setMeter(1)
 
