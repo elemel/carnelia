@@ -11,12 +11,12 @@ function love.load(arg)
   love.window.setMode(800, 600, {
     fullscreentype = "desktop",
     resizable = true,
-    -- highdpi = true,
+    highdpi = true,
     -- vsync = false,
   })
 
   love.graphics.setDefaultFilter("linear", "nearest")
-  -- love.graphics.setBackgroundColor(0.6, 0.9, 1)
+  love.graphics.setBackgroundColor(0.6, 0.9, 1)
 
   love.physics.setMeter(1)
 
@@ -30,7 +30,7 @@ function love.load(arg)
   }
 
   local gameConfig = require("carnelia.resources.configs.game")
-  local levelName = parsed_args.level or "grass"
+  local levelName = parsed_args.level or "grassland"
   local levelConfig = require("carnelia.resources.configs.levels." .. levelName)
   local config = setmetatable({entities = levelConfig.entities}, {__index = gameConfig})
   game = heart.Game.new(resourceLoaders, config)
