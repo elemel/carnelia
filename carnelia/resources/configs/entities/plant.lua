@@ -6,8 +6,6 @@ return {
       localX = 1,
     },
 
-    transform = {},
-
     bone = {},
 
     parentConstraint = {
@@ -21,22 +19,20 @@ return {
         jaw = {},
         upper = {},
 
-        transform = {
+        bone = {
           transform = {0, 0, -0.375 * math.pi},
         },
 
-        bone = {},
         parentConstraint = {},
       },
 
       children = {
         {
           components = {
-            transform = {
+            bone = {
               transform = {0, 0, 0, 1 / 32, 1 / 32, 3, 11},
             },
 
-            bone = {},
             parentConstraint = {},
 
             sprite = {
@@ -53,22 +49,20 @@ return {
         jaw = {},
         lower = {},
 
-        transform = {
+        bone = {
           transform = {0, 0, 0.375 * math.pi},
         },
 
-        bone = {},
         parentConstraint = {},
       },
 
       children = {
         {
           components = {
-            transform = {
+            bone = {
               transform = {0, 0, 0, 1 / 32, 1 / 32, 3, 3},
             },
 
-            bone = {},
             parentConstraint = {},
 
             sprite = {

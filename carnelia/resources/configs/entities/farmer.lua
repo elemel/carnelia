@@ -4,7 +4,6 @@ return {
     character = {},
     characterLowerState = {},
     characterUpperState = {},
-    transform = {},
     bone = {},
 
     body = {
@@ -22,7 +21,7 @@ return {
   children = {
     {
       components = {
-        transform = {
+        bone = {
           transform = {0, -0.125},
         },
 
@@ -34,7 +33,7 @@ return {
 
     {
       components = {
-        transform = {
+        bone = {
           transform = {0, 0.125},
         },
 
@@ -46,11 +45,10 @@ return {
 
     {
       components = {
-        transform = {
+        bone = {
           transform = {0, 0, 0, 1 / 32, 1 / 32, 12, 16.5},
         },
 
-        bone = {},
         parentConstraint = {},
 
         sprite = {
@@ -63,11 +61,10 @@ return {
       components = {
         head = {},
 
-        transform = {
+        bone = {
           transform = {0, 0.55, 0, 1 / 32, 1 / 32, 10, 8},
         },
 
-        bone = {},
         parentConstraint = {},
 
         sprite = {
@@ -78,12 +75,11 @@ return {
 
     {
       components = {
-        transform = {
+        bone = {
           transform = {-0.2, -0.1, 0.1, 1 / 32, 1 / 32, 17, 23.5},
           z = -0.1,
         },
 
-        bone = {},
         parentConstraint = {},
 
         sprite = {
@@ -98,7 +94,7 @@ return {
       components = {
         left = {},
 
-        transform = {
+        bone = {
           transform = {-0.15, -0.3, 0.25 * math.pi},
           z = 0.1,
         },
@@ -111,7 +107,7 @@ return {
       components = {
         right = {},
 
-        transform = {
+        bone = {
           transform = {0.15, -0.3, 0.25 * math.pi},
           z = -0.1,
         },
@@ -124,7 +120,7 @@ return {
       components = {
         left = {},
 
-        transform = {
+        bone = {
           transform = {0.1, 0.3, -0.25 * math.pi},
         },
       },
@@ -136,7 +132,7 @@ return {
       components = {
         right = {},
 
-        transform = {
+        bone = {
           transform = {-0.1, 0.3, -0.25 * math.pi},
         },
       },

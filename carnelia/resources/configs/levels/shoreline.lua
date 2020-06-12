@@ -2,11 +2,10 @@ return {
   entities = {
     {
       components = {
-        transform = {
+        bone = {
           transform = {0, 0, 0, 15},
         },
 
-        bone = {},
         camera = {},
         viewport = {},
       },
@@ -16,7 +15,7 @@ return {
       prototype = "carnelia.resources.configs.entities.farmer",
 
       components = {
-        transform = {
+        bone = {
           transform = {-10, 5},
         },
       },
@@ -26,7 +25,7 @@ return {
       components = {
         water = {},
 
-        transform = {
+        bone = {
           transform = {0, 10},
         },
 
@@ -43,7 +42,7 @@ return {
 
     {
       components = {
-        transform = {
+        bone = {
           transform = {-10, 8},
         },
 
@@ -64,7 +63,7 @@ return {
       children = {
         {
           components = {
-            transform = {
+            bone = {
               transform = {0, 0, 0, 1 / 32, 1 / 32, 128, 16},
             },
 

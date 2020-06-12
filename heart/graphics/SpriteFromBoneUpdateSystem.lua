@@ -11,7 +11,6 @@ function M:init(game, config)
   self.spriteEntities = assert(self.game.componentEntitySets.sprite)
 
   self.boneComponents = assert(self.game.componentManagers.bone)
-  self.transformComponents = assert(self.game.componentManagers.transform)
   self.spriteComponents = assert(self.game.componentManagers.sprite)
 
   self.hardFlipEnabled = config.hardFlipEnabled == true
@@ -19,7 +18,7 @@ end
 
 function M:handleEvent(dt)
   local previousTransforms = self.boneComponents.previousTransforms
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
   local t = self.timerDomain:getFraction()
   local spriteTransforms = self.spriteComponents.transforms
   local zs = self.spriteComponents.zs

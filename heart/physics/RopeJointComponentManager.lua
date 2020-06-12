@@ -5,11 +5,11 @@ local M = class.newClass()
 function M:init(game, config)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+  self.boneComponents = assert(self.game.componentManagers.bone)
 end
 
 function M:createComponent(entityId, config)
-  local transform = self.transformComponents.transforms[entityId]
+  local transform = self.boneComponents.transforms[entityId]
   local bodyId2 = config.body2 or "body"
 
   if type(bodyId2) == "string" then

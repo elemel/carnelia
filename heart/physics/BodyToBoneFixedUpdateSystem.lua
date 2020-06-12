@@ -9,12 +9,12 @@ function M:init(game, config)
   self.boneEntities = assert(self.game.componentEntitySets.bone)
 
   self.bodyComponents = assert(self.game.componentManagers.body)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+  self.boneComponents = assert(self.game.componentManagers.bone)
 end
 
 function M:handleEvent(dt)
   local bodies = self.physicsDomain.bodies
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
   local localTransforms = self.bodyComponents.localTransforms
 
   for id in pairs(self.boneEntities) do

@@ -11,11 +11,11 @@ function M:init(game, system)
   self.plantEntities = assert(self.game.componentEntitySets.plant)
   self.upperEntities = assert(self.game.componentEntitySets.upper)
 
+  self.boneComponents = assert(self.game.componentManagers.bone)
   self.characterComponents = assert(self.game.componentManagers.character)
   self.parentConstraintComponents = assert(self.game.componentManagers.parentConstraint)
   self.plantComponents = assert(self.game.componentManagers.plant)
   self.plantStateComponents = assert(self.game.componentManagers.plantState)
-  self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
 function M:handleEvent(dt)
@@ -29,7 +29,7 @@ function M:handleEvent(dt)
   local distanceJoints = self.physicsDomain.distanceJoints
   local ropeJoints = self.physicsDomain.ropeJoints
 
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
   local localTransforms = self.parentConstraintComponents.localTransforms
   local directionXs = self.characterComponents.directionXs
   local states = self.plantStateComponents.states

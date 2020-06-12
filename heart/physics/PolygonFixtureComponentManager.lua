@@ -9,11 +9,11 @@ local M = class.newClass()
 function M:init(game, config)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+  self.boneComponents = assert(self.game.componentManagers.bone)
 end
 
 function M:createComponent(id, config)
-  local transform = self.transformComponents.transforms[id]
+  local transform = self.boneComponents.transforms[id]
 
   local bodyId = assert(self.game:findAncestorComponent(id, "body"))
   local body = self.physicsDomain.bodies[bodyId]

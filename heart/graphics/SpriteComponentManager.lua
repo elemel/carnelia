@@ -4,7 +4,7 @@ local M = class.newClass()
 
 function M:init(game, config)
   self.game = assert(game)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+  self.boneComponents = assert(self.game.componentManagers.bone)
   self.imageLoader = assert(game.resourceLoaders.image)
   self.images = {}
   self.zs = {}
@@ -13,7 +13,7 @@ function M:init(game, config)
 end
 
 function M:createComponent(entityId, config)
-  local transform = self.transformComponents.transforms[entityId]
+  local transform = self.boneComponents.transforms[entityId]
 
   if config.image then
     local imageFilename = assert(config.image)

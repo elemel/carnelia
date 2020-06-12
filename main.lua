@@ -16,7 +16,6 @@ function love.load(arg)
   })
 
   love.graphics.setDefaultFilter("linear", "nearest")
-
   love.physics.setMeter(1)
 
   -- Work-around for freeze while pressing mouse in LÖVE 11.3 (macOS Mojave)

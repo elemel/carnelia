@@ -11,19 +11,17 @@ function M:init(game, system)
   self.plantEntities = assert(self.game.componentEntitySets.plant)
   self.characterComponents = assert(self.game.componentManagers.character)
 
+  self.boneComponents = assert(self.game.componentManagers.bone)
   self.plantComponents = assert(self.game.componentManagers.plant)
   self.plantStateComponents = assert(self.game.componentManagers.plantState)
 
   self.characterUpperStateComponents = assert(self.game.componentManagers.characterUpperState)
 
-  self.transformComponents =
-    assert(self.game.componentManagers.transform)
-
   self.mouseDown = love.mouse.isDown(1)
 end
 
 function M:handleEvent(dt)
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
   local distanceJoints = self.physicsDomain.distanceJoints
   local ropeJoints = self.physicsDomain.ropeJoints
   local bodies = self.physicsDomain.bodies

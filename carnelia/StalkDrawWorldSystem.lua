@@ -25,7 +25,6 @@ function M:init(game, system)
   self.boneComponents = assert(self.game.componentManagers.bone)
   self.characterComponents = assert(self.game.componentManagers.character)
   self.plantStateComponents = assert(self.game.componentManagers.plantState)
-  self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
 function M:handleEvent(viewportId)
@@ -39,7 +38,7 @@ function M:handleEvent(viewportId)
 
   local t = self.timerDomain.accumulatedDt / self.timerDomain.fixedDt
   local previousTransforms = self.boneComponents.previousTransforms
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
 
   local bodies = self.physicsDomain.bodies
   local targetYs = self.characterComponents.targetYs

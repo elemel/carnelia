@@ -8,15 +8,15 @@ function M:init(game, config)
   self.parentConstraintEntities =
     assert(self.game.componentEntitySets.parentConstraint)
 
+  self.boneComponents = assert(self.game.componentManagers.bone)
+
   self.parentConstraintComponents =
     assert(self.game.componentManagers.parentConstraint)
-
-  self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
 function M:handleEvent(dt)
   local parents = self.game.entityParents
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
   local localTransforms = self.parentConstraintComponents.localTransforms
   local enabledFlags = self.parentConstraintComponents.enabledFlags
 

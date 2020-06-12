@@ -5,7 +5,7 @@ local M = heart.class.newClass()
 function M:init(game, config)
   self.game = assert(game)
 
-  self.transformComponents = assert(self.game.componentManagers.transform)
+  self.boneComponents = assert(self.game.componentManagers.bone)
   self.parentConstraintComponents = assert(self.game.componentManagers.parentConstraint)
   self.bodyComponents = assert(self.game.componentManagers.body)
 

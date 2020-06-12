@@ -101,11 +101,6 @@ return {
     },
 
     {
-      componentType = "transform",
-      class = "heart.animation.TransformComponentManager",
-    },
-
-    {
       componentType = "bone",
       class = "heart.animation.BoneComponentManager",
     },
@@ -218,7 +213,7 @@ return {
 
     drawworld = {
       {
-        class = "heart.graphics.SpriteDrawWorldSystem",
+        class = "carnelia.SpriteDrawWorldSystem",
       },
 
       {

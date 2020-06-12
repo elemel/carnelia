@@ -4,15 +4,15 @@ local M = class.newClass()
 
 function M:init(game, config)
   self.game = assert(game)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+  self.boneComponents = assert(self.game.componentManagers.bone)
   self.localTransforms = {}
   self.enabledFlags = {}
 end
 
 function M:createComponent(entityId, config)
   local parentId = self.game.entityParents[entityId]
-  local parentTransform = self.transformComponents.transforms[parentId]
-  local transform = self.transformComponents.transforms[entityId]
+  local parentTransform = self.boneComponents.transforms[parentId]
+  local transform = self.boneComponents.transforms[entityId]
   local localTransform = parentTransform:inverse():apply(transform)
   self.localTransforms[entityId] = localTransform
   self.enabledFlags[entityId] = config.enabled ~= false

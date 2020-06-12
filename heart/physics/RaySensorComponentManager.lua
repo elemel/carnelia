@@ -5,7 +5,7 @@ local M = heart.class.newClass()
 function M:init(game, config)
   self.game = assert(game)
   self.physicsDomain = assert(self.game.domains.physics)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+  self.boneComponents = assert(self.game.componentManagers.bone)
 
   self.localXs = {}
   self.localYs = {}
@@ -18,7 +18,7 @@ function M:init(game, config)
 end
 
 function M:createComponent(id, config)
-  local transform = self.transformComponents.transforms[id]
+  local transform = self.boneComponents.transforms[id]
   local body = self.physicsDomain.bodies[id]
 
   local x = config.x or 0

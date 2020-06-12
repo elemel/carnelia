@@ -9,8 +9,8 @@ function M:init(game, config)
   self.cameraEntities = assert(self.game.componentEntitySets.camera)
   self.viewportEntities = assert(self.game.componentEntitySets.viewport)
 
+  self.boneComponents = assert(self.game.componentManagers.bone)
   self.cameraComponents = assert(self.game.componentManagers.camera)
-  self.transformComponents = assert(self.game.componentManagers.transform)
   self.viewportComponents = assert(self.game.componentManagers.viewport)
 end
 
@@ -18,7 +18,7 @@ function M:handleEvent()
   local widths = self.viewportComponents.widths
   local heights = self.viewportComponents.heights
   local transforms = self.cameraComponents.transforms
-  local debugTransforms = self.transformComponents.transforms
+  local debugTransforms = self.boneComponents.transforms
 
   for id in pairs(self.viewportEntities) do
     if self.cameraEntities[id] then

@@ -1,6 +1,5 @@
 return {
   components = {
-    transform = {},
     bone = {},
 
     body = {
@@ -17,11 +16,9 @@ return {
   children = {
     {
       components = {
-        transform = {
+        bone = {
           transform = {0, -0.1, 0, 1 / 32, 1 / 32, 67, 38.5},
         },
-
-        bone = {},
 
         sprite = {
           image = "carnelia/resources/images/terrain/grass4x2.png",

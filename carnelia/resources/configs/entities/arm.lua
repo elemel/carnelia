@@ -1,6 +1,5 @@
 return {
   components = {
-    transform = {},
     bone = {},
 
     parentConstraint = {
@@ -11,11 +10,10 @@ return {
   children = {
     {
       components = {
-        transform = {
+        bone = {
           transform = {0, 0, 0, 1 / 32, 1 / 32, 6, 3},
         },
 
-        bone = {},
         parentConstraint = {},
 
         sprite = {
@@ -27,11 +25,9 @@ return {
 
     {
       components = {
-        transform = {
+        bone = {
           transform = {0, 0.4, -0.5 * math.pi},
         },
-
-        bone = {},
 
         parentConstraint = {
           enabled = false,
@@ -41,11 +37,10 @@ return {
       children = {
         {
           components = {
-            transform = {
+            bone = {
               transform = {0, 0, 0, 1 / 32, 1 / 32, 7, 3},
             },
 
-            bone = {},
             parentConstraint = {},
 
             sprite = {
@@ -59,11 +54,9 @@ return {
           components = {
             hand = {},
 
-            transform = {
+            bone = {
               transform = {0, 0.4, 0},
             },
-
-            bone = {},
 
             parentConstraint = {
               enabled = false,
@@ -73,11 +66,10 @@ return {
           children = {
             {
               components = {
-                transform = {
+                bone = {
                   transform = {0, 0, 0, 1 / 32, 1 / 32, 4.5, 5},
                 },
 
-                bone = {},
                 parentConstraint = {},
 
                 sprite = {

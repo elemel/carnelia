@@ -4,14 +4,16 @@ local M = heart.class.newClass()
 
 function M:init(game, config)
   self.game = assert(game)
+
   self.playerEntities = assert(self.game.componentEntitySets.player)
   self.cameraEntities = assert(self.game.componentEntitySets.camera)
-  self.transformComponents = assert(self.game.componentManagers.transform)
+
+  self.boneComponents = assert(self.game.componentManagers.bone)
   self.bounds = config.bounds or {-1, -1, 1, 1}
 end
 
 function M:handleEvent(dt)
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
   local minX, minY, maxX, maxY = unpack(self.bounds)
 
   for playerId in pairs(self.playerEntities) do

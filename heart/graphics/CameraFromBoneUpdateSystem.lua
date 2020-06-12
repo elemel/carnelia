@@ -12,12 +12,11 @@ function M:init(game, config)
 
   self.boneComponents = assert(self.game.componentManagers.bone)
   self.cameraComponents = assert(self.game.componentManagers.camera)
-  self.transformComponents = assert(self.game.componentManagers.transform)
 end
 
 function M:handleEvent(dt)
   local previousTransforms = self.boneComponents.previousTransforms
-  local transforms = self.transformComponents.transforms
+  local transforms = self.boneComponents.transforms
   local t = self.timerDomain:getFraction()
   local cameraTransforms = self.cameraComponents.transforms
 
