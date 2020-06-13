@@ -42,6 +42,8 @@ function love.load(arg)
     local y2 = math.min(y + 1, height - 1)
 
     for x = 0, width - 1 do
+      local z = depthData:getPixel(x, y)
+
       local x1 = math.max(0, x - 1)
       local x2 = math.min(x + 1, width - 1)
 
@@ -55,7 +57,7 @@ function love.load(arg)
       local dy, dzdy = normalize2(y2 - y1, zy2 - zy1)
 
       local normalX, normalY, normalZ = normalize3(cross3(dx, 0, dzdx, 0, dy, dzdy))
-      normalData:setPixel(x, y, 0.5 + 0.5 * normalX, 0.5 + 0.5 * normalY, 0.5 + 0.5 * normalZ, 1)
+      normalData:setPixel(x, y, 0.5 + 0.5 * normalX, 0.5 + 0.5 * normalY, 0.5 + 0.5 * normalZ, z)
     end
   end
 

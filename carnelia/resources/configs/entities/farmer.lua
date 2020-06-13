@@ -63,6 +63,7 @@ return {
 
         bone = {
           transform = {0, 0.55, 0, 1 / 32, 1 / 32, 10, 8},
+          z = -0.1,
         },
 
         parentConstraint = {},
@@ -77,7 +78,7 @@ return {
       components = {
         bone = {
           transform = {-0.2, -0.1, 0.1, 1 / 32, 1 / 32, 17, 23.5},
-          z = -0.1,
+          z = 0.1,
         },
 
         parentConstraint = {},
@@ -96,7 +97,7 @@ return {
 
         bone = {
           transform = {-0.15, -0.3, 0.25 * math.pi},
-          z = 0.1,
+          z = 0.2,
         },
       },
     },
@@ -109,7 +110,7 @@ return {
 
         bone = {
           transform = {0.15, -0.3, 0.25 * math.pi},
-          z = -0.1,
+          z = -0.2,
         },
       },
     },
@@ -122,6 +123,7 @@ return {
 
         bone = {
           transform = {0.1, 0.3, -0.25 * math.pi},
+          z = -0.1,
         },
       },
     },
@@ -134,6 +136,7 @@ return {
 
         bone = {
           transform = {-0.1, 0.3, -0.25 * math.pi},
+          z = 0.1,
         },
       },
     },

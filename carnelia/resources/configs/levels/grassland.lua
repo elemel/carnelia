@@ -155,6 +155,7 @@ return {
       components = {
         bone = {
           transform = {-4, 11.4, 0.7, 1 / 32, 1 / 32, 67, 67},
+          z = -0.1,
         },
 
         sprite = {

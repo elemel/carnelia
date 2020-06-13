@@ -25,11 +25,14 @@ vec4 effect(vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords)
       discard;
     }
 
+    vec4 normalDepth = 2 * Texel(normalMap, texture_coords) - 1;
     mat3 norm_matrix = mat3(1, 0, 0, 0, 1, 0, 0, 0, 1.0 / 32.0) * mat3(transformx);
-    vec3 normal = 2 * vec3(Texel(normalMap, texture_coords)) - 1;
-    normal = normalize(norm_matrix * normal);
+    vec3 normal = normalize(norm_matrix * vec3(normalDepth));
     vec3 sunColor = 5 * vec3(texturecolor) * dot(normal, normalize(vec3(0, -1, 0.25))) * vec3(1.0, 0.75, 0.5);
     vec3 skyColor = 0.5 * vec3(texturecolor) * vec3(0.5, 0.75, 1.0);
+
+    gl_FragDepth = 0.5 + 0.01 * (transformx * vec4(0, 0, 0, 1)).z - 0.005 * normalDepth.w;
+
     return vec4(sunColor + skyColor, 1);
 }
 
@@ -40,25 +43,19 @@ end
 
 function M:handleEvent(viewportId)
   local transforms = self.spriteComponents.transforms
-  local ids = heartTable.keys(self.spriteEntities)
-  local zs = self.spriteComponents.zs
-  local epsilon = 1e-6
-
-  table.sort(ids, function(a, b)
-    return zs[a] + a * epsilon < zs[b] + b * epsilon
-  end)
-
   local images = self.spriteComponents.images
 
+  love.graphics.setDepthMode("less", true)
   love.graphics.setShader(self.shader)
-  self.shader:send("normalMap", self.normalMap)
 
-  for _, id in ipairs(ids) do
+  for id in pairs(self.spriteEntities) do
     self.shader:send("transformx", transforms[id])
+    self.shader:send("normalMap", self.normalMap)
     love.graphics.draw(images[id], transforms[id])
   end
 
   love.graphics.setShader()
+  love.graphics.setDepthMode()
 end
 
 return M

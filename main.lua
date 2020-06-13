@@ -11,11 +11,10 @@ function love.load(arg)
   love.window.setMode(800, 600, {
     fullscreentype = "desktop",
     resizable = true,
-    highdpi = true,
+    -- highdpi = true,
     -- vsync = false,
   })
 
-  love.graphics.setDefaultFilter("linear", "nearest")
   love.physics.setMeter(1)
 
   -- Work-around for freeze while pressing mouse in LÖVE 11.3 (macOS Mojave)

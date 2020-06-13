@@ -120,7 +120,7 @@ function M:handleEvent(dt)
       localTransforms[headId]:apply(love.math.newTransform():setMatrix(
         1, 0, 0, 0,
         0, 1, 0, 0,
-        0, 0, 1, 0.1,
+        0, 0, 1, -0.1,
         0, 0, 0, 1))
     end
   end
@@ -151,7 +151,7 @@ function M:handleEvent(dt)
 
       local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
 
-      local z = directionX * side
+      local z = -directionX * side
 
       -- TODO: Find a better way to keep the z-coordinate
       local zTransform = love.math.newTransform():setMatrix(
@@ -176,7 +176,7 @@ function M:handleEvent(dt)
 
       local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
 
-      local z = directionX * side
+      local z = -directionX * side
 
       -- TODO: Find a better way to keep the z-coordinate
       local zTransform = love.math.newTransform():setMatrix(

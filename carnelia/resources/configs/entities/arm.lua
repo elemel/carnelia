@@ -18,7 +18,6 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/farmer/upperArm.png",
-          z = 0.1,
         },
       },
     },
@@ -45,7 +44,6 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/farmer/lowerArm.png",
-              z = 0.1,
             },
           },
         },
@@ -74,7 +72,6 @@ return {
 
                 sprite = {
                   image = "carnelia/resources/images/farmer/hand.png",
-                  z = 0.1,
                 },
               },
             },
