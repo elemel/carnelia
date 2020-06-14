@@ -147,6 +147,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/terrain/rock4x4.png",
+          normalMap = "carnelia/resources/images/terrain/rock4x4Normal.png",
         },
       },
     },
@@ -159,6 +160,7 @@ return {
         },
 
         sprite = {
+          normalMap = "carnelia/resources/images/terrain/rock4x4Normal.png",
           image = "carnelia/resources/images/terrain/rock4x4.png",
         },
       },
@@ -172,6 +174,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/terrain/rock4x4.png",
+          normalMap = "carnelia/resources/images/terrain/rock4x4Normal.png",
         },
       },
     },
@@ -184,6 +187,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/terrain/rock4x4.png",
+          normalMap = "carnelia/resources/images/terrain/rock4x4Normal.png",
         },
       },
     },
@@ -196,6 +200,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/terrain/rock4x4.png",
+          normalMap = "carnelia/resources/images/terrain/rock4x4Normal.png",
         },
       },
     },

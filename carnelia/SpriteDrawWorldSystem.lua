@@ -38,19 +38,20 @@ vec4 effect(vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords)
 
 ]])
 
-  self.normalMap = love.graphics.newImage("carnelia/resources/images/terrain/rock4x4Normal.png", {linear = true})
+  self.defaultNormalMap = love.graphics.newImage("carnelia/resources/images/defaultNormal.png", {linear = true})
 end
 
 function M:handleEvent(viewportId)
   local transforms = self.spriteComponents.transforms
   local images = self.spriteComponents.images
+  local normalMaps = self.spriteComponents.normalMaps
 
   love.graphics.setDepthMode("less", true)
   love.graphics.setShader(self.shader)
 
   for id in pairs(self.spriteEntities) do
     self.shader:send("transformx", transforms[id])
-    self.shader:send("normalMap", self.normalMap)
+    self.shader:send("normalMap", normalMaps[id] or self.defaultNormalMap)
     love.graphics.draw(images[id], transforms[id])
   end
 

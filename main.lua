@@ -1,5 +1,6 @@
 local argparse = require("argparse")
 local heart = require("heart")
+local LinearImageResourceLoader = require("carnelia.LinearImageResourceLoader")
 
 function love.load(arg)
   local parser = argparse("love DIRECTORY", "Carnelia: Keep it alive")
@@ -24,6 +25,7 @@ function love.load(arg)
 
   local resourceLoaders = {
     image = heart.graphics.ImageResourceLoader.new(),
+    linearImage = LinearImageResourceLoader.new(),
   }
 
   local gameConfig = require("carnelia.resources.configs.game")
