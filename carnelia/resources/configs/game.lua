@@ -182,7 +182,7 @@ return {
 
     {
       componentType = "sprite",
-      class = "heart.graphics.SpriteComponentManager",
+      class = "carnelia.SpriteComponentManager",
     },
 
     {
