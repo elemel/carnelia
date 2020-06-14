@@ -18,7 +18,21 @@ local function cross3(x1, y1, z1, x2, y2, z2)
   return y1 * z2 - z1 * y2, z1 * x2 - x1 * z2, x1 * y2 - y1 * x2
 end
 
+local function readBinaryFile(filename)
+  local file = assert(io.open(filename, "rb"))
+  local contents = file:read("*a")
+  file:close()
+  return contents
+end
+
+local function writeBinaryFile(filename, contents)
+  local file = assert(io.open(filename, "wb"))
+  file:write(contents)
+  file:close()
+end
+
 function love.load(arg)
+  love.window.setTitle("Bump to Normal")
   love.graphics.setDefaultFilter("linear", "nearest")
 
   love.window.setMode(800, 600, {
@@ -26,12 +40,13 @@ function love.load(arg)
     resizable = true,
   })
 
-  local parser = argparse("love DIRECTORY", "Convert depth map to normal map")
-  parser:argument("input", "Filename of depth-map input")
-  parser:argument("output", "Filename of normal-map output")
-  local parsed_args = parser:parse(arg)
+  local parser = argparse("love DIRECTORY", "Convert bump map to normal map")
+  parser:argument("input", "Filename of bump map to read")
+  parser:argument("output", "Filename of normal map to write")
+  local parsedArgs = parser:parse(arg)
 
-  depthData = love.image.newImageData(parsed_args.input)
+  local depthContents = readBinaryFile(parsedArgs.input)
+  depthData = love.image.newImageData(love.filesystem.newFileData(depthContents, parsedArgs.input))
   depthImage = love.graphics.newImage(depthData, {linear = true})
 
   local width, height = depthImage:getDimensions()
@@ -61,7 +76,7 @@ function love.load(arg)
     end
   end
 
-  normalData:encode("png", parsed_args.output)
+  writeBinaryFile(parsedArgs.output, normalData:encode("png"):getString())
   normalImage = love.graphics.newImage(normalData, {linear = true})
 end
 
