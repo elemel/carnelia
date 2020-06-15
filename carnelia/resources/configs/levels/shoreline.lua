@@ -3,7 +3,7 @@ return {
     {
       components = {
         bone = {
-          transform = {0, 0, 0, 15},
+          transform = {0, 0, 0, 10},
         },
 
         camera = {},

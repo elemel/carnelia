@@ -299,7 +299,7 @@ return {
 
       {
         class = "carnelia.PlayerToCameraUpdateSystem",
-        bounds = {-10, -5, 10, 5},
+        bounds = {-20, -10, 20, 10},
       },
 
       {

@@ -18,6 +18,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/farmer/upperArm.png",
+              normalMap = "carnelia/resources/images/farmer/upperArmNormal.png",
         },
       },
     },
@@ -44,6 +45,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/farmer/lowerArm.png",
+              normalMap = "carnelia/resources/images/farmer/lowerArmNormal.png",
             },
           },
         },
@@ -72,6 +74,7 @@ return {
 
                 sprite = {
                   image = "carnelia/resources/images/farmer/hand.png",
+                  normalMap = "carnelia/resources/images/farmer/handNormal.png",
                 },
               },
             },

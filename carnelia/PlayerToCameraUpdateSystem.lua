@@ -36,7 +36,7 @@ function M:handleEvent(dt)
         cameraX = heart.math.clamp(cameraX, minX, maxX)
         cameraY = heart.math.clamp(cameraY, minY, maxY)
 
-        transforms[cameraId]:setTransformation(cameraX, cameraY, 0, 15)
+        transforms[cameraId]:setTransformation(cameraX, cameraY, 0, 5)
       end
     end
   end

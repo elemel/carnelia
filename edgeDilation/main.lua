@@ -39,6 +39,8 @@ function love.load(arg)
     local y2 = math.min(y + 1, inputHeight - 1)
 
     for x = 0, inputWidth - 1 do
+      local r, g, b, a = inputData:getPixel(x, y)
+
       if a == 0 then
         r = 0
         g = 0

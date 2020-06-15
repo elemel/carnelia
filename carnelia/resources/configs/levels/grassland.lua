@@ -3,7 +3,7 @@ return {
     {
       components = {
         bone = {
-          transform = {0, 0, 0, 15},
+          transform = {0, 0, 0, 10},
         },
 
         camera = {},
@@ -123,6 +123,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/terrain/brightLeaf.png",
+          normalMap = "carnelia/resources/images/terrain/brightLeafNormal.png",
         },
       },
     },

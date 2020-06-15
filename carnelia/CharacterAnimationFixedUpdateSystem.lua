@@ -66,7 +66,7 @@ function M:handleEvent(dt)
 
     local contact = self.raySensorComponents.contacts[characterId]
     local characterBody = self.physicsDomain.bodies[characterId]
-    local hipX, hipY = characterBody:getWorldPoint(side * 0.5 * hipWidths[characterId], hipYs[characterId])
+    local hipX, hipY = characterBody:getWorldPoint(-side * 0.5 * hipWidths[characterId], hipYs[characterId])
 
     local groundX, groundY, groundNormalX, groundNormalY
 
@@ -85,8 +85,8 @@ function M:handleEvent(dt)
     local groundTangentY = -groundNormalX
 
     if lowerStates[characterId] == "falling" or lowerStates[characterId] == "standing" then
-      footX = groundX + (directionX * 0.075 - side * 0.375) * groundTangentX
-      footY = groundY + (directionX * 0.075 - side * 0.375) * groundTangentY
+      footX = groundX + (directionX * 0.075 + side * 0.375) * groundTangentX
+      footY = groundY + (directionX * 0.075 + side * 0.375) * groundTangentY
     else
       local angle = inputXs[characterId] * 10 * fixedTime + side * 0.5 * math.pi
       footX = groundX + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentX + groundNormalX * 0.25 * math.max(0, 0.5 + math.sin(angle))
@@ -102,9 +102,18 @@ function M:handleEvent(dt)
     local kneeAngle = math.acos(directionX * math.min(distance / legLength, 1))
     local footAngle = math.atan2(groundNormalY, groundNormalX) + 0.5 * math.pi
 
-    transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle, directionX, 1)
-    transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle, directionX, 1)
-    transforms[footId]:setTransformation(footX, footY, footAngle, directionX, 1)
+    local z = -directionX * side * 0.1
+
+    -- TODO: Find a better way to keep the z-coordinate
+    local zTransform = love.math.newTransform():setMatrix(
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, z,
+        0, 0, 0, 1)
+
+    transforms[upperLegId]:setTransformation(hipX, hipY, legAngle - kneeAngle, directionX, 1):apply(zTransform)
+    transforms[lowerLegId]:setTransformation(kneeX, kneeY, legAngle + kneeAngle, directionX, 1):apply(zTransform)
+    transforms[footId]:setTransformation(footX, footY, footAngle, directionX, 1):apply(zTransform)
   end
 
   for id in pairs(self.characterEntities) do
@@ -151,7 +160,7 @@ function M:handleEvent(dt)
 
       local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
 
-      local z = -directionX * side
+      local z = -directionX * side * 0.2
 
       -- TODO: Find a better way to keep the z-coordinate
       local zTransform = love.math.newTransform():setMatrix(
@@ -176,7 +185,7 @@ function M:handleEvent(dt)
 
       local elbowAngle = math.acos(directionX * math.min(distance / armLength, 1))
 
-      local z = -directionX * side
+      local z = -directionX * side * 0.2
 
       -- TODO: Find a better way to keep the z-coordinate
       local zTransform = love.math.newTransform():setMatrix(
