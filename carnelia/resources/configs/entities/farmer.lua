@@ -71,6 +71,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/farmer/head.png",
+          normalMap = "carnelia/resources/images/farmer/headNormal.png",
         },
       },
     },
@@ -86,6 +87,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/sandbag.png",
+          normalMap = "carnelia/resources/images/sandbagNormal.png",
         },
       },
     },
