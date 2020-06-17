@@ -83,7 +83,7 @@ return {
       componentType = "characterLowerState",
       class = "heart.StateComponentManager",
       defaultState = "falling",
-      validStates = {"falling", "running", "standing", "walking"},
+      validStates = {"crouching", "falling", "running", "standing", "walking"},
     },
 
     {

@@ -10,7 +10,9 @@ function M:init(game, config)
   self.bodyComponents = assert(self.game.componentManagers.body)
 
   self.directionXs = {}
+
   self.inputXs = {}
+  self.inputYs = {}
 
   self.targetXs = {}
   self.targetYs = {}
@@ -30,7 +32,9 @@ end
 
 function M:createComponent(id, config)
   self.directionXs[id] = config.directionX or 1
+
   self.inputXs[id] = config.inputX or 0
+  self.inputYs[id] = config.inputY or 0
 
   self.targetXs[id] = config.targetX or 0
   self.targetYs[id] = config.targetY or 0
@@ -50,7 +54,9 @@ end
 
 function M:destroyComponent(id, config)
   self.directionXs[id] = nil
+
   self.inputXs[id] = nil
+  self.inputYs[id] = nil
 
   self.targetXs[id] = nil
   self.targetYs[id] = nil

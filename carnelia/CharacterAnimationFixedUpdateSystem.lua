@@ -39,7 +39,10 @@ function M:handleEvent(dt)
   local upperStates = self.characterUpperStateComponents.states
 
   local directionXs = self.characterComponents.directionXs
+
   local inputXs = self.characterComponents.inputXs
+  local inputYs = self.characterComponents.inputYs
+
   local localTransforms = self.parentConstraintComponents.localTransforms
 
   local targetXs = self.characterComponents.targetXs
@@ -78,17 +81,33 @@ function M:handleEvent(dt)
       groundNormalY = contact.normalY
     else
       groundX, groundY = characterBody:getWorldPoint(0, 1.125)
+
+      if inputYs[characterId] == 1 then
+        groundX, groundY = characterBody:getWorldPoint(0, 0.875)
+      end
+
       groundNormalX, groundNormalY = characterBody:getWorldVector(0, -1)
     end
 
     local groundTangentX = groundNormalY
     local groundTangentY = -groundNormalX
 
-    if lowerStates[characterId] == "falling" or lowerStates[characterId] == "standing" then
+    if lowerStates[characterId] == "crouching" or lowerStates[characterId] == "falling" or lowerStates[characterId] == "standing" then
       footX = groundX + (directionX * 0.075 + side * 0.375) * groundTangentX
       footY = groundY + (directionX * 0.075 + side * 0.375) * groundTangentY
     else
-      local angle = inputXs[characterId] * 10 * fixedTime + side * 0.5 * math.pi
+      local angle
+
+      if lowerStates[characterId] == "running" then
+        angle = inputXs[characterId] * 12 * fixedTime + side * 0.5 * math.pi
+      else
+        if inputYs[characterId] == 1 then
+          angle = inputXs[characterId] * 8 * fixedTime + side * 0.5 * math.pi
+        else
+          angle = inputXs[characterId] * 10 * fixedTime + side * 0.5 * math.pi
+        end
+      end
+
       footX = groundX + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentX + groundNormalX * 0.25 * math.max(0, 0.5 + math.sin(angle))
       footY = groundY + (directionX * 0.1 + 0.5 * math.cos(angle)) * groundTangentY + groundNormalY * 0.25 * math.max(0, 0.5 + math.sin(angle))
     end

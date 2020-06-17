@@ -25,7 +25,10 @@ function M:handleEvent(dt)
   local fixedTime = self.timerDomain:getFixedTime()
 
   local bodies = self.physicsDomain.bodies
+
   local inputXs = self.characterComponents.inputXs
+  local inputYs = self.characterComponents.inputYs
+
   local lowerStateComponents = self.characterLowerStateComponents
   local lowerStates = self.characterLowerStateComponents.states
   local upperStates = self.characterUpperStateComponents.states
@@ -47,7 +50,13 @@ function M:handleEvent(dt)
   local inputY = (downInput and 1 or 0) - (upInput and 1 or 0)
 
   for id in pairs(self.playerEntities) do
-    if lowerStates[id] == "falling" then
+    if lowerStates[id] == "crouching" then
+      if not contacts[id] then
+        lowerStateComponents:setState(id, "falling")
+      elseif inputY ~= 1 then
+        lowerStateComponents:setState(id, "standing")
+      end
+    elseif lowerStates[id] == "falling" then
       if contacts[id] then
         lowerStateComponents:setState(id, "standing")
       end
@@ -63,6 +72,8 @@ function M:handleEvent(dt)
     elseif lowerStates[id] == "standing" then
       if not contacts[id] then
         lowerStateComponents:setState(id, "falling")
+      elseif inputY == 1 then
+        lowerStateComponents:setState(id, "crouching")
       elseif inputX ~= 0 or runInput then
         lowerStateComponents:setState(id, "walking")
       end
@@ -77,6 +88,8 @@ function M:handleEvent(dt)
     end
 
     inputXs[id] = inputX
+    inputYs[id] = inputY
+
     local contact = contacts[id]
     local body = bodies[id]
     local x, y = body:getPosition()
@@ -85,10 +98,16 @@ function M:handleEvent(dt)
       local distance = heart.math.distance2(x, y, contact.x, contact.y)
       local targetDistance = 1.25
 
+      if inputY == 1 then
+        if inputX == 0 then
+          targetDistance = 1
+        end
+      end
+
       local positionError = targetDistance - distance
       local mass = body:getMass()
       local stiffness = 100
-      local damping = 20
+      local damping = 10
       local linearVelocityX, linearVelocityY = body:getLinearVelocity()
 
       local tangentX = contact.normalY
@@ -104,21 +123,24 @@ function M:handleEvent(dt)
       if lowerStates[id] == "running" then
         targetVelocity = 8
       elseif lowerStates[id] == "walking" then
-        targetVelocity = 5
+        if inputY == 1 then
+          targetVelocity = 3
+        else
+          targetVelocity = 5
+        end
       end
 
       local velocityErrorX = contactLinearVelocityX + targetVelocity * inputX - linearVelocityX
 
       local velocityErrorY = contactLinearVelocityY - linearVelocityY - linearVelocityX * tangentY
-      --body:applyForce(0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
 
       local forceX = 0
       local forceY = 0
 
-      forceY = forceY + math.min(
-        0, -stiffness * mass * positionError + damping * mass * velocityErrorY)
+      forceY = forceY - stiffness * mass * positionError
+      forceY = forceY + damping * mass * velocityErrorY
 
-      if upperStates[id] == "grabbing" then
+      if upperStates[id] == "vaulting" then
         forceY = math.min(0, forceY)
       end
 

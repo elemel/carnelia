@@ -22,6 +22,7 @@ return {
 
         sprite = {
           image = "carnelia/resources/images/terrain/grass4x2.png",
+          normalMap = "carnelia/resources/images/terrain/grass4x2Normal.png",
         },
       },
     },
