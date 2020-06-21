@@ -14,7 +14,7 @@ local function transformVector(previousTransforms, transforms, id, x, y, t)
   return heart.math.mix2(x1, y1, x2, y2, t)
 end
 
-function M:init(game, system)
+function M:init(game, config)
   self.game = assert(game)
 
   self.physicsDomain = assert(self.game.domains.physics)

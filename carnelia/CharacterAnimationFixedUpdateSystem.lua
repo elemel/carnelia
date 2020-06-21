@@ -3,7 +3,7 @@ local inverseKinematics = require("carnelia.inverseKinematics")
 
 local M = heart.class.newClass()
 
-function M:init(game, system)
+function M:init(game, config)
   self.game = assert(game)
 
   self.physicsDomain = assert(self.game.domains.physics)
