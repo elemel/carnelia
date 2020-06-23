@@ -1,7 +1,5 @@
 return {
   components = {
-    plantState = {},
-
     plant = {
       localX = 1,
     },

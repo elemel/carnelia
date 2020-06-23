@@ -13,8 +13,6 @@ function M:init(game, config)
 
   self.boneComponents = assert(self.game.componentManagers.bone)
   self.plantComponents = assert(self.game.componentManagers.plant)
-  self.plantStateComponents = assert(self.game.componentManagers.plantState)
-
   self.characterUpperStateComponents = assert(self.game.componentManagers.characterUpperState)
 
   self.mouseDown = love.mouse.isDown(1)
@@ -25,8 +23,7 @@ function M:handleEvent(dt)
   local distanceJoints = self.physicsDomain.distanceJoints
   local ropeJoints = self.physicsDomain.ropeJoints
   local bodies = self.physicsDomain.bodies
-  local states = self.plantStateComponents.states
-  local characterUpperStates = self.characterUpperStateComponents.states
+  local states = self.characterUpperStateComponents.states
 
   local localXs = self.plantComponents.localXs
   local localYs = self.plantComponents.localYs
@@ -122,7 +119,6 @@ function M:handleEvent(dt)
               collideConnected = true,
             })
 
-            self.plantStateComponents:setState(id, "vaulting")
             self.characterUpperStateComponents:setState(parentId, "vaulting")
 
             localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
@@ -146,7 +142,6 @@ function M:handleEvent(dt)
               collideConnected = true,
             })
 
-            self.plantStateComponents:setState(id, "swinging")
             self.characterUpperStateComponents:setState(parentId, "swinging")
 
             localNormalXs[id], localNormalYs[id] = hitFixture:getBody():getLocalVector(hitNormalX, hitNormalY)
@@ -166,19 +161,18 @@ function M:handleEvent(dt)
         self.game:destroyComponent(id, "distanceJoint")
         self.game:destroyComponent(id, "ropeJoint")
 
-        self.plantStateComponents:setState(id, "aiming")
         self.characterUpperStateComponents:setState(parentId, "aiming")
       end
     end
 
     local parentX, parentY = bodies[parentId]:getPosition()
 
-    if states[id] == "vaulting" then
+    if states[parentId] == "vaulting" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
 
       localXs[id] = x1 - parentX
       localYs[id] = y1 - parentY
-    elseif states[id] == "swinging" then
+    elseif states[parentId] == "swinging" then
       local x1, y1, x2, y2 = ropeJoints[id]:getAnchors()
 
       localXs[id] = x1 - parentX

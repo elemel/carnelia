@@ -13,9 +13,9 @@ function M:init(game, config)
 
   self.boneComponents = assert(self.game.componentManagers.bone)
   self.characterComponents = assert(self.game.componentManagers.character)
+  self.characterUpperStateComponents = assert(self.game.componentManagers.characterUpperState)
   self.parentConstraintComponents = assert(self.game.componentManagers.parentConstraint)
   self.plantComponents = assert(self.game.componentManagers.plant)
-  self.plantStateComponents = assert(self.game.componentManagers.plantState)
 end
 
 function M:handleEvent(dt)
@@ -32,7 +32,7 @@ function M:handleEvent(dt)
   local transforms = self.boneComponents.transforms
   local localTransforms = self.parentConstraintComponents.localTransforms
   local directionXs = self.characterComponents.directionXs
-  local states = self.plantStateComponents.states
+  local states = self.characterUpperStateComponents.states
 
   local localXs = self.plantComponents.localXs
   local localYs = self.plantComponents.localYs
@@ -43,7 +43,7 @@ function M:handleEvent(dt)
   for id in pairs(self.plantEntities) do
     local parentId = self.game.entityParents[id]
 
-    if states[id] == "vaulting" then
+    if states[parentId] == "vaulting" then
       local x1, y1, x2, y2 = distanceJoints[id]:getAnchors()
       local body1, body2 = distanceJoints[id]:getBodies()
 
@@ -56,7 +56,7 @@ function M:handleEvent(dt)
         local directionY = self.upperEntities[childId] and -1 or 1
         localTransforms[childId]:setTransformation(0, 0, directionY * 0.375 * math.pi)
       end
-    elseif states[id] == "swinging" then
+    elseif states[parentId] == "swinging" then
       local x1, y1, x2, y2 = ropeJoints[id]:getAnchors()
       local body1, body2 = ropeJoints[id]:getBodies()
 

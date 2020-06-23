@@ -24,7 +24,7 @@ function M:init(game, config)
 
   self.boneComponents = assert(self.game.componentManagers.bone)
   self.characterComponents = assert(self.game.componentManagers.character)
-  self.plantStateComponents = assert(self.game.componentManagers.plantState)
+  self.characterUpperStateComponents = assert(self.game.componentManagers.characterUpperState)
 end
 
 function M:handleEvent(viewportId)
@@ -42,13 +42,13 @@ function M:handleEvent(viewportId)
 
   local bodies = self.physicsDomain.bodies
   local targetYs = self.characterComponents.targetYs
-  local states = self.plantStateComponents.states
+  local states = self.characterUpperStateComponents.states
 
   for id in pairs(self.plantEntities) do
     local parentId = self.game.entityParents[id]
     local headX, headY = bodies[parentId]:getWorldPoint(0, -0.55)
 
-    if states[id] == "vaulting" then
+    if states[parentId] == "vaulting" then
       local handX, handY = transformPoint(previousTransforms, transforms, parentId, 0, -1, t)
       local plantX, plantY = transformPoint(previousTransforms, transforms, id, 0, 0, t)
 

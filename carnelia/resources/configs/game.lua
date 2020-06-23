@@ -90,14 +90,7 @@ return {
       componentType = "characterUpperState",
       class = "heart.StateComponentManager",
       defaultState = "aiming",
-      validStates = {"aiming", "firing", "swinging", "vaulting"},
-    },
-
-    {
-      componentType = "plantState",
-      class = "heart.StateComponentManager",
-      defaultState = "aiming",
-      validStates = {"aiming", "swinging", "vaulting"},
+      validStates = {"aiming", "firing", "swinging", "vaultAiming", "vaultFiring", "vaulting"},
     },
 
     {
