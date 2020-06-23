@@ -83,7 +83,7 @@ function M:handleEvent(dt)
         self.physicsDomain.world:rayCast(x1, y1, x2, y2, callback)
 
         if hitFixture then
-          if hitNormalY < 0 then
+          if states[parentId] == "vaultAiming" then
             local ropeX1, ropeY1 = transforms[id]:inverseTransformPoint(hitX, hitY)
             local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(parentBody:getWorldPoint(0, -1.25))
 
@@ -126,7 +126,7 @@ function M:handleEvent(dt)
             local ropeX1, ropeY1 = transforms[id]:inverseTransformPoint(hitX, hitY)
             local ropeX2, ropeY2 = transforms[id]:inverseTransformPoint(parentBody:getWorldPoint(0, -0.3))
 
-            local maxLength = heart.math.distance2(hitX, hitY, x1, y1)
+            local maxLength = heart.math.distance2(hitX, hitY, parentBody:getWorldPoint(0, -0.3))
 
             self.game:createComponent(id, "ropeJoint", {
               body1 = hitFixture:getUserData(),
