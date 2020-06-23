@@ -30,8 +30,11 @@ function M:handleEvent(dt)
   local inputYs = self.characterComponents.inputYs
 
   local lowerStateComponents = self.characterLowerStateComponents
+  local upperStateComponents = self.characterUpperStateComponents
+
   local lowerStates = self.characterLowerStateComponents.states
   local upperStates = self.characterUpperStateComponents.states
+
   local contacts = self.raySensorComponents.contacts
   local directionXs = self.characterComponents.directionXs
 
@@ -63,27 +66,34 @@ function M:handleEvent(dt)
     elseif lowerStates[id] == "running" then
       if not contacts[id] then
         lowerStateComponents:setState(id, "falling")
-      elseif not runInput then
+      elseif not runInput or inputX ~= directionXs[id] then
         lowerStateComponents:setState(id, "walking")
-      else
-        -- TODO: Implement properly
-        inputX = directionXs[id]
       end
     elseif lowerStates[id] == "standing" then
       if not contacts[id] then
         lowerStateComponents:setState(id, "falling")
       elseif inputY == 1 then
         lowerStateComponents:setState(id, "crouching")
-      elseif inputX ~= 0 or runInput then
+      elseif inputX ~= 0 then
         lowerStateComponents:setState(id, "walking")
       end
     elseif lowerStates[id] == "walking" then
       if not contacts[id] then
         lowerStateComponents:setState(id, "falling")
-      elseif runInput then
-        lowerStateComponents:setState(id, "running")
       elseif inputX == 0 then
         lowerStateComponents:setState(id, "standing")
+      elseif runInput and inputX == directionXs[id] then
+        lowerStateComponents:setState(id, "running")
+      end
+    end
+
+    if upperStates[id] == "aiming" then
+      if runInput then
+        upperStateComponents:setState(id, "vaultAiming")
+      end
+    elseif upperStates[id] == "vaultAiming" then
+      if not runInput then
+        upperStateComponents:setState(id, "aiming")
       end
     end
 

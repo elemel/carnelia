@@ -167,7 +167,7 @@ function M:handleEvent(dt)
 
     local headX, headY = characterBody:getWorldPoint(0, -0.55)
 
-    if upperStates[characterId] == "vaulting" then
+    if upperStates[characterId] == "vaultAiming" or upperStates[characterId] == "vaulting" then
       local handX, handY = characterBody:getWorldPoint(0, -1)
       local handAngle = math.atan2(handY - shoulderY, handX - shoulderX)
 

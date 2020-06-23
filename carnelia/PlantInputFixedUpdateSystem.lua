@@ -161,7 +161,11 @@ function M:handleEvent(dt)
         self.game:destroyComponent(id, "distanceJoint")
         self.game:destroyComponent(id, "ropeJoint")
 
-        self.characterUpperStateComponents:setState(parentId, "aiming")
+        if states[parentId] == "vaulting" then
+          self.characterUpperStateComponents:setState(parentId, "vaultAiming")
+        else
+          self.characterUpperStateComponents:setState(parentId, "aiming")
+        end
       end
     end
 

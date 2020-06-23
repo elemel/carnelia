@@ -48,7 +48,7 @@ function M:handleEvent(viewportId)
     local parentId = self.game.entityParents[id]
     local headX, headY = bodies[parentId]:getWorldPoint(0, -0.55)
 
-    if states[parentId] == "vaulting" then
+    if states[parentId] == "vaultAiming" or states[parentId] == "vaulting" then
       local handX, handY = transformPoint(previousTransforms, transforms, parentId, 0, -1, t)
       local plantX, plantY = transformPoint(previousTransforms, transforms, id, 0, 0, t)
 

@@ -70,7 +70,14 @@ function M:handleEvent(dt)
         localTransforms[childId]:setTransformation(0, 0, directionY * 0.375 * math.pi)
       end
     else
-      local angle = math.atan2(localYs[id], localXs[id])
+      local angle
+
+      if states[parentId] == "vaultAiming" then
+        angle = math.atan2(localYs[id] + 1, localXs[id])
+      else
+        angle = math.atan2(localYs[id], localXs[id])
+      end
+
       local parentX, parentY = bodies[parentId]:getPosition()
 
       transforms[id]:setTransformation(
