@@ -1,19 +1,21 @@
 local heart = require("heart")
 
-local ColorStack = require("carnelia.ColorStack")
-
 local M = heart.class.newClass()
 
 function M:init(game, config)
   self.game = assert(game)
   self.color = config.color or {0, 1, 0, 1}
-  self.colorStack = ColorStack.new()
+  self.fontSize = config.fontSize or 12
+  self.font = love.graphics.newFont(self.fontSize)
+  self.text = love.graphics.newText(self.font)
 end
 
 function M:handleEvent()
-  self.colorStack:push(unpack(self.color))
-  love.graphics.print(love.timer.getFPS() .. " FPS")
-  self.colorStack:pop()
+  local width, height = love.graphics.getDimensions()
+  local fps = 1 / love.timer.getAverageDelta()
+  local text = string.format("%.3g FPS", fps)
+  self.text:set({self.color, text})
+  love.graphics.draw(self.text, math.floor(0.5 * width - 0.5 * self.text:getWidth()), self.fontSize)
 end
 
 return M
