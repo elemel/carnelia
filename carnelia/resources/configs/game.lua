@@ -200,6 +200,10 @@ return {
       },
 
       {
+        class = "carnelia.GraphicsStatsDrawSystem",
+      },
+
+      {
         class = "carnelia.FpsDrawSystem",
       },
     },
@@ -248,10 +252,10 @@ return {
       --   scale = 0.5,
       -- },
 
-      {
-        class = "carnelia.GridDebugDrawSystem",
-        color = {0, 1, 0, 0.25},
-      },
+      -- {
+      --   class = "carnelia.GridDebugDrawSystem",
+      --   color = {0, 1, 0, 0.25},
+      -- },
     },
 
     fixedupdate = {
