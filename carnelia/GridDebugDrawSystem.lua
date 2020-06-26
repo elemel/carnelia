@@ -1,17 +1,15 @@
 local heart = require("heart")
 
-local ColorStack = require("carnelia.ColorStack")
-
 local M = heart.class.newClass()
 
 function M:init(game, config)
   self.game = assert(game)
   self.color = config.color or {0, 1, 0, 1}
-  self.colorStack = ColorStack.new()
 end
 
 function M:handleEvent(viewportId)
-  self.colorStack:push(unpack(self.color))
+  local r, g, b, a = love.graphics.getColor()
+  love.graphics.setColor(self.color)
 
   local minX = -50
   local minY = -20
@@ -27,7 +25,7 @@ function M:handleEvent(viewportId)
     love.graphics.line(x, minY, x, maxY)
   end
 
-  self.colorStack:pop()
+  love.graphics.setColor(r, g, b, a)
 end
 
 return M
