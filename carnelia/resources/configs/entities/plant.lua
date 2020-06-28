@@ -35,7 +35,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/plant/upperJaw.png",
-              z = -0.1,
+              normalMap = "carnelia/resources/images/plant/upperJawNormal.png",
             },
           },
         },
@@ -65,7 +65,7 @@ return {
 
             sprite = {
               image = "carnelia/resources/images/plant/lowerJaw.png",
-              z = -0.1,
+              normalMap = "carnelia/resources/images/plant/lowerJawNormal.png",
             },
           },
         },
